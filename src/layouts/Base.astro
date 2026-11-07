@@ -1,0 +1,54 @@
+---
+import "../styles/global.css";
+import RevealEmail from "../components/RevealEmail.astro";
+
+interface Props { title?: string; description?: string; bare?: boolean }
+const {
+  title = "Taggart Thomson",
+  description = "Operator who builds AI tools teams actually use.",
+  bare = false,
+} = Astro.props;
+const path = Astro.url.pathname;
+const nav = [
+  { href: "/#work", label: "Work" },
+  { href: "/about", label: "About" },
+];
+// One switch for search engines. Flip to false when the site is ready to be found.
+const NOINDEX = true;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title === "Taggart Thomson" ? title : `${title} | Taggart Thomson`}</title>
+    <meta name="description" content={description} />
+    {NOINDEX && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#FFD500" />
+  </head>
+  <body>
+    {!bare && (
+      <header class="wrap bar mono">
+        <a href="/">Taggart Thomson</a>
+        <nav aria-label="Main">
+          {nav.map((n) => <a href={n.href} aria-current={path === n.href ? "page" : undefined}>{n.label}</a>)}
+        </nav>
+      </header>
+    )}
+    <slot />
+    <footer class="foot">
+      <div class="wrap row">
+        <div>
+          <div class="mono" style="opacity:.7">Get in touch</div>
+          <div style="font-size:22px;font-weight:800;margin-top:6px">Email is the best way to reach me.</div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+          <RevealEmail />
+          <a class="mono" href="https://www.linkedin.com/in/taggart-thomson-55043396">LinkedIn</a>
+          <a class="mono" href="https://github.com/Taggart-Thomson">GitHub</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

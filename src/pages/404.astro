@@ -1,0 +1,18 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="Not found">
+  <section class="nf">
+    <div class="wrap">
+      <h1>Wrong turn.</h1>
+      <p>That page doesn't exist. The work is a better place to start.</p>
+      <a class="btn" href="/#work">See the work</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { background: var(--yel); padding-block: 40px 96px; }
+  h1 { font-weight: 800; font-size: clamp(64px, 14vw, 190px); line-height: .84; letter-spacing: -.045em; margin: 0; }
+  p { font-size: 22px; margin: 24px 0; }
+</style>

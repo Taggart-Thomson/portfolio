@@ -1,0 +1,122 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import AskBox from "../components/AskBox.astro";
+import { demoLabel } from "../lib/labels";
+
+const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
+const words = ["schedulers.", "AI assistants.", "automations.", "this agent.", "career tools."];
+---
+<Base bare>
+  <section class="hero">
+    <div class="wrap">
+      <header class="bar mono">
+        <span>Taggart Thomson</span>
+        <nav aria-label="Main"><a href="#work">Work</a><a href="/about">About</a></nav>
+        <span class="where">Remote / Canada and the Americas</span>
+      </header>
+
+      <h1>
+        Operator<br />
+        <span class="l2">who builds <span class="pill" id="pill" data-words={JSON.stringify(words)}>{words[0]}</span></span>
+      </h1>
+
+      <div class="row">
+        <p>
+          I build AI tools teams actually use. Eleven years running operations and businesses,
+          from a production company I co-founded in Shanghai to the online program at
+          Think Tank Training Centre.
+        </p>
+        <AskBox />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="work">
+    <div class="wrap">
+      <h2>Work</h2>
+      <ol class="work">
+        {projects.map((p, i) => (
+          <li>
+            <a href={`/projects/${p.id}`}>
+              <span class="num mono">{String(i + 1).padStart(2, "0")}</span>
+              <span class="body">
+                <span class="title">{p.data.title}</span>
+                <span class="sum">{p.data.summary}</span>
+              </span>
+              <span class="meta">
+                <span class="tag">{p.data.kicker}</span>
+                <span class={p.data.demo === "guided" || p.data.demo === "live" ? "tag solid" : "tag"}>{demoLabel[p.data.demo]}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section now">
+    <div class="wrap grid">
+      <div>
+        <div class="mono">Now</div>
+        <p>Online Program Director at Think Tank Training Centre since October 2023. About 500 students a term, across every time zone.</p>
+      </div>
+      <div>
+        <div class="mono">Before</div>
+        <p>Co-founder of Try Creative Media Group in Shanghai. We grew from 2 founders and no clients to 9 people.</p>
+      </div>
+      <div>
+        <div class="mono">Studying</div>
+        <p>MS in AI Engineering, expected 2027. Coursework in AI-assisted development, testing, CI/CD and cloud.</p>
+      </div>
+    </div>
+    <div class="wrap"><a class="btn" href="/about">More about me</a></div>
+  </section>
+</Base>
+
+<style>
+  .hero { background: var(--yel); overflow: hidden; padding-bottom: clamp(32px, 5vw, 56px); }
+  .hero .bar { padding-block: 26px 0; }
+  .hero .bar nav { margin-right: auto; margin-left: 28px; }
+  @media (max-width: 640px) { .hero .bar nav { margin-left: 0; } .where { width: 100%; } }
+  h1 { margin: 24px 0 0; font-weight: 800; font-size: clamp(60px, 15.5vw, 212px); line-height: .84; letter-spacing: -.045em; }
+  .l2 { display: flex; flex-wrap: wrap; align-items: center; gap: .12em .22em; }
+  .pill { display: inline-block; background: var(--ink); color: var(--yel); border-radius: 999px; padding: .02em .32em .1em; font-size: .62em; letter-spacing: -.035em; line-height: 1; transition: transform .45s cubic-bezier(.2,.9,.3,1.2), opacity .2s; }
+  .pill.out { transform: translateY(18%) scale(.92) rotate(-2deg); opacity: .4; }
+  .row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 28px; margin-top: 34px; align-items: end; }
+  @media (max-width: 820px) { .row { grid-template-columns: minmax(0, 1fr); } }
+  .row p { font-size: clamp(17px, 1.8vw, 21px); line-height: 1.45; margin: 0; max-width: 36ch; }
+
+  .work { list-style: none; margin: 0; padding: 0; border-top: 3px solid var(--ink); }
+  .work li { border-bottom: 3px solid var(--ink); }
+  .work a { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 18px; align-items: center; padding: 22px 0; text-decoration: none; transition: background .2s, padding .2s; }
+  .work a:hover { background: var(--yel); padding-inline: 14px; }
+  .num { font-size: 14px; }
+  .title { display: block; font-weight: 800; font-size: clamp(24px, 3.4vw, 40px); line-height: 1.02; letter-spacing: -.025em; }
+  .sum { display: block; margin-top: 6px; color: var(--muted); font-size: 17px; max-width: 60ch; }
+  .meta { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  @media (max-width: 720px) {
+    .work a { grid-template-columns: 40px minmax(0, 1fr); }
+    .meta { grid-column: 2; justify-content: flex-start; }
+  }
+
+  .now { background: var(--ink); color: var(--paper); }
+  .now .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-bottom: 32px; }
+  @media (max-width: 820px) { .now .grid { grid-template-columns: minmax(0, 1fr); } }
+  .now .mono { color: var(--yel); }
+  .now p { font-size: 20px; margin: 10px 0 0; }
+  .now .btn { background: var(--yel); color: var(--ink); }
+</style>
+
+<script>
+  const pill = document.getElementById("pill");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (pill && !reduce) {
+    const words: string[] = JSON.parse(pill.dataset.words ?? "[]");
+    let i = 0;
+    setInterval(() => {
+      pill.classList.add("out");
+      setTimeout(() => { i = (i + 1) % words.length; pill.textContent = words[i]; pill.classList.remove("out"); }, 220);
+    }, 2200);
+  }
+</script>

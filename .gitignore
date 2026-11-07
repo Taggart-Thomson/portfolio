@@ -6,6 +6,9 @@
 # Private anonymization blocklist (real names live here, never in git)
 private/
 
+# Tailored resumes and cover letters (source material for the knowledge base, never published)
+CVs and Cover Letters/
+
 # Dependencies and builds
 node_modules/
 dist/

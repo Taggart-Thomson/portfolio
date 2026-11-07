@@ -10,7 +10,7 @@ import { join, relative, extname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
-const SKIP_DIRS = new Set(["node_modules", ".git", "private", "dist", ".astro", ".wrangler", ".vercel", "coverage", ".venv"]);
+const SKIP_DIRS = new Set(["node_modules", ".git", "private", "CVs and Cover Letters", "dist", ".astro", ".wrangler", ".vercel", "coverage", ".venv"]);
 const TEXT_EXT = new Set([".md", ".mdx", ".astro", ".tsx", ".ts", ".jsx", ".js", ".mjs", ".json", ".jsonl", ".html", ".css", ".yml", ".yaml", ".txt", ".py", ".svg"]);
 // Folders whose files are visible copy (dash rule applies).
 const COPY_DIRS = ["content", "src/content", "src/pages", "src/components", "public/demos"];

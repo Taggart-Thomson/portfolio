@@ -28,7 +28,9 @@ Personal portfolio site for Taggart Thomson with an "Ask Taggart" RAG chat agent
 
 - Plain, grounded, non-hype. Direct and specific. No "passionate," "revolutionary" or buzzword soup.
 - **No em dashes and no double dashes** in visible copy. Use commas, periods or colons.
-- American English.
+- American English. Proper names keep their own spelling (Think Tank Training Centre).
+- **Voice:** site pages (`src/`) are first person ("I built"). The knowledge base (`content/kb/`) and the Ask Taggart assistant are third person: the assistant is a guide for visitors talking about Taggart, never pretending to be him.
+- **Visitors are recruiters** from different companies hiring for different roles. The assistant infers the role from the questions and leads with the most relevant work, without inventing fit.
 - Real numbers over percentages unless the percentage is the natural unit ("8 in 10 graduates").
 - Never show a number without context. No stat graphics or big floating numbers.
 

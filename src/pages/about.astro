@@ -1,0 +1,179 @@
+---
+import Base from "../layouts/Base.astro";
+import RevealEmail from "../components/RevealEmail.astro";
+
+const roles = [
+  {
+    when: "October 2023 to now",
+    title: "Online Program Director",
+    org: "Think Tank Training Centre, a global online VFX and 3D art school",
+    points: [
+      "I run the online program: about 500 students a term (600 at peak), 22 to 36 supervisors and 72 mentors, across every time zone.",
+      "I own a contractor budget of about CAD 490,000 per term and am relied on for cost-saving measures.",
+      "I built the cost model leadership used to approve a new supervisor group structure, which saves about CAD 119,677 per term, or about CAD 360,000 a year.",
+      "I run each term build end to end. For one recent term, I launched 24 supervisor groups on the promised date, with all 22 supervisors confirmed within 48 hours.",
+      "I work daily with academics and compliance, accounting, marketing and engineering, and report to the founder.",
+    ],
+  },
+  {
+    when: "February 2017 to October 2023",
+    title: "Co-Founder",
+    org: "Try Creative Media Group, Shanghai",
+    points: [
+      "We started with 2 founders and no clients and grew to 9 people and more than CNY 4 million a year in revenue.",
+      "Clients included BMW, Cartier, McLaren, Porsche and Jaguar Land Rover: TV commercials, social ads, launch screens, event recaps and 3D work, up to flagship events like the W Hotel opening and Porsche's 20-year anniversary in China.",
+      "I owned business development, pricing, budgets, vendors, invoicing and delivery, and presented strategy directly to senior client stakeholders.",
+      "During COVID, I restructured the business to keep clients supplied.",
+    ],
+  },
+  {
+    when: "October 2015 to February 2017",
+    title: "Senior Associate, Head of Digital Content",
+    org: "Red Gate International, Shanghai",
+    points: [
+      "I led client coordination on international PR events and brand campaigns and produced their digital content.",
+      "I reviewed contracts, reports and proposals for accuracy and compliance.",
+    ],
+  },
+];
+
+const education = [
+  ["MS in AI Engineering", "Quantic School of Business and Technology", "2026 to 2027, in progress"],
+  ["MBA, Management", "University of East London", "2024"],
+  ["Bachelor of Commerce, Accounting and Finance", "Mount Allison University", "2010"],
+  ["Visual Art and Design", "Vancouver Film School", "2011"],
+];
+
+const skills = [
+  ["AI", "Claude and Claude Code (daily), the Anthropic API, RAG, tool-using agents, MCP, Claude Skills, prompt and context design, LLM-based extraction, human-in-the-loop design."],
+  ["Building", "Python, FastAPI, Flask, Django, React, TypeScript, SQL, PostgreSQL, SQLite, REST APIs, Git, GitHub Actions, pytest."],
+  ["Automation", "Google Apps Script, Google Forms and Sheets, HubSpot workflows, HTML email, Zoom integration, Google Workspace, ClickUp, Miro, Figma."],
+  ["Operating", "Budget ownership, Excel cost and scenario modeling, KPI design, reporting to leadership, contractor contracts and onboarding, cross-functional delivery."],
+];
+---
+<Base title="About" description="Operations leader who builds AI and automation tools. Based remotely, relocating to Canada.">
+  <section class="head">
+    <div class="wrap">
+      <h1>About</h1>
+      <p class="lede">
+        I'm an operator who can also build. I've spent eleven years running operations and businesses,
+        including years in digital media, and I now build AI and automation tools that teams actually use.
+      </p>
+    </div>
+  </section>
+
+  <section class="wrap cols">
+    <div>
+      <h2 class="mono">How I work</h2>
+      <p>
+        I'm not a specialist software engineer, and I say so plainly. My strength is finding the workflow
+        worth fixing, building the first version with AI tools, working with engineers on the production
+        version, and measuring the result.
+      </p>
+      <p>
+        I haven't held a formal software engineering or product manager title. What I have done: built working
+        first versions, handed them to engineering teams who adopted them as the model for production features,
+        and run my own tools every term. I'm learning production engineering through my MS in AI Engineering
+        and the tools I build.
+      </p>
+    </div>
+    <div>
+      <h2 class="mono">What I'm looking for</h2>
+      <ul>
+        <li>Forward-deployed and AI deployment roles</li>
+        <li>AI enablement and AI operations roles</li>
+        <li>AI product roles</li>
+        <li>AI transformation consulting</li>
+      </ul>
+      <h2 class="mono">Where I'm based</h2>
+      <p>
+        Canadian citizen, born and raised in Calgary. I'm working remotely from Brazil and relocating to Canada.
+        Open to remote roles in Canada and the Americas and hybrid roles in Canada. No sponsorship needed in Canada.
+      </p>
+      <p>English is my native language. My Portuguese is intermediate.</p>
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <h2 class="big">Experience</h2>
+    {roles.map((r) => (
+      <div class="role">
+        <div class="mono when">{r.when}</div>
+        <div>
+          <h3>{r.title}</h3>
+          <div class="org">{r.org}</div>
+          <ul>{r.points.map((pt) => <li>{pt}</li>)}</ul>
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <section class="wrap block" id="other-work">
+    <h2 class="big">Other work</h2>
+    <div class="role">
+      <div class="mono when">Every term</div>
+      <div>
+        <h3>Messaging workflow automation</h3>
+        <p>
+          I run 9 automated messaging workflows in HubSpot every term, using triggered sends and HTML-built emails.
+          A webinar integration enrolls every member automatically, so nobody has to be added by hand.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap block">
+    <h2 class="big">Education</h2>
+    <div class="table">
+      {education.map(([d, s, y]) => (
+        <div class="erow"><span class="t">{d}</span><span>{s}</span><span class="mono">{y}</span></div>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap block last">
+    <h2 class="big">Skills</h2>
+    <div class="table">
+      {skills.map(([k, v]) => (
+        <div class="srow"><span class="mono">{k}</span><span>{v}</span></div>
+      ))}
+    </div>
+    <div class="cta">
+      <RevealEmail label="Email me" />
+      <a class="btn ghost" href="/#work">See the work</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head { background: var(--yel); padding-block: 8px clamp(36px, 6vw, 64px); }
+  h1 { font-weight: 800; font-size: clamp(64px, 13vw, 180px); line-height: .84; letter-spacing: -.045em; margin: 20px 0 0; }
+  .lede { font-size: clamp(20px, 2.3vw, 28px); line-height: 1.35; max-width: 40ch; margin: 24px 0 0; }
+
+  .cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 5vw, 64px); padding-block: clamp(40px, 6vw, 72px); }
+  @media (max-width: 820px) { .cols { grid-template-columns: minmax(0, 1fr); } }
+  .cols h2 { margin: 0 0 10px; font-weight: 500; }
+  .cols h2:not(:first-child) { margin-top: 28px; }
+  .cols p, .cols li { font-size: 19px; line-height: 1.6; }
+  .cols p { margin: 0 0 14px; }
+  .cols ul { margin: 0; padding-left: 1.2em; }
+
+  .block { border-top: 3px solid var(--ink); padding-block: clamp(32px, 5vw, 56px); }
+  .big { font-weight: 800; font-size: clamp(36px, 6vw, 72px); letter-spacing: -.04em; line-height: .95; margin: 0 0 24px; }
+  .role { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; padding-block: 18px; }
+  .role + .role { border-top: 1.5px solid var(--ink); }
+  @media (max-width: 760px) { .role { grid-template-columns: minmax(0, 1fr); gap: 6px; } }
+  .when { padding-top: 8px; }
+  h3 { font-weight: 800; font-size: clamp(22px, 2.6vw, 30px); letter-spacing: -.02em; margin: 0; line-height: 1.1; }
+  .org { color: var(--muted); margin-top: 4px; }
+  .role ul { padding-left: 1.2em; margin: 12px 0 0; }
+  .role li, .role p { font-size: 18px; line-height: 1.55; margin: 6px 0; }
+
+  .table > div { display: grid; gap: 16px; padding-block: 14px; border-bottom: 1.5px solid var(--ink); align-items: baseline; }
+  .erow { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) 200px; }
+  .erow .t { font-weight: 700; }
+  .srow { grid-template-columns: 160px minmax(0, 1fr); }
+  @media (max-width: 760px) { .erow, .srow { grid-template-columns: minmax(0, 1fr) !important; gap: 4px !important; } }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+  .last { padding-bottom: clamp(48px, 7vw, 88px); }
+</style>

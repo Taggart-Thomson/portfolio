@@ -1,0 +1,21 @@
+---
+// Click to reveal: the address is assembled in the browser, so it is not sitting in the page for scrapers.
+const { label = "Show my email", class: cls = "btn" } = Astro.props;
+---
+<span class="reveal-email">
+  <button type="button" class={cls} data-u="taggart.thomson" data-d="gmail.com">{label}</button>
+</span>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>(".reveal-email button").forEach((b) => {
+    b.addEventListener("click", () => {
+      const addr = `${b.dataset.u}@${b.dataset.d}`;
+      const a = document.createElement("a");
+      a.href = `mailto:${addr}`;
+      a.textContent = addr;
+      a.className = b.className;
+      b.replaceWith(a);
+      a.focus();
+    });
+  });
+</script>

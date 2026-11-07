@@ -1,0 +1,43 @@
+---
+// Hero ask box. The assistant speaks about Taggart in the third person, as a guide for visitors.
+// Until the chat endpoint exists, asking shows a short holding note.
+const chips = ["What has he built?", "Is he a fit for an AI operations role?", "Show me a demo"];
+---
+<form class="slab" id="ask" autocomplete="off">
+  <label class="ask">
+    <span class="sr">Ask a question about Taggart</span>
+    <input name="q" placeholder="Ask anything about Taggart" maxlength="500" />
+    <button type="submit" aria-label="Ask">&#8599;</button>
+  </label>
+  <div class="chips">
+    {chips.map((c) => <button type="button" data-q={c}>{c}</button>)}
+  </div>
+  <p class="note" role="status" hidden></p>
+</form>
+
+<style>
+  .slab { background: var(--ink); color: var(--paper); border-radius: 22px; padding: 18px; }
+  .ask { display: flex; gap: 10px; align-items: center; border-bottom: 2px solid var(--yel); padding-bottom: 10px; }
+  .ask input { flex: 1; min-width: 0; background: transparent; border: 0; outline: none; color: var(--paper); font: 400 18px var(--f-display); }
+  .ask input::placeholder { color: #B9B39A; }
+  .ask button { border: 0; background: var(--yel); color: var(--ink); width: 44px; height: 44px; flex: none; border-radius: 50%; font-size: 20px; font-weight: 800; cursor: pointer; }
+  .chips { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips button { background: transparent; border: 1.5px solid #FFF3A0; color: var(--paper); border-radius: 999px; padding: 7px 13px; font: 400 14px var(--f-display); cursor: pointer; }
+  .chips button:hover { background: var(--yel); color: var(--ink); border-color: var(--yel); }
+  .note { margin: 14px 0 0; font-size: 15px; color: #E9E3C4; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+
+<script>
+  const form = document.getElementById("ask") as HTMLFormElement;
+  const input = form.querySelector("input")!;
+  const note = form.querySelector(".note") as HTMLElement;
+  function hold() {
+    note.hidden = false;
+    note.textContent = "The assistant is not switched on yet. Until it is, the projects below cover the same ground.";
+  }
+  form.addEventListener("submit", (e) => { e.preventDefault(); if (input.value.trim()) hold(); });
+  form.querySelectorAll<HTMLButtonElement>(".chips button").forEach((b) =>
+    b.addEventListener("click", () => { input.value = b.dataset.q ?? ""; hold(); }),
+  );
+</script>

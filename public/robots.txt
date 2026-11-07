@@ -1,0 +1,3 @@
+# Not ready to be indexed yet. Flip together with NOINDEX in src/layouts/Base.astro.
+User-agent: *
+Disallow: /

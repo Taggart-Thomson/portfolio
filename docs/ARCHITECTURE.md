@@ -65,7 +65,7 @@ The build computes chunk embeddings locally, and the Worker embeds questions thr
 - Cloudflare: free plan covers this traffic (100,000 Worker requests a day).
 - Workers AI: free daily allowance far exceeds a portfolio's query volume.
 - Anthropic: the only real cost. Capped by message limits, output-token limits, the daily cap and the spend limit Taggart sets in the console. Target under USD 10 a month.
-- Domain: about USD 10 a year at cost for a `.com`.
+- Domain: taggartthomson.ca, renewed at cost through Cloudflare Registrar.
 
 ## Not stored
 

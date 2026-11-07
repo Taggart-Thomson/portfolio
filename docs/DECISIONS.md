@@ -5,7 +5,7 @@ Answers to BRIEF Section 10, recorded in Phase 0. These override the BRIEF where
 | # | Question | Decision |
 |---|---|---|
 | 1 | Hosting | **Cloudflare** (Workers with static assets) for the site and the agent, built with **Astro + React islands**. Replaces Vercel throughout the BRIEF. |
-| 2 | Domain | **Buying one now.** Plan the hookup early (Cloudflare Registrar sells at cost and connects with no DNS setup). |
+| 2 | Domain | **taggartthomson.ca**, bought through Cloudflare Registrar on 2026-11-07. Hook it up to the Worker early. |
 | 3 | Relocation wording | **Canada, no city or date.** "Canadian citizen, relocating to Canada. Open to remote roles in Canada and the Americas, and hybrid roles in Canada." |
 | 4 | Contact | Email behind a **click to reveal** button. **No phone number.** |
 | 5 | Lastro | Free to use the repo and brand assets. Taggart hasn't used the tool much yet, so the demo must be populated with invented sample data (portfolio, budget, chat history, usage costs) so it looks lived in. The case study must stay honest: an in-progress personal build, not a tool with a track record. Build state still to be confirmed from the repo. |

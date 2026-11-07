@@ -10,7 +10,7 @@
 - [ ] Fill `private/blocklist.txt` with real names (employer, client, colleagues, platforms).
 - [ ] Create the GitHub repo on the Taggart-Thomson account and choose visibility.
 - [x] Create the Cloudflare account.
-- [ ] Buy the domain (Cloudflare Registrar recommended).
+- [x] Buy the domain: taggartthomson.ca (Cloudflare Registrar, 2026-11-07).
 - [ ] Create a site-specific Anthropic API key with a monthly spend limit; add it as a Cloudflare Worker secret and to local `.env`.
 - [ ] Supply the resume PDF (`public/Taggart_Thomson_Resume.pdf`).
 - [ ] Review every knowledge base file before Phase 2 deploys.
@@ -18,5 +18,5 @@
 
 ## Later
 
-- [ ] Custom domain hookup (moved earlier, since the domain is being bought now).
+- [ ] Connect taggartthomson.ca to the Worker once the first deploy exists (wait for the .ca registration to finish first).
 - [ ] Flip `noindex` off when the job search is public.

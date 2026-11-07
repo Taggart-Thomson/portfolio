@@ -8,7 +8,7 @@ page_url: /about#current-role
 
 ## The role
 
-Since October 2023, Taggart has been Online Program Director at a global online VFX and 3D art school based in Canada. He works remotely.
+Since October 2023, Taggart has been Online Program Director at Think Tank Training Centre, a global online VFX and 3D art school based in Canada. He works remotely.
 
 ## Scope
 

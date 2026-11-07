@@ -11,7 +11,8 @@ Personal portfolio site for Taggart Thomson with an "Ask Taggart" RAG chat agent
 
 ## Anonymization (non-negotiable)
 
-- Never name the current employer. Use only "a global online VFX and 3D art school" (or "an online art and design school"). No city, founder, staff, platform name or internal product names.
+- The current employer may be named (Think Tank Training Centre), including which tools were built there and for which of its products. No founder or staff names.
+- One body of work is excluded completely (named in `private/BRIEF.md` Section 2 and `private/blocklist.txt`): never mention it anywhere, in any form, until Taggart says otherwise.
 - Never name the public art client behind Verso. Use "a public art organization."
 - No real people anywhere: content, demo data, screenshots, alt text, code comments, commit messages.
 - No real data. Demo data is synthetic and obviously fake (invented names, `@example.com` emails).
@@ -19,7 +20,9 @@ Personal portfolio site for Taggart Thomson with an "Ask Taggart" RAG chat agent
 - Some projects, names and items are excluded completely. The full list is in `private/BRIEF.md` (Section 2) and `private/blocklist.txt`. Course projects are never named; mention the stack only.
 - The career assistant project is called only "AI Career Assistant." Never use its internal name.
 - Aggregate figures on the public resume (BRIEF Section 6) are fine. Anything else, ask first.
-- The private blocklist lives at `private/blocklist.txt` (git-ignored). The build must fail if any term from it appears in content.
+- Private blocklists (all git-ignored), checked by `npm run check:content`, and the build must fail on any hit:
+  - `private/blocklist.txt` (hand-written terms) and `private/blocklist-names.txt` (people's names from the rosters): blocked everywhere.
+  - `private/allowlist.txt` (optional): exact phrases that are always allowed.
 
 ## Writing style
 

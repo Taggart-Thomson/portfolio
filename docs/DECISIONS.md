@@ -8,7 +8,7 @@ Answers to BRIEF Section 10, recorded in Phase 0. These override the BRIEF where
 | 2 | Domain | **Buying one now.** Plan the hookup early (Cloudflare Registrar sells at cost and connects with no DNS setup). |
 | 3 | Relocation wording | **Canada, no city or date.** "Canadian citizen, relocating to Canada. Open to remote roles in Canada and the Americas, and hybrid roles in Canada." |
 | 4 | Contact | Email behind a **click to reveal** button. **No phone number.** |
-| 5 | Lastro | Open. Waiting on build state, repo access and permission to use brand assets. |
+| 5 | Lastro | Free to use the repo and brand assets. Taggart hasn't used the tool much yet, so the demo must be populated with invented sample data (portfolio, budget, chat history, usage costs) so it looks lived in. The case study must stay honest: an in-progress personal build, not a tool with a track record. Build state still to be confirmed from the repo. |
 | 6 | Scheduler demo | **In-browser guided demo** (see "Demo style" below). |
 | 7 | Career Hub demo name | **No invented school name.** Label it "Career Hub demo." |
 | 8 | Conversation logging | **Off.** Nothing stored. Can revisit later. |

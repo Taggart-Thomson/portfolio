@@ -14,5 +14,18 @@
     "run_worker_first": ["/api/*"]
   },
   "workers_dev": false,
-  "preview_urls": false
+  "preview_urls": false,
+
+  // Non-secret settings for the Ask Taggart assistant.
+  "vars": {
+    "CHAT_MODEL": "claude-haiku-5-5",
+    "DAILY_MESSAGE_CAP": "300",
+    "RATE_LIMIT_PER_HOUR": "20"
+  },
+
+  // Usage counters (per-visitor hourly limit and daily cap).
+  "durable_objects": {
+    "bindings": [{ "name": "LIMITER", "class_name": "Limiter" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Limiter"] }]
 }

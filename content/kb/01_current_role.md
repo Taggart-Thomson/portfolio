@@ -1,7 +1,7 @@
 ---
 title: Current role, Online Program Director
 tags: [current role, operations, budget, leadership, term build]
-page_url: /about#current-role
+page_url: /about#experience
 ---
 
 # Current role: Online Program Director
@@ -34,4 +34,4 @@ In this role he has built:
 - a cost-aware term scheduler for placing students into supervised groups (see Term Scheduler),
 - a career hub and placement tracker (see Career Hub),
 - a mentor assessment automation in Google Apps Script (see Mentor Assessment Automation),
-- 9 automated messaging workflows that run every term (see Workflow Automation).
+- 9 HubSpot messaging workflows that he rebuilds and launches each term (see Workflow Automation).

@@ -1,7 +1,7 @@
 ---
 title: Career history before the current role
 tags: [career history, founder, Shanghai, China, clients, digital media, video production]
-page_url: /about#career
+page_url: /about#experience
 ---
 
 # Career history

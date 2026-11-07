@@ -26,4 +26,4 @@ Budget ownership, Excel cost and scenario modeling, KPI design, reporting to lea
 
 Taggart has not held a formal software engineering title or a product manager title. He is learning production engineering through his MS in AI Engineering and through the tools he builds.
 
-What he has done instead: he has found workflows worth fixing, built working first versions with AI tools, handed them to engineering teams who adopted them as the model for production features, and run his own tools every term. If a role needs a senior software engineer, he is not that. If it needs someone who can connect operations, AI tools and engineering, that is his work.
+What he has done instead: he has found workflows worth fixing, built working first versions with AI tools, worked with engineering teams to take them into production, and run his own tools every term. If a role needs a senior software engineer, he is not that. If it needs someone who can connect operations, AI tools and engineering, that is his work.

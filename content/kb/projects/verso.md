@@ -2,7 +2,7 @@
 title: "Verso: collection and invoicing app for a public art organization"
 project_id: verso
 tags: [Django, SQL, workflow, invoicing, roles, prototype, testing]
-page_url: /about#other-work
+page_url: /projects/verso
 ---
 
 # Verso

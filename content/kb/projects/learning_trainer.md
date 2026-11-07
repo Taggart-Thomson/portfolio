@@ -2,7 +2,7 @@
 title: Driver's license exam trainer
 project_id: learning_trainer
 tags: [learning app, PWA, offline, quiz, Portuguese, Brazil]
-page_url: /projects/learning-trainer
+page_url: /projects/drivers-exam-trainer
 ---
 
 # Driver's license exam trainer

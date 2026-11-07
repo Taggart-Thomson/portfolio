@@ -5,11 +5,13 @@
   "scripts": {
     "check:content": "node scripts/check-content.mjs",
     "dev": "astro dev",
-    "build": "npm run check:content && astro build",
+    "build": "npm run check:content && node scripts/build-kb-index.mjs && astro build",
     "preview": "astro preview",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && wrangler deploy",
+    "kb": "node scripts/build-kb-index.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.6.0",
     "@fontsource-variable/bricolage-grotesque": "^5.3.0",
     "@fontsource/dm-mono": "^5.3.0",
     "astro": "^7.4.7"

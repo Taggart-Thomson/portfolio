@@ -1,9 +1,10 @@
 ---
-// Hero ask box. The assistant speaks about Taggart in the third person, as a guide for visitors.
-// Until the chat endpoint exists, asking shows a short holding note.
-const chips = ["What has he built?", "Is he a fit for an AI operations role?", "Show me a demo"];
+// Hero chat box for Ask Taggart. The assistant speaks about Taggart in the third person, as a guide for visitors.
+// Talks to POST /api/chat (worker/index.ts), which streams server-sent events: sources, delta, done, error.
+const chips = ["What has he built?", "Is he a fit for an AI operations role?", "Is he a software engineer?"];
 ---
 <form class="slab" id="ask" autocomplete="off">
+  <div class="log" aria-live="polite" hidden></div>
   <label class="ask">
     <span class="sr">Ask a question about Taggart</span>
     <input name="q" placeholder="Ask anything about Taggart" maxlength="500" />
@@ -12,32 +13,171 @@ const chips = ["What has he built?", "Is he a fit for an AI operations role?", "
   <div class="chips">
     {chips.map((c) => <button type="button" data-q={c}>{c}</button>)}
   </div>
-  <p class="note" role="status" hidden></p>
+  <div class="foot" hidden>
+    <span>AI answers from Taggart's reviewed notes. Can make mistakes.</span>
+    <button type="button" class="reset">New chat</button>
+  </div>
 </form>
 
 <style>
+  .slab [hidden] { display: none !important; }
   .slab { background: var(--ink); color: var(--paper); border-radius: 22px; padding: 18px; }
   .ask { display: flex; gap: 10px; align-items: center; border-bottom: 2px solid var(--yel); padding-bottom: 10px; }
   .ask input { flex: 1; min-width: 0; background: transparent; border: 0; outline: none; color: var(--paper); font: 400 18px var(--f-display); }
   .ask input::placeholder { color: #B9B39A; }
   .ask button { border: 0; background: var(--yel); color: var(--ink); width: 44px; height: 44px; flex: none; border-radius: 50%; font-size: 20px; font-weight: 800; cursor: pointer; }
+  .ask button:disabled { opacity: .5; cursor: default; }
   .chips { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
   .chips button { background: transparent; border: 1.5px solid #FFF3A0; color: var(--paper); border-radius: 999px; padding: 7px 13px; font: 400 14px var(--f-display); cursor: pointer; }
   .chips button:hover { background: var(--yel); color: var(--ink); border-color: var(--yel); }
-  .note { margin: 14px 0 0; font-size: 15px; color: #E9E3C4; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  .log { max-height: min(56vh, 520px); overflow-y: auto; margin: -2px -4px 14px; padding: 0 4px; display: flex; flex-direction: column; gap: 14px; overscroll-behavior: contain; }
+  .log :global(.q) { align-self: flex-end; max-width: 85%; background: var(--yel); color: var(--ink); border-radius: 16px 16px 4px 16px; padding: 8px 13px; font-size: 16px; }
+  .log :global(.a) { font-size: 16px; line-height: 1.55; }
+  .log :global(.a p) { margin: 0 0 .6em; }
+  .log :global(.a p:last-child) { margin-bottom: 0; }
+  .log :global(.a ul) { margin: 0 0 .6em; padding-left: 1.2em; }
+  .log :global(.a li) { margin: .2em 0; }
+  .log :global(.a a) { color: var(--yel); }
+  .log :global(.a.err) { color: #FFB4A8; }
+  .log :global(.a .wait) { display: inline-block; width: 8px; height: 16px; background: var(--yel); vertical-align: -2px; animation: blink 1s steps(2) infinite; }
+  .log :global(.src) { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .log :global(.src a) { font: 500 11px/1.4 var(--f-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--paper); border: 1px solid #6E6A57; border-radius: 999px; padding: 3px 9px; text-decoration: none; }
+  .log :global(.src a:hover) { border-color: var(--yel); color: var(--yel); }
+  .foot { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-top: 12px; font-size: 12px; color: #B9B39A; }
+  .foot .reset { background: transparent; border: 0; color: var(--yel); font: 600 13px var(--f-display); cursor: pointer; padding: 4px 0; }
+  @keyframes blink { to { visibility: hidden; } }
 </style>
 
 <script>
+  type Turn = { role: "user" | "assistant"; content: string };
+  const MAX_TURNS = 6;
+
   const form = document.getElementById("ask") as HTMLFormElement;
   const input = form.querySelector("input")!;
-  const note = form.querySelector(".note") as HTMLElement;
-  function hold() {
-    note.hidden = false;
-    note.textContent = "The assistant is not switched on yet. Until it is, the projects below cover the same ground.";
+  const sendBtn = form.querySelector(".ask button") as HTMLButtonElement;
+  const log = form.querySelector(".log") as HTMLElement;
+  const chips = form.querySelector(".chips") as HTMLElement;
+  const foot = form.querySelector(".foot") as HTMLElement;
+  let history: Turn[] = [];
+  let busy = false;
+
+  const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+
+  // Minimal, safe Markdown: escape everything, then allow bold, bullets and links to this site, LinkedIn or GitHub.
+  function render(md: string): string {
+    const inline = (s: string) =>
+      esc(s)
+        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, text, href) => {
+          const ok = href.startsWith("/") || /^https:\/\/(www\.)?(linkedin\.com|github\.com)\//.test(href);
+          return ok ? `<a href="${href}"${href.startsWith("/") ? "" : ' target="_blank" rel="noopener"'}>${text}</a>` : text;
+        });
+    const out: string[] = [];
+    let list: string[] = [];
+    const flush = () => { if (list.length) { out.push(`<ul>${list.map((l) => `<li>${l}</li>`).join("")}</ul>`); list = []; } };
+    for (const block of md.split(/\n{2,}/)) {
+      for (const line of block.split("\n")) {
+        const item = line.match(/^\s*[-*]\s+(.*)$/);
+        if (item) list.push(inline(item[1]));
+        else { flush(); if (line.trim()) out.push(`<p>${inline(line)}</p>`); }
+      }
+      flush();
+    }
+    return out.join("");
   }
-  form.addEventListener("submit", (e) => { e.preventDefault(); if (input.value.trim()) hold(); });
-  form.querySelectorAll<HTMLButtonElement>(".chips button").forEach((b) =>
-    b.addEventListener("click", () => { input.value = b.dataset.q ?? ""; hold(); }),
-  );
+
+  function bubble(cls: string, html: string) {
+    const el = document.createElement("div");
+    el.className = cls;
+    el.innerHTML = html;
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+    return el;
+  }
+
+  function setBusy(b: boolean) {
+    busy = b;
+    sendBtn.disabled = b;
+    input.disabled = b || history.filter((t) => t.role === "user").length >= MAX_TURNS;
+  }
+
+  async function ask(q: string) {
+    q = q.trim().slice(0, 500);
+    if (!q || busy) return;
+    log.hidden = false;
+    foot.hidden = false;
+    chips.hidden = true;
+    input.value = "";
+    bubble("q", esc(q));
+    const answer = bubble("a", '<span class="wait"></span>');
+    history.push({ role: "user", content: q });
+    setBusy(true);
+
+    let text = "";
+    let sources: { url: string; title: string }[] = [];
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ messages: history }),
+      });
+      if (!res.ok || !res.body) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || "The assistant isn't available right now. The project pages below cover the same ground.");
+      }
+      const reader = res.body.getReader();
+      const dec = new TextDecoder();
+      let buf = "";
+      for (;;) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buf += dec.decode(value, { stream: true });
+        let i;
+        while ((i = buf.indexOf("\n\n")) !== -1) {
+          const raw = buf.slice(0, i);
+          buf = buf.slice(i + 2);
+          const ev = raw.match(/^event: (\w+)/m)?.[1];
+          const data = raw.match(/^data: (.*)$/m)?.[1];
+          if (!ev || !data) continue;
+          const d = JSON.parse(data);
+          if (ev === "sources") sources = d;
+          if (ev === "delta") { text += d.text; answer.innerHTML = render(text) + '<span class="wait"></span>'; log.scrollTop = log.scrollHeight; }
+          if (ev === "error") throw new Error(d.message);
+        }
+      }
+      answer.innerHTML = render(text);
+      if (sources.length) {
+        const src = document.createElement("div");
+        src.className = "src";
+        src.innerHTML = sources.map((s) => `<a href="${esc(s.url)}">${esc(s.title.split(":")[0])}</a>`).join("");
+        answer.appendChild(src);
+      }
+      history.push({ role: "assistant", content: text.slice(0, 4000) });
+      if (history.filter((t) => t.role === "user").length >= MAX_TURNS) {
+        bubble("a", "<p>That's the limit for one chat. Start a new chat to keep going.</p>");
+      }
+    } catch (e) {
+      history.pop(); // drop the unanswered question so the next request stays valid
+      answer.classList.add("err");
+      answer.innerHTML = `<p>${esc((e as Error).message)}</p>`;
+    } finally {
+      setBusy(false);
+      log.scrollTop = log.scrollHeight;
+      if (!input.disabled) input.focus();
+    }
+  }
+
+  form.addEventListener("submit", (e) => { e.preventDefault(); ask(input.value); });
+  chips.querySelectorAll<HTMLButtonElement>("button").forEach((b) => b.addEventListener("click", () => ask(b.dataset.q ?? "")));
+  foot.querySelector(".reset")!.addEventListener("click", () => {
+    history = [];
+    log.innerHTML = "";
+    log.hidden = true;
+    foot.hidden = true;
+    chips.hidden = false;
+    setBusy(false);
+    input.focus();
+  });
 </script>

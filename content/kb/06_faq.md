@@ -1,7 +1,7 @@
 ---
 title: Recruiter FAQ
 tags: [faq, recruiters, hiring]
-page_url: /about#faq
+page_url: /about
 ---
 
 # Frequently asked questions
@@ -32,7 +32,7 @@ Yes. He is a Canadian citizen.
 
 ## What is Taggart's strongest AI project?
 
-Two stand out. The AI Career Assistant, a retrieval system over 80 anonymized webinar transcripts: Taggart built the prototype, then worked with the school's engineering team to refine its knowledge base until it shipped. It is now fully operational and one of the main support systems for students. Ask Taggart, the assistant on this site, shows the same pattern in public, with tools, guardrails and published evals.
+Two stand out. The AI Career Assistant, a retrieval system over 80 anonymized webinar transcripts: Taggart built the prototype, then worked with the school's engineering team to refine its knowledge base until it shipped. It is now fully operational and one of the main support systems for students. Ask Taggart, the assistant on this site, shows the same retrieval pattern in public, with guardrails and usage limits. An automated evaluation set is being built next.
 
 ## Has Taggart shipped anything to production?
 
@@ -72,7 +72,7 @@ He is studying for an MS in AI Engineering (2026 to 2027, expected), covering AI
 
 ## Can I see Taggart's code?
 
-Yes. His GitHub is github.com/Taggart-Thomson, and the code for this site, including the assistant and its evals, is public there. Some work projects are private because they were built for an employer, so those are shown as case studies.
+Yes. His GitHub is github.com/Taggart-Thomson, and the code for this site, including this assistant, is public there. Some work projects are private because they were built for an employer, so those are shown as case studies.
 
 ## How do I contact Taggart?
 

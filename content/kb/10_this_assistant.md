@@ -2,7 +2,7 @@
 title: How Ask Taggart works
 project_id: ask_taggart
 tags: [this assistant, RAG, retrieval, tools, guardrails, evals, architecture]
-page_url: /projects/ask-taggart
+page_url: /
 ---
 
 # How Ask Taggart works
@@ -13,19 +13,19 @@ Ask Taggart is the AI assistant on this site. Taggart built it to answer questio
 
 ## Where its answers come from
 
-It answers only from a knowledge base of Markdown files that Taggart wrote and reviewed. If the answer isn't in the knowledge base, it says so and suggests emailing him. Each answer shows source chips that link to the page the facts came from.
+It answers only from a knowledge base of Markdown files that Taggart wrote and reviewed. If the answer isn't in the knowledge base, it says so and suggests emailing him. Each answer shows source links to the pages the facts came from.
 
 ## How retrieval works
 
-When the site is built, the knowledge base is split into short passages by heading. For each question, two searches run: a keyword search (BM25) that catches names and numbers, and a meaning search using small text embeddings that catches questions phrased in different words. The scores are combined and the top few passages are sent to the model with the question.
+When the site is built, the knowledge base is split into 122 short passages by heading. For each question, a keyword search (BM25) picks the most relevant passages, using the latest question and the one before it so follow-ups keep their context. A small set of core facts about Taggart is always included. A second, meaning-based search using text embeddings is planned, so questions phrased in different words find the right passages too.
 
 ## The model and cost
 
 Answers come from Claude Haiku, a fast and low-cost Claude model, through the Anthropic API. The fixed instructions are cached to cut cost and response time. Usage is capped by message length limits, a limit on conversation length, a per-visitor hourly limit, a daily cap, and a monthly spend limit.
 
-## Tools
+## What it can show
 
-The assistant can call tools that show cards in the chat: a project card, a demo link with tips on what to try, the resume link, contact details, and this explanation of how it works.
+Answers stream in as they are written, with links to the relevant project pages and source links underneath. Richer cards for projects and demos are planned.
 
 ## Guardrails
 
@@ -33,7 +33,7 @@ It ignores instructions that try to change its role or reveal its instructions. 
 
 ## Fallback
 
-If the API is down or the daily cap is reached, the chat switches to written answers to the most common questions, so the page never looks broken.
+If the API is down or the daily cap is reached, the chat says so plainly and points to the project pages and the email button, so the page never looks broken.
 
 ## Privacy
 
@@ -41,4 +41,4 @@ Conversations are not stored.
 
 ## How it is tested
 
-Taggart wrote an evaluation set of 40 or more test questions. Each case lists facts the answer must include, facts it must not include, and the passages retrieval should find. The suite measures retrieval hit rate, faithfulness (a stronger Claude model checks that every claim appears in the retrieved passages), required and forbidden facts, and whether trick questions are refused correctly. Results, including failures, are published on the evals page.
+Taggart tests it with recruiter-style questions for different roles, questions it should decline, and attempts to make it break its rules. An automated evaluation set is being built next: each case lists facts the answer must include, facts it must not include, and the passages retrieval should find, with a stronger Claude model checking that every claim is supported. Results will be published on the site.

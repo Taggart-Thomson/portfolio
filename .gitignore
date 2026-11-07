@@ -31,3 +31,7 @@ kb_index.json
 .vscode/*
 !.vscode/extensions.json
 *.log
+
+# Wrangler local dev state
+.wrangler/
+.dev.vars*

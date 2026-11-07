@@ -44,6 +44,21 @@ const education = [
   ["Visual Art and Design", "Vancouver Film School", "2011"],
 ];
 
+const courses = [
+  "AI Agents",
+  "LLM-Based Apps",
+  "Prompt Engineering",
+  "AI-Assisted Software Development",
+  "Software Testing and Agentic Software Development",
+  "CI/CD and Software Maintenance",
+  "Performance Monitoring",
+  "Cloud Foundations",
+  "Managing AI Application Development I and II",
+  "Adopting AI in Your Organization",
+  "Relational Databases",
+  "Back Ends",
+];
+
 const skills = [
   ["AI", "Claude and Claude Code (daily), the Anthropic API, RAG, tool-using agents, MCP, Claude Skills, prompt and context design, LLM-based extraction, human-in-the-loop design."],
   ["Building", "Python, FastAPI, Flask, Django, React, TypeScript, SQL, PostgreSQL, SQLite, REST APIs, Git, GitHub Actions, pytest."],
@@ -129,6 +144,13 @@ const skills = [
         <div class="erow"><span class="t">{d}</span><span>{s}</span><span class="mono">{y}</span></div>
       ))}
     </div>
+    <div class="courses">
+      <h3>MS courses completed so far</h3>
+      <p class="sub">24 courses, May to November 2026, each with a proof of completion. Highlights:</p>
+      <ul class="chips">
+        {courses.map((c) => <li class="tag">{c}</li>)}
+      </ul>
+    </div>
   </section>
 
   <section class="wrap block last">
@@ -175,5 +197,9 @@ const skills = [
   .srow { grid-template-columns: 160px minmax(0, 1fr); }
   @media (max-width: 760px) { .erow, .srow { grid-template-columns: minmax(0, 1fr) !important; gap: 4px !important; } }
   .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+  .courses { margin-top: 32px; }
+  .courses .sub { margin: 6px 0 14px; color: var(--muted); }
+  .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips .tag { font-size: 12px; }
   .last { padding-bottom: clamp(48px, 7vw, 88px); }
 </style>

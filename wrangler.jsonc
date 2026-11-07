@@ -1,12 +1,18 @@
-// Cloudflare Workers config. For now the Worker only serves the built static site from ./dist.
-// The chat endpoint (/api/chat) gets added here later.
+// Cloudflare Workers config.
+// Pages come from ./dist (static assets). Requests to /api/* run the Worker script first.
+// The ANTHROPIC_API_KEY secret is set in the Cloudflare dashboard, never in this file.
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "portfolio",
+  "main": "worker/index.ts",
   "compatibility_date": "2026-11-01",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
     "not_found_handling": "404-page",
-    "html_handling": "drop-trailing-slash"
-  }
+    "html_handling": "drop-trailing-slash",
+    "run_worker_first": ["/api/*"]
+  },
+  "workers_dev": false,
+  "preview_urls": false
 }

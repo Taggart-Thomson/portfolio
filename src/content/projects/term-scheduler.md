@@ -1,13 +1,13 @@
 ---
 title: "Term Scheduler"
 kicker: "Operations tool"
-summary: "Places about 500 online students into supervised groups each term, balancing cost, local time and supervisor contracts. A person approves every change."
+summary: "Places online students into supervised groups each term, balancing cost, local time and supervisor contracts. It placed just over 220 students into 24 groups for October 2026."
 order: 2
 where: "Think Tank Training Centre"
 stack: [FastAPI, React, TypeScript, SQLite, Anthropic API, tool use]
 demo: guided
 demoNote: "A guided demo on an invented term of about 40 fictional students across 4 time zone regions and 3 program paths, with 8 fictional supervisors priced in credits, not real money."
-status: "Handed to the school's engineering team."
+status: "Rebuilt by me, now owned by the school's engineering team."
 ---
 
 ## The problem
@@ -40,4 +40,6 @@ Real data was messy. Supervisors typed their names differently on different form
 
 ## Result
 
-For one real term, the scheduler placed all 88 students who needed a group, 83 of them at ideal local times. I handed the rebuilt version to the school's engineering team.
+For the October 2026 term, the scheduler placed just over 220 students into 24 supervisor groups. Checked against a past term, its fit rule agreed with 265 of 266 human-assigned labels.
+
+I rebuilt it myself as a FastAPI and React app, then handed it to the school's engineering team, who own it now.

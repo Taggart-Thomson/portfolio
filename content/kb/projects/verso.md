@@ -25,7 +25,7 @@ Django and SQL, with email-based accounts and PDF and Excel exports. It has 24 p
 
 ## What changed after user review
 
-Taggart reviewed the prototype with its users and redesigned the workflow based on what he learned.
+After reviewing the prototype with the client, Taggart redesigned the workflow.
 
 ## Status
 

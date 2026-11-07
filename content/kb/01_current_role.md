@@ -20,11 +20,11 @@ He works daily with academics and compliance, accounting, marketing and engineer
 
 Taggart owns a contractor budget of about CAD 490,000 per term and is relied on for cost-saving measures.
 
-He built the cost model leadership used to approve a new supervisor group structure. The new structure saves about CAD 119,677 per term, which is about CAD 360,000 a year. His part was the budget ownership and the business case: modeling the options, showing the trade-offs, and giving leadership the numbers to decide.
+He built the cost model leadership used to approve a new supervisor group structure, and then implemented the new structure himself. It saves about CAD 119,677 per term, which is about CAD 360,000 a year. He owned the whole change: modeling the options, showing leadership the trade-offs and numbers to decide, and rolling it out.
 
 ## Running the term build
 
-Taggart runs each term build end to end. For one recent term, he launched 24 supervisor groups on the promised date, with all 22 supervisors confirmed within 48 hours.
+Taggart runs each term build end to end. For the October 2026 term, he launched 24 supervisor groups on the promised date, with all 22 supervisors confirmed within 48 hours. The Term Scheduler placed just over 220 students into those 24 groups.
 
 ## What he has built in this role
 

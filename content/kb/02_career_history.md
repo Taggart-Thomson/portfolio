@@ -10,7 +10,7 @@ page_url: /about#career
 
 Taggart co-founded Try Creative Media Group, a digital media and video production company in Shanghai. He and his co-founder started with 2 founders and no clients, and grew it to 9 people and more than CNY 4 million a year in revenue.
 
-The company served BMW, Cartier, McLaren, Porsche and Jaguar Land Rover.
+The company's clients included BMW, Cartier, McLaren, Porsche, Jaguar Land Rover, Kate Spade, Heineken, Rémy Martin, W Hotels, Yves Saint Laurent, L'Oréal, The EDITION hotels, Dom Pérignon, Diageo, Michelin, Marriott Bonvoy and Roland-Garros, among others.
 
 ## What Try Creative produced
 
@@ -29,3 +29,11 @@ At Red Gate International, Taggart led client coordination on international PR e
 ## Years in China
 
 In total, Taggart lived and worked in China for about 8 years.
+
+## Earlier and side roles (background only)
+
+These are older or short roles. They are not central to his current direction, so mention them only if a visitor asks about his full history, his education-sector background or his time before Red Gate.
+
+- Program Manager, Vancouver Film School (2013 to 2014).
+- Program Manager, the school's Shanghai campus (2014 to 2015).
+- Content Strategist, Alibaba.com (2022).

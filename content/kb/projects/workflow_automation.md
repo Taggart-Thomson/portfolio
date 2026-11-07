@@ -9,7 +9,7 @@ page_url: /about#other-work
 
 ## What Taggart runs
 
-Every term, Taggart runs 9 automated messaging workflows in HubSpot, a marketing automation platform.
+Every term, Taggart rebuilds and launches 9 messaging workflows in HubSpot, a marketing automation platform. Once live, enrollment and sends run automatically.
 
 ## How they work
 

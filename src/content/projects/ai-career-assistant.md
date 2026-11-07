@@ -1,18 +1,18 @@
 ---
 title: "AI Career Assistant"
 kicker: "AI and retrieval"
-summary: "An assistant that answers students' career questions from 80 webinar transcripts. Engineering adopted it as the model for the production feature."
+summary: "An assistant that answers students' career questions from 80 webinar transcripts. I took it from prototype to launch with engineering, and it's now a main support system for students."
 order: 1
 where: "Think Tank Training Centre"
 stack: [Python, Flask, RAG, LLM extraction, TF-IDF, sentence-transformers]
 demo: guided
 demoNote: "A guided walk-through on invented webinar snippets, showing a raw transcript, the cleaned version, the failed rules-based extraction and the LLM extraction side by side."
-status: "Prototype adopted. The production version is live to students."
+status: "Fully operational for students."
 ---
 
 ## What I built
 
-I prototyped an AI career assistant that answers students' and graduates' career questions from the school's recorded webinars. Its knowledge layer is retrieval over 80 anonymized webinar transcripts, cleaned and split into 5,780 searchable passages.
+I built Synapse, an AI career assistant that answers students' and graduates' career questions from the school's recorded webinars, from the first prototype through to launch. Its knowledge layer is retrieval over 80 anonymized webinar transcripts, cleaned and split into 5,780 searchable passages.
 
 ## The pipeline
 
@@ -37,4 +37,4 @@ The raw transcripts and the built knowledge base were never committed to GitHub.
 
 ## Result
 
-The school's engineering team adopted my prototype as the model for the production feature, which is now live to students. The assistant on this site uses the same retrieval pattern.
+After the prototype, I worked alongside the school's engineering team to refine the retrieval knowledge base so it could ship. It's now fully operational and one of the main support systems in place for students. The assistant on this site uses the same retrieval pattern.

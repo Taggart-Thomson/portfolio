@@ -32,11 +32,11 @@ Yes. He is a Canadian citizen.
 
 ## What is Taggart's strongest AI project?
 
-Two stand out. The AI Career Assistant, a retrieval prototype over 80 anonymized webinar transcripts, was adopted by the school's engineering team as the model for a production feature that is now live to students. Ask Taggart, the assistant on this site, shows the same pattern in public, with tools, guardrails and published evals.
+Two stand out. The AI Career Assistant, a retrieval system over 80 anonymized webinar transcripts: Taggart built the prototype, then worked with the school's engineering team to refine its knowledge base until it shipped. It is now fully operational and one of the main support systems for students. Ask Taggart, the assistant on this site, shows the same pattern in public, with tools, guardrails and published evals.
 
 ## Has Taggart shipped anything to production?
 
-Yes, in an operator's way. His AI Career Assistant prototype was adopted by the school's engineering team as the model for the production feature, which is now live to students. He handed his rebuilt Term Scheduler to the same team. His mentor assessment automation and messaging workflows run every term. He has not been the engineer who owns a production codebase.
+Yes, in an operator's way. He built the AI Career Assistant prototype and then worked with the school's engineering team to refine its retrieval knowledge base until it shipped; it is now fully operational for students. He rebuilt the Term Scheduler himself and handed it to the same team, who own it now. His mentor assessment automation and messaging workflows run every term. He has not been the engineer who owns a production codebase.
 
 ## How does Taggart use AI day to day?
 
@@ -56,7 +56,7 @@ Yes. Each term he coordinates 22 to 36 supervisors and 72 mentors for about 500 
 
 ## Does Taggart have experience with clients and executives?
 
-Yes. At Try Creative he presented strategy directly to senior client stakeholders at brands including BMW, Cartier, McLaren, Porsche and Jaguar Land Rover. In his current role he reports to the founder.
+Yes. At Try Creative he presented strategy directly to senior client stakeholders at brands including BMW, Cartier, McLaren, Porsche, Jaguar Land Rover, Heineken and Dom Pérignon. In his current role he reports to the founder.
 
 ## Does Taggart have budget and finance experience?
 
@@ -108,7 +108,7 @@ No. He has a Bachelor of Commerce in Accounting and Finance and an MBA, and he i
 
 ## Has Taggart worked with engineering teams?
 
-Yes. He works daily with his school's engineering team. They adopted his AI Career Assistant prototype as the model for a production feature, and he handed them his rebuilt Term Scheduler.
+Yes. He works daily with his school's engineering team. He worked with them to refine the AI Career Assistant's knowledge base until it shipped, and he handed them the Term Scheduler after rebuilding it himself.
 
 ## How does Taggart make sure AI tools are trustworthy?
 
@@ -116,7 +116,7 @@ He keeps people in control and checks the output. His Term Scheduler only propos
 
 ## What results has Taggart's work produced?
 
-A few with numbers: the Term Scheduler placed all 88 students who needed a group in one real term, 83 at ideal local times. The mentor assessment automation replaced about 20 hours of manual setup each term. The Career Hub's placement tracker showed that 8 in 10 graduates from the past 2 years work in the industry.
+A few with numbers: for the October 2026 term, the Term Scheduler placed just over 220 students into 24 supervisor groups, and the new group structure he modeled and implemented saves about CAD 119,677 per term. The mentor assessment automation replaced about 20 hours of manual setup each term. The Career Hub's placement tracker showed that 8 in 10 graduates from the past 2 years work in the industry.
 
 ## Is Taggart open to contract or consulting work?
 

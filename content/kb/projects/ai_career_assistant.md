@@ -14,7 +14,7 @@ Students and graduates of a global online art school needed career guidance, and
 
 ## What Taggart built
 
-Taggart prototyped an AI career assistant that answers students' career questions from those webinars. Its knowledge layer is retrieval over 80 anonymized webinar transcripts, cleaned and split into 5,780 searchable passages.
+Taggart built an AI career assistant, called Synapse inside the school, that answers students' career questions from those webinars, from the first prototype through to launch. Its knowledge layer is retrieval over 80 anonymized webinar transcripts, cleaned and split into 5,780 searchable passages.
 
 ## The pipeline
 
@@ -38,7 +38,7 @@ The raw transcripts and the built knowledge base were never committed to GitHub.
 
 ## Results
 
-The school's engineering team adopted Taggart's prototype as the model for the production feature, which is now live to students.
+Taggart built the prototype, then worked alongside the school's engineering team to refine the retrieval knowledge base so it could ship. It is now fully operational and one of the main support systems in place for students. His involvement ran from the first prototype through to launch, not just a hand-off.
 
 ## Demo
 

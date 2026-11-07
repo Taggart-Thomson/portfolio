@@ -20,7 +20,7 @@ He is open to remote roles in Canada and the Americas, and to hybrid roles in Ca
 
 ## Languages
 
-English is his native language. His Portuguese is intermediate.
+English is his native language. His Portuguese is intermediate and improving.
 
 ## What he is looking for
 

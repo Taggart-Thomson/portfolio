@@ -37,7 +37,9 @@ FastAPI backend, React and TypeScript frontend, and SQLite. It has 22 automated 
 
 ## Results
 
-For one real term, the scheduler placed all 88 students who needed a group, 83 of them at ideal local times. Taggart handed the rebuilt version to the school's engineering team.
+For the October 2026 term, the scheduler placed just over 220 students into 24 supervisor groups. Checked against a past term, its fit rule agreed with 265 of 266 human-assigned labels.
+
+Taggart rebuilt the scheduler himself as a FastAPI and React app with 22 tests, then handed it to the school's engineering team, who own it now.
 
 ## Demo
 

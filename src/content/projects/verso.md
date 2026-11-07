@@ -28,4 +28,4 @@ Django and SQL, with email-based accounts and PDF and Excel exports. It has 24 p
 
 ## What changed after review
 
-I reviewed the prototype with its users and redesigned the workflow based on what I learned.
+After reviewing the prototype with the client, I redesigned the workflow.

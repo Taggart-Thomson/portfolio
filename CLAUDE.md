@@ -7,7 +7,7 @@ Personal portfolio site for Taggart Thomson with an "Ask Taggart" RAG chat agent
 - Explain each step plainly. Give terminal commands **one line at a time**, each in its own code block.
 - For Python, use Homebrew `python3.12` for virtual environments (system `python3` is 3.14, too new).
 - Work in the phases in BRIEF Section 9. At the end of each phase: what changed, how to run it, what Taggart must do by hand.
-- Ask before guessing. Never invent facts about Taggart. All facts come from BRIEF Section 6; if it isn't there, ask.
+- Ask before guessing. Never invent facts about Taggart. All facts come from BRIEF Section 6 and `private/fact-decisions.md` (which overrides the brief where they differ). Facts found only in the CVs (`private/cv_inventory.md`) need Taggart's OK first. If it isn't there, ask.
 
 ## Anonymization (non-negotiable)
 
@@ -18,7 +18,7 @@ Personal portfolio site for Taggart Thomson with an "Ask Taggart" RAG chat agent
 - No real data. Demo data is synthetic and obviously fake (invented names, `@example.com` emails).
 - No contractor pay rates or rate changes, ever. Cost work is "owning a budget and being relied on for cost-saving measures."
 - Some projects, names and items are excluded completely. The full list is in `private/BRIEF.md` (Section 2) and `private/blocklist.txt`. Course projects are never named; mention the stack only.
-- The career assistant project is called only "AI Career Assistant." Never use its internal name.
+- The career assistant project is titled "AI Career Assistant." Its internal name, Synapse, may be used too (approved 2026-11-07).
 - Aggregate figures on the public resume (BRIEF Section 6) are fine. Anything else, ask first.
 - Private blocklists (all git-ignored), checked by `npm run check:content`, and the build must fail on any hit:
   - `private/blocklist.txt` (hand-written terms) and `private/blocklist-names.txt` (people's names from the rosters): blocked everywhere.

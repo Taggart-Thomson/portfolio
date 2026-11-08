@@ -10,7 +10,7 @@ How it runs: Taggart steers from his phone. Copy edits go to the main session. D
 
 **2. Working demos (demo session)**
 - Approach: guided, hands-on demos rebuilt in the site on invented data (see `docs/DECISIONS.md`, "Demo style"). Not Figma: they run real logic in the page, work on phones, match the site and cost nothing to host.
-- [ ] Taggart points to the real repos or screenshots for reference (UI and behavior only, nothing copied).
+- [x] Taggart pointed to the local project folders (map in `private/demo-sources.md`). Reference only, nothing copied.
 - [ ] Shared tour component (steps, highlight, skip, back, restart).
 - [ ] Build in this order, one at a time, each reviewed live before the next:
   1. Term Scheduler
@@ -19,7 +19,7 @@ How it runs: Taggart steers from his phone. Copy edits go to the main session. D
   4. Verso (now a demo on an invented collection, not a diagram)
   5. Lastro (banner: "Demo with sample data. Not financial advice.")
   6. Career Hub ("Career Hub demo", form stores nothing)
-  7. Driver's Exam Trainer (question source to be decided, see Blockers)
+  7. Driver's Exam Trainer (original questions written from the public CTB, approved 2026-11-08)
 - [ ] When each demo ships, update its KB file (Mentor and Verso KB files still say "diagram only").
 
 ## Blockers

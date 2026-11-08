@@ -26,3 +26,10 @@ Each demo is a guided, Figma-prototype-style walkthrough that runs entirely in t
 - No separate servers, no real data, nothing to keep running.
 - Built as one shared tour component reused across demos.
 - Demo UIs are rebuilt from scratch for the portfolio. Nothing is copied from private repos without Taggart's say-so.
+
+## 2026-11-08
+
+- Project order: AI Career Assistant, Term Scheduler, Mentor Assessment Automation, Verso, Lastro, Career Hub, Driver's Exam Trainer.
+- Mentor Assessment Automation and Verso get hands-on demos on invented data, not diagrams.
+- Demos may use Taggart's local project folders as reference (UI and behavior only, rebuilt from scratch, nothing copied). The map is in `private/demo-sources.md`.
+- Driver's Exam Trainer demo uses original questions written from Brazil's public traffic code (CTB). The purchased study book's questions are never used. The same bank can later replace the one in the live app.

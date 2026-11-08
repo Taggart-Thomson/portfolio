@@ -1,7 +1,12 @@
 ---
 // Hero chat box for Ask Taggart. The assistant speaks about Taggart in the third person, as a guide for visitors.
 // Talks to POST /api/chat (worker/index.ts), which streams server-sent events: sources, delta, done, error.
-const chips = ["What has he built?", "Is he a fit for an AI operations role?", "Is he a software engineer?"];
+// Examples only, not buttons: visitors type their own question, so they see real retrieval, not canned answers.
+const examples = [
+  "What has Taggart shipped that people actually use?",
+  "We need to automate our client onboarding. Any relevant experience?",
+  "How hands-on is Taggart with code?",
+];
 ---
 <form class="slab" id="ask" autocomplete="off">
   <div class="log" aria-live="polite" hidden></div>
@@ -10,8 +15,9 @@ const chips = ["What has he built?", "Is he a fit for an AI operations role?", "
     <input name="q" placeholder="Ask anything about Taggart" maxlength="500" />
     <button type="submit" aria-label="Ask">&#8599;</button>
   </label>
-  <div class="chips">
-    {chips.map((c) => <button type="button" data-q={c}>{c}</button>)}
+  <div class="examples">
+    <span class="lbl">Ask in your own words, for example</span>
+    <ul>{examples.map((c) => <li>{c}</li>)}</ul>
   </div>
   <div class="foot" hidden>
     <span>AI answers from Taggart's reviewed notes. Can make mistakes.</span>
@@ -27,9 +33,12 @@ const chips = ["What has he built?", "Is he a fit for an AI operations role?", "
   .ask input::placeholder { color: #B9B39A; }
   .ask button { border: 0; background: var(--yel); color: var(--ink); width: 44px; height: 44px; flex: none; border-radius: 50%; font-size: 20px; font-weight: 800; cursor: pointer; }
   .ask button:disabled { opacity: .5; cursor: default; }
-  .chips { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
-  .chips button { background: transparent; border: 1.5px solid #FFF3A0; color: var(--paper); border-radius: 999px; padding: 7px 13px; font: 400 14px var(--f-display); cursor: pointer; }
-  .chips button:hover { background: var(--yel); color: var(--ink); border-color: var(--yel); }
+  .examples { margin-top: 14px; color: #B9B39A; }
+  .examples .lbl { font: 500 11px/1.4 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; }
+  .examples ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 5px; }
+  .examples li { font-size: 15px; line-height: 1.4; color: var(--paper); opacity: .78; }
+  .examples li::before { content: "\201C"; color: var(--yel); margin-right: 2px; }
+  .examples li::after { content: "\201D"; color: var(--yel); margin-left: 1px; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   .log { max-height: min(56vh, 520px); overflow-y: auto; margin: -2px -4px 14px; padding: 0 4px; display: flex; flex-direction: column; gap: 14px; overscroll-behavior: contain; }
@@ -58,7 +67,7 @@ const chips = ["What has he built?", "Is he a fit for an AI operations role?", "
   const input = form.querySelector("input")!;
   const sendBtn = form.querySelector(".ask button") as HTMLButtonElement;
   const log = form.querySelector(".log") as HTMLElement;
-  const chips = form.querySelector(".chips") as HTMLElement;
+  const examples = form.querySelector(".examples") as HTMLElement;
   const foot = form.querySelector(".foot") as HTMLElement;
   let history: Turn[] = [];
   let busy = false;
@@ -108,7 +117,7 @@ const chips = ["What has he built?", "Is he a fit for an AI operations role?", "
     if (!q || busy) return;
     log.hidden = false;
     foot.hidden = false;
-    chips.hidden = true;
+    examples.hidden = true;
     input.value = "";
     bubble("q", esc(q));
     const answer = bubble("a", '<span class="wait"></span>');
@@ -170,13 +179,12 @@ const chips = ["What has he built?", "Is he a fit for an AI operations role?", "
   }
 
   form.addEventListener("submit", (e) => { e.preventDefault(); ask(input.value); });
-  chips.querySelectorAll<HTMLButtonElement>("button").forEach((b) => b.addEventListener("click", () => ask(b.dataset.q ?? "")));
   foot.querySelector(".reset")!.addEventListener("click", () => {
     history = [];
     log.innerHTML = "";
     log.hidden = true;
     foot.hidden = true;
-    chips.hidden = false;
+    examples.hidden = false;
     setBusy(false);
     input.focus();
   });

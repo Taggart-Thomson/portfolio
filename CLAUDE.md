@@ -18,7 +18,7 @@ Personal portfolio site for Taggart Thomson with an "Ask Taggart" RAG chat agent
 - No real data. Demo data is synthetic and obviously fake (invented names, `@example.com` emails).
 - No contractor pay rates or rate changes, ever. Cost work is "owning a budget and being relied on for cost-saving measures."
 - Some projects, names and items are excluded completely. The full list is in `private/BRIEF.md` (Section 2) and `private/blocklist.txt`. Course projects are never named; mention the stack only.
-- The career assistant project is titled "AI Career Assistant." Its internal name, Synapse, may be used too (approved 2026-11-07).
+- The assistant project is titled "Virtual Program Assistant" (renamed 2026-11-08; it started as the AI Career Assistant). Its internal name, Synapse, may be used too.
 - Aggregate figures on the public resume (BRIEF Section 6) are fine. Anything else, ask first.
 - Private blocklists (all git-ignored), checked by `npm run check:content`, and the build must fail on any hit:
   - `private/blocklist.txt` (hand-written terms) and `private/blocklist-names.txt` (people's names from the rosters): blocked everywhere.

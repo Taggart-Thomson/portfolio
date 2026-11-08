@@ -32,11 +32,11 @@ Yes. He is a Canadian citizen.
 
 ## What is Taggart's strongest AI project?
 
-Two stand out. The AI Career Assistant, a retrieval system over 80 anonymized webinar transcripts: Taggart built the prototype, then worked with the school's engineering team to refine its knowledge base until it shipped. It is now fully operational and one of the main support systems for students. Ask Taggart, the assistant on this site, shows the same retrieval pattern in public, with guardrails and usage limits. An automated evaluation set is being built next.
+Two stand out. The Virtual Program Assistant, a retrieval system over the school's curriculum, course content, program material and recorded webinars that supports students from their first week to after graduation: Taggart built the prototype, then worked with the school's engineering team to refine its knowledge base until it shipped. It is now live for all students and graduates and one of the main support systems at the school. Ask Taggart, the assistant on this site, shows the same retrieval pattern in public, with guardrails and usage limits. An automated evaluation set is being built next.
 
 ## Has Taggart shipped anything to production?
 
-Yes, in an operator's way. He built the AI Career Assistant prototype and then worked with the school's engineering team to refine its retrieval knowledge base until it shipped; it is now fully operational for students. He rebuilt the Term Scheduler himself and handed it to the same team, who own it now. His mentor assessment automation and messaging workflows run every term. He has not been the engineer who owns a production codebase.
+Yes, in an operator's way. He built the Virtual Program Assistant prototype and then worked with the school's engineering team to refine its retrieval knowledge base until it shipped; it is now live for all students and graduates. He rebuilt the Term Scheduler himself and handed it to the same team, who own it now. His mentor assessment automation and messaging workflows run every term. He has not been the engineer who owns a production codebase.
 
 ## How does Taggart use AI day to day?
 
@@ -44,7 +44,7 @@ He uses Claude Code daily to build his tools. He designs AI tools with a human i
 
 ## What has failed, and what did Taggart learn?
 
-His first Q&A extractor for the AI Career Assistant was rules-based and failed on real webinar transcripts. Students typed questions into the Zoom Q&A box, and the host read and answered them inside one speaking turn, sometimes word for word, sometimes paraphrased, sometimes only implied. Rules couldn't separate question from answer, so he switched to an LLM-based extractor. The lesson: know which problems need rules and which need a model.
+His first Q&A extractor for the Virtual Program Assistant was rules-based and failed on real webinar transcripts. Students typed questions into the Zoom Q&A box, and the host read and answered them inside one speaking turn, sometimes word for word, sometimes paraphrased, sometimes only implied. Rules couldn't separate question from answer, so he switched to an LLM-based extractor. The lesson: know which problems need rules and which need a model.
 
 ## Why is Taggart moving from operations to AI?
 
@@ -108,7 +108,7 @@ No. He has a Bachelor of Commerce in Accounting and Finance and an MBA, and he i
 
 ## Has Taggart worked with engineering teams?
 
-Yes. He works daily with his school's engineering team. He worked with them to refine the AI Career Assistant's knowledge base until it shipped, and he handed them the Term Scheduler after rebuilding it himself.
+Yes. He works daily with his school's engineering team. He worked with them to refine the Virtual Program Assistant's knowledge base until it shipped, and he handed them the Term Scheduler after rebuilding it himself.
 
 ## How does Taggart make sure AI tools are trustworthy?
 

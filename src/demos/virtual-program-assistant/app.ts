@@ -1,4 +1,4 @@
-// AI Career Assistant demo: the transcript pipeline on invented webinar snippets.
+// Virtual Program Assistant demo: how a webinar recording becomes part of the assistant's knowledge.
 import { SNIPPETS } from "./data";
 import type { Verdict } from "./data";
 import { cleanVtt, rulesExtract } from "./pipeline";
@@ -10,7 +10,7 @@ const STAGES: [Stage, string][] = [["raw", "1 Raw VTT"], ["clean", "2 Cleaned"],
 const VERDICT: Record<Verdict, string> = { usable: "Usable", split: "Wrong split", rhetorical: "Not a real question" };
 
 let S = { snip: SNIPPETS[0].id, stage: "raw" as Stage };
-const root = document.querySelector<HTMLElement>("#demo-ai-career-assistant [data-demo-app]")!;
+const root = document.querySelector<HTMLElement>("#demo-virtual-program-assistant [data-demo-app]")!;
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 const snip = () => SNIPPETS.find((s) => s.id === S.snip)!;
 
@@ -140,8 +140,8 @@ render();
 const set = (snipId: string, stage: Stage) => () => { S = { snip: snipId, stage }; render(); };
 const steps: TourStep[] = [
   {
-    title: "Why invented snippets",
-    body: `The real assistant answers students' career questions from 80 recorded webinars. Those can't be shown, so this demo runs the same pipeline on ${SNIPPETS.length} short, fictional snippets about reels, portfolios and art tests.`,
+    title: "From recording to knowledge",
+    body: `The assistant answers from the school's curriculum, program guides and recorded webinars. This demo shows how a recording becomes something it can answer from. The real webinars can't be shown, so it runs the same pipeline on ${SNIPPETS.length} short, fictional snippets about reels, portfolios and art tests.`,
     before: set("reel", "raw"),
   },
   {
@@ -228,12 +228,12 @@ const steps: TourStep[] = [
   },
   {
     title: "The lesson",
-    body: "Know which problems need rules and which need a model. Click through the other snippets to see paraphrased questions, two questions at once, and questions asked in the chat.",
+    body: "Know which problems need rules and which need a model. The clean pairs are what the assistant searches when a student asks. Click through the other snippets to see paraphrased questions, two questions at once, and questions asked in the chat.",
     before: set("recruiters", "compare"),
   },
 ];
 
-mountTour(document.getElementById("demo-ai-career-assistant")!, {
+mountTour(document.getElementById("demo-virtual-program-assistant")!, {
   steps,
   reset: () => { S = { snip: SNIPPETS[0].id, stage: "raw" }; render(); },
   intro: `About 2 minutes, ${steps.length} steps.`,

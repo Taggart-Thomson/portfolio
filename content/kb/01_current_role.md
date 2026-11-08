@@ -30,7 +30,7 @@ Taggart runs each term build end to end. For the October 2026 term, he launched 
 
 In this role he has built:
 
-- an AI career assistant for students and graduates (see the AI Career Assistant project),
+- a virtual program assistant for students and graduates, which started as a career assistant (see the Virtual Program Assistant project),
 - a cost-aware term scheduler for placing students into supervised groups (see Term Scheduler),
 - a career hub and placement tracker (see Career Hub),
 - a mentor assessment automation in Google Apps Script (see Mentor Assessment Automation),

@@ -5,7 +5,7 @@ import AskBox from "../components/AskBox.astro";
 import { demoLabel } from "../lib/labels";
 
 const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
-const words = ["schedulers.", "AI assistants.", "automations.", "this agent.", "career tools."];
+const words = ["AI agents.", "automations.", "internal tools.", "AI assistants.", "dashboards.", "career tools.", "this agent."];
 ---
 <Base bare>
   <section class="hero">
@@ -63,14 +63,14 @@ const words = ["schedulers.", "AI assistants.", "automations.", "this agent.", "
       </div>
       <div>
         <div class="mono">Before</div>
-        <p>Co-founder of Try Creative Media Group in Shanghai. We grew from 2 founders and no clients to 9 people.</p>
+        <p>Co-founded Try Creative Media Group in Shanghai and grew it from no clients to more than CNY 4 million a year, producing campaigns for BMW, Cartier, McLaren, Porsche and Jaguar Land Rover.</p>
       </div>
       <div>
         <div class="mono">Studying</div>
-        <p>MS in AI Engineering, expected 2027. Coursework in AI-assisted development, testing, CI/CD and cloud.</p>
+        <p>MS in AI Engineering, expected 2027. Coursework so far in AI agents, LLM apps, prompt engineering, AI-assisted development, testing, CI/CD, monitoring, cloud, databases and back ends.</p>
       </div>
     </div>
-    <div class="wrap"><a class="btn" href="/about">More about me</a></div>
+    <div class="wrap"><a class="btn more" href="/about">More about me <span aria-hidden="true">&rarr;</span></a></div>
   </section>
 </Base>
 
@@ -106,6 +106,8 @@ const words = ["schedulers.", "AI assistants.", "automations.", "this agent.", "
   .now .mono { color: var(--yel); }
   .now p { font-size: 20px; margin: 10px 0 0; }
   .now .btn { background: var(--yel); color: var(--ink); }
+  .now .btn.more { font-size: clamp(22px, 3vw, 32px); padding: .7em 1.4em; gap: .4em; }
+  @media (max-width: 640px) { .now .btn.more { display: flex; justify-content: center; } }
 </style>
 
 <script>

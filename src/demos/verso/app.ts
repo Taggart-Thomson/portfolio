@@ -145,14 +145,16 @@ const A = {
   },
 };
 
-// ---------- views ----------
+// ---------- views (styled after the real collection tool) ----------
 
 function header() {
-  const tabs: [Tab, string][] = [["collection", "Collection"], ["assistant", "Assistant"], ["invoices", `<span class="vs-lg">Contracts and invoices</span><span class="vs-sm">Invoices</span>`]];
-  return `<div class="vs-head">
-    <div><div class="vs-brand">Verso</div><div class="vs-k">Invented organization &middot; 3 entities &middot; ${WORKS.length} works</div></div>
-    <nav class="vs-tabs" role="tablist" aria-label="Verso sections">${tabs.map(([id, l]) => `<button type="button" role="tab" aria-selected="${S.tab === id}" data-a="tab" data-v="${id}" data-tour="tab-${id}">${l}</button>`).join("")}</nav>
-  </div>`;
+  const tabs: [Tab, string][] = [["collection", "Collection"], ["assistant", "Ask Verso"], ["invoices", "Contracts and invoices"]];
+  return `<header class="vx-top">
+    <div class="vx-brand">Collection Search<span>Lantern &middot; demo</span></div>
+    <span class="vx-pill">invented data</span>
+    <div class="vx-grow"></div>
+    <nav class="vx-nav" role="tablist" aria-label="Verso sections">${tabs.map(([id, l]) => `<button type="button" role="tab" class="vx-tbtn" aria-selected="${S.tab === id}" data-a="tab" data-v="${id}" data-tour="tab-${id}">${l}</button>`).join("")}</nav>
+  </header>`;
 }
 
 function filtered() {
@@ -162,77 +164,98 @@ function filtered() {
 
 function gridHtml() {
   const list = filtered();
-  return `<div class="vs-count">${list.length} of ${WORKS.length} works</div>
-    <div class="vs-grid">${list.map((w) => `<button type="button" class="vs-work ${S.work === w.id ? "on" : ""}" data-a="work" data-v="${w.id}" data-tour="work-${w.id}">
-      <span class="vs-swatch m-${w.medium}" aria-hidden="true"></span>
-      <span class="vs-wt">${esc(w.title)}</span>
-      <span class="vs-wa">${esc(w.artist)}, ${w.year}</span>
-      <span class="vs-wm">${esc(w.material)}</span>
-      <span class="vs-wl">${esc(w.location)}${w.status !== "available" ? ` &middot; ${w.status}` : ""}</span>
-    </button>`).join("") || `<p class="vs-muted">No works match.</p>`}</div>`;
+  return `<div class="vx-bar"><span class="vx-count"><b>${list.length}</b> of ${WORKS.length} works</span></div>
+    <div class="vx-grid">${list.map((w) => `<button type="button" class="vx-card ${S.work === w.id ? "on" : ""}" data-a="work" data-v="${w.id}" data-tour="work-${w.id}">
+      <span class="vx-thumb"><span class="vx-none">No image in demo</span></span>
+      <span class="vx-cbody">
+        <span class="vx-cart">${esc(w.artist)}</span>
+        <span class="vx-ctit">${esc(w.title)}, ${w.year}</span>
+        <span class="vx-dims">${w.h} &times; ${w.w} &times; ${w.d} cm</span>
+        <span class="vx-cmeta"><span class="vx-tag">${w.medium}</span>${w.outdoor ? `<span class="vx-tag out">outdoor</span>` : ""}${w.status !== "available" ? `<span class="vx-tag ns">${w.status}</span>` : ""}</span>
+      </span>
+    </button>`).join("") || `<div class="vx-empty"><b>No works match.</b>Clear a filter to see more.</div>`}</div>`;
 }
 
 function detail(w: Work) {
-  return `<section class="vs-card vs-detail" data-tour="detail">
-    <div class="vs-card-h"><div><div class="vs-k">${w.id} &middot; ${cap(w.medium)}</div><h3>${esc(w.title)}</h3><div class="vs-muted">${esc(w.artist)}, ${w.year}</div></div>
-      <button type="button" class="vs-btn ghost sm" data-a="work" data-v="">Close</button></div>
-    <dl class="vs-dl">
-      <div><dt>Material</dt><dd>${esc(w.material)}</dd></div>
-      <div><dt>Size (h, w, d)</dt><dd>${w.h} &times; ${w.w} &times; ${w.d} cm${w.kg ? `, ${w.kg} kg` : ""}</dd></div>
-      <div><dt>Location</dt><dd>${esc(w.location)}</dd></div>
-      <div><dt>Status</dt><dd>${cap(w.status)}</dd></div>
-      <div><dt>Outdoors</dt><dd>${w.outdoor ? "Weather durable" : "Indoor only"}</dd></div>
-    </dl>
-    <div class="vs-lock" data-tour="lock">
-      <div class="vs-k">Sensitive &middot; kept in the app, never sent to the assistant</div>
-      <dl class="vs-dl">
-        <div><dt>Cost</dt><dd>${money(w.cost)}</dd></div>
-        <div><dt>Insured value</dt><dd>${money(w.insured)}</dd></div>
-        <div><dt>Owner</dt><dd>${esc(w.owner)}</dd></div>
+  return `<div class="vx-sheet">
+    <button type="button" class="vx-sheet-bg" data-a="work" data-v="" aria-label="Close record"></button>
+    <section class="vx-sheet-card" data-tour="detail">
+      <button type="button" class="vx-sheet-x" data-a="work" data-v="" aria-label="Close">&times;</button>
+      <h2>${esc(w.title)}</h2>
+      <div class="vx-who">${esc(w.artist)}, ${w.year} &middot; <span class="vx-mono">${w.id}</span></div>
+      <dl class="vx-kv">
+        <dt>Medium</dt><dd>${cap(w.medium)}</dd>
+        <dt>Material</dt><dd>${esc(w.material)}</dd>
+        <dt>Dimensions</dt><dd class="vx-mono">${w.h} &times; ${w.w} &times; ${w.d} cm${w.kg ? `, ${w.kg} kg` : ""}</dd>
+        <dt>Location</dt><dd>${esc(w.location)}</dd>
+        <dt>Status</dt><dd>${cap(w.status)}</dd>
+        <dt>Outdoors</dt><dd>${w.outdoor ? "Weather durable" : "Indoor only"}</dd>
       </dl>
-    </div>
-  </section>`;
+      <div class="vx-conf" data-tour="lock">
+        <h4>Confidential &middot; never sent to the assistant</h4>
+        <dl class="vx-kv">
+          <dt>Cost</dt><dd class="vx-mono">${money(w.cost)}</dd>
+          <dt>Insured value</dt><dd class="vx-mono">${money(w.insured)}</dd>
+          <dt>Owner</dt><dd>${esc(w.owner)}</dd>
+        </dl>
+      </div>
+    </section>
+  </div>`;
 }
 
 function collectionView() {
-  return `${S.work ? detail(work(S.work)) : ""}
-    <section class="vs-card" data-tour="collection">
-      <div class="vs-card-h">
-        <input class="vs-input" type="search" placeholder="Search title, artist, material, location" value="${esc(S.query)}" data-in="query" aria-label="Search the collection" />
-        <div class="vs-chips">${(["all", ...MEDIA] as (Medium | "all")[]).map((m) => `<button type="button" class="vs-chip" aria-pressed="${S.medium === m}" data-a="medium" data-v="${m}">${m === "all" ? "All" : cap(m)}</button>`).join("")}</div>
+  const counts = (m: Medium) => WORKS.filter((w) => w.medium === m).length;
+  return `<div class="vx-wrap">
+    <aside class="vx-rail">
+      <div class="vx-search"><input type="search" placeholder="Search or describe what you need" value="${esc(S.query)}" data-in="query" aria-label="Search the collection" autocomplete="off" /></div>
+      <p class="vx-hint">Try <b>bronze</b>, <b>warehouse</b>, or an artist name.</p>
+      <div class="vx-fs"><h3>Medium</h3>
+        <button type="button" class="vx-opt" aria-pressed="${S.medium === "all"}" data-a="medium" data-v="all"><i></i>All<span class="n">${WORKS.length}</span></button>
+        ${MEDIA.map((m) => `<button type="button" class="vx-opt" aria-pressed="${S.medium === m}" data-a="medium" data-v="${m}"><i></i>${cap(m)}<span class="n">${counts(m)}</span></button>`).join("")}
       </div>
-      <div data-grid>${gridHtml()}</div>
-    </section>`;
+    </aside>
+    <main class="vx-main" data-tour="collection"><div data-grid>${gridHtml()}</div></main>
+    ${S.work ? detail(work(S.work)) : ""}
+  </div>`;
 }
 
 function assistantView() {
   const left = QUESTIONS.filter((q) => !S.asked.has(q.id));
-  return `<section class="vs-card vs-chat" data-tour="chat">
-    <div class="vs-card-h"><h3>Collection assistant</h3></div>
-    <p class="vs-muted vs-top">Sample questions. In the real app a language model chooses the search. Here each question maps to a fixed search, and the search runs live on the invented records.</p>
-    <div class="vs-msgs">${S.answers.map((a, i) => `
-      <div class="vs-msg you">${esc(a.q)}</div>
-      <div class="vs-msg bot" data-tour="answer-${i}">
-        <div>${esc(a.text)}</div>
-        ${a.call ? `<div class="vs-trace" data-tour="trace-${i}"><span class="vs-k">Searched</span> <code>${esc(a.call)}</code> &middot; ${a.matches} ${a.call.startsWith("collection_stats") ? "works counted" : `record${a.matches === 1 ? "" : "s"} matched`}</div>` : ""}
-        ${a.payload ? `<button type="button" class="vs-link" data-a="payload" data-v="${i}" aria-expanded="${a.open}" data-tour="payload-btn-${i}">${a.open ? "Hide" : "See"} what the model received</button>` : ""}
-        ${a.open ? `<div class="vs-payload" data-tour="payload-${i}"><div class="vs-k">Sent to the model. Never included: ${HIDDEN_FIELDS.join(", ")}.</div><pre>${esc(JSON.stringify(a.payload!.slice(0, 2), null, 2))}${a.payload!.length > 2 ? `\n... and ${a.payload!.length - 2} more records with the same fields` : ""}</pre></div>` : ""}
-      </div>`).join("")}</div>
-    <div class="vs-chips">${left.map((q) => `<button type="button" class="vs-chip ask" data-a="ask" data-v="${q.id}" data-tour="ask-${q.id}">${esc(q.q)}</button>`).join("") || `<span class="vs-muted">No more sample questions.</span>`}</div>
-  </section>`;
+  return `<div class="vx-assist">
+    ${S.answers.length ? "" : `<div class="vx-land"><div class="vx-land-brand">Collection Search &middot; Lantern</div><h1>Hello, I'm Verso.<br>What can I help you find today?</h1>
+      <p class="vx-sub">Ask about the collection in plain words. Verso searches the records and shows what fits.</p></div>`}
+    <section class="vx-cpanel" data-tour="chat">
+      <div class="vx-chead"><b>Verso</b><small>collection assistant</small><span class="vx-grow"></span><small>sample questions</small></div>
+      <div class="vx-clog">
+        ${S.answers.length ? "" : `<p class="vx-hintx">In the real app a language model chooses the search. Here each question maps to a fixed search, and the search runs live on the invented records.</p>`}
+        ${S.answers.map((a, i) => `
+          <div class="vx-msg you">${esc(a.q)}</div>
+          <div class="vx-msg bot" data-tour="answer-${i}">
+            <div>${esc(a.text)}</div>
+            ${a.call ? `<div class="vx-trace" data-tour="trace-${i}"><span class="vx-q">${esc(a.call)}</span> &middot; ${a.matches} ${a.call.startsWith("collection_stats") ? "works counted" : `record${a.matches === 1 ? "" : "s"} matched`}</div>` : ""}
+            ${a.payload ? `<button type="button" class="vx-link" data-a="payload" data-v="${i}" aria-expanded="${a.open}" data-tour="payload-btn-${i}">${a.open ? "Hide" : "See"} what the model received</button>` : ""}
+            ${a.open ? `<div class="vx-payload" data-tour="payload-${i}"><div class="vx-payload-h">Sent to the model. Never included: ${HIDDEN_FIELDS.join(", ")}.</div><pre>${esc(JSON.stringify(a.payload!.slice(0, 2), null, 2))}${a.payload!.length > 2 ? `\n... and ${a.payload!.length - 2} more records with the same fields` : ""}</pre></div>` : ""}
+          </div>`).join("")}
+      </div>
+      <div class="vx-eg">${left.map((q) => `<button type="button" data-a="ask" data-v="${q.id}" data-tour="ask-${q.id}">${esc(q.q)}</button>`).join("") || `<span class="vx-hintx">No more sample questions.</span>`}</div>
+    </section>
+  </div>`;
 }
+
+const STATUS_CLS: Record<InvStatus, string> = { submitted: "warn", returned: "stop", approved: "ok", paid: "" };
 
 function invCard(inv: Invoice, actions: string) {
   const c = contract(inv.contract);
-  return `<article class="vs-inv st-${inv.status}" data-tour="inv-${inv.id}">
-    <div class="vs-inv-h">
-      <div><b>${inv.id}</b> &middot; ${esc(person(c.contractor).name)}<div class="vs-muted">${esc(entity(c.entity).name)} &middot; ${c.id}</div></div>
-      <div class="vs-amt">${money(inv.amount)}<span class="vs-st">${STATUS_LABEL[inv.status]}</span></div>
+  return `<article class="vx-inv" data-tour="inv-${inv.id}">
+    <div class="vx-inv-h">
+      <div><b class="vx-mono">${inv.id}</b> <span class="vx-tag ${STATUS_CLS[inv.status]}">${STATUS_LABEL[inv.status]}</span>
+        <div class="vx-inv-sub">${esc(person(c.contractor).name)} &middot; ${esc(entity(c.entity).name)} &middot; <span class="vx-mono">${c.id}</span></div></div>
+      <div class="vx-amt vx-mono">${money(inv.amount)}</div>
     </div>
     <div>${esc(inv.desc)}</div>
-    ${inv.status === "returned" && inv.note ? `<div class="vs-return">Returned: ${esc(inv.note)}</div>` : ""}
-    <ol class="vs-hist" data-tour="hist-${inv.id}">${inv.history.map((h) => `<li><span>${h.at}</span> ${esc(h.who)}: ${esc(h.what)}</li>`).join("")}</ol>
-    ${actions}
+    ${inv.status === "returned" && inv.note ? `<div class="vx-errbox">Returned: ${esc(inv.note)}</div>` : ""}
+    <div class="vx-log" data-tour="hist-${inv.id}">${inv.history.map((h) => `<div class="vx-logrow"><span>${h.at}</span><b>${esc(h.who)}</b><span>${esc(h.what)}</span></div>`).join("")}</div>
+    ${actions ? `<div class="vx-mact">${actions}</div>` : ""}
   </article>`;
 }
 
@@ -243,9 +266,8 @@ function roleBar() {
     ["accounting", "Accounting", "Pat Ellery"],
     ["admin", "Admin", "Sol Ferreira"],
   ];
-  return `<div class="vs-roles" data-tour="roles">
-    <span class="vs-k">View as</span>
-    ${roles.map(([r, l, n]) => `<button type="button" class="vs-role" aria-pressed="${S.role === r}" data-a="role" data-v="${r}" data-tour="role-${r}"><b>${l}</b><span>${esc(n)}</span></button>`).join("")}
+  return `<div class="vx-mtabs" data-tour="roles"><span class="vx-mtabs-k">Signed in as</span>
+    ${roles.map(([r, l, n]) => `<button type="button" role="tab" aria-selected="${S.role === r}" data-a="role" data-v="${r}" data-tour="role-${r}">${l} <span>${esc(n)}</span></button>`).join("")}
   </div>`;
 }
 
@@ -253,25 +275,26 @@ function contractorView() {
   const mine = CONTRACTS.filter((c) => c.contractor === "jun");
   const invs = S.invoices.filter((i) => contract(i.contract).contractor === "jun");
   const sent = S.invoices.some((i) => i.id === NEW_ID);
-  return `<div class="vs-two">
-    <section class="vs-card" data-tour="contracts">
-      <div class="vs-card-h"><h3>My contracts</h3></div>
-      <ul class="vs-list">${mine.map((c) => `<li><b>${c.id}</b> ${esc(c.title)}<div class="vs-muted">${esc(entity(c.entity).name)} &middot; ends ${c.ends}</div></li>`).join("")}</ul>
+  return `<div class="vx-two">
+    <section class="vx-panel" data-tour="contracts">
+      <h4>My contracts</h4>
+      <table class="vx-table"><thead><tr><th>Contract</th><th>Entity</th><th>Ends</th></tr></thead>
+      <tbody>${mine.map((c) => `<tr><td><b class="vx-mono">${c.id}</b><div class="vx-inv-sub">${esc(c.title)}</div></td><td>${esc(entity(c.entity).name)}</td><td class="vx-num">${c.ends}</td></tr>`).join("")}</tbody></table>
     </section>
-    <section class="vs-card" data-tour="form">
-      <div class="vs-card-h"><h3>New invoice</h3></div>
-      ${sent ? `<p>Invoice ${NEW_ID} is with the reviewer. You'll see its progress below.</p>` : `
-      <form class="vs-form" data-form="invoice">
+    <section class="vx-panel" data-tour="form">
+      <h4>New invoice</h4>
+      ${sent ? `<div class="vx-okbox">Invoice ${NEW_ID} is with the reviewer. You'll see its progress below.</div>` : `
+      <form class="vx-form" data-form="invoice">
         <label>Contract<select name="contract">${mine.map((c) => `<option value="${c.id}" ${c.id === DRAFT.contract ? "selected" : ""}>${c.id}, ${esc(entity(c.entity).name)}</option>`).join("")}</select></label>
         <label>Description<input name="desc" value="${esc(DRAFT.desc)}" /></label>
         <label>Amount<input name="amount" type="number" min="1" step="1" value="${DRAFT.amount}" /></label>
-        <p class="vs-muted">The contract decides which entity reviews and pays it.</p>
-        <button type="submit" class="vs-btn" data-tour="submit">Submit invoice</button>
+        <p class="vx-hintx">The contract decides which entity reviews and pays it.</p>
+        <div class="vx-mact"><button type="submit" class="vx-pbtn" data-tour="submit">Submit invoice</button></div>
       </form>`}
     </section>
   </div>
-  <h3 class="vs-sec">My invoices</h3>
-  <div class="vs-invs">${invs.map((i) => invCard(i, i.status === "returned" ? `<button type="button" class="vs-btn sm" data-a="resubmit" data-v="${i.id}">Correct and resubmit</button>` : "")).join("")}</div>`;
+  <h3 class="vx-sec">My invoices</h3>
+  <div class="vx-invs">${invs.map((i) => invCard(i, i.status === "returned" ? `<button type="button" class="vx-pbtn" data-a="resubmit" data-v="${i.id}">Correct and resubmit</button>` : "")).join("")}</div>`;
 }
 
 function reviewerView() {
@@ -279,40 +302,39 @@ function reviewerView() {
   const mine = S.invoices.filter((i) => contract(i.contract).entity === e.id);
   const queue = mine.filter((i) => i.status === "submitted");
   const done = mine.filter((i) => i.status !== "submitted");
-  return `<div class="vs-chips vs-ents"><span class="vs-k">Entity</span>${ENTITIES.map((x) => `<button type="button" class="vs-chip" aria-pressed="${x.id === e.id}" data-a="entity" data-v="${x.id}">${esc(x.name)}</button>`).join("")}</div>
-    <h3 class="vs-sec">Waiting for ${esc(person(e.reviewer).name)}, ${esc(e.name)}</h3>
-    <div class="vs-invs" data-tour="queue">${queue.map((i) => invCard(i, S.returning === i.id
-      ? `<form class="vs-form row" data-form="return" data-v="${i.id}"><input name="reason" placeholder="Reason, sent to the contractor" required /><button type="submit" class="vs-btn sm">Return</button><button type="button" class="vs-btn ghost sm" data-a="cancel-return">Cancel</button></form>`
-      : `<div class="vs-row"><button type="button" class="vs-btn sm" data-a="approve" data-v="${i.id}" data-tour="approve-${i.id}">Approve</button><button type="button" class="vs-btn ghost sm" data-a="return" data-v="${i.id}">Return with reason</button></div>`)).join("") || `<p class="vs-muted">Nothing waiting. Reviewers only see their own entity's invoices.</p>`}</div>
-    ${done.length ? `<h3 class="vs-sec">Decided</h3><div class="vs-invs">${done.map((i) => invCard(i, "")).join("")}</div>` : ""}`;
+  return `<div class="vx-ents"><span class="vx-mtabs-k">Entity</span>${ENTITIES.map((x) => `<button type="button" class="vx-chip" aria-pressed="${x.id === e.id}" data-a="entity" data-v="${x.id}">${esc(x.name)}</button>`).join("")}</div>
+    <h3 class="vx-sec">Waiting for ${esc(person(e.reviewer).name)}, ${esc(e.name)}</h3>
+    <div class="vx-invs" data-tour="queue">${queue.map((i) => invCard(i, S.returning === i.id
+      ? `<form class="vx-form row" data-form="return" data-v="${i.id}"><input name="reason" placeholder="Reason, sent to the contractor" required /><button type="submit" class="vx-dbtn">Return</button><button type="button" class="vx-sbtn" data-a="cancel-return">Cancel</button></form>`
+      : `<button type="button" class="vx-pbtn" data-a="approve" data-v="${i.id}" data-tour="approve-${i.id}">Approve</button><button type="button" class="vx-dbtn" data-a="return" data-v="${i.id}">Return with reason</button>`)).join("") || `<div class="vx-empty"><b>Nothing waiting.</b>Reviewers only see their own entity's invoices.</div>`}</div>
+    ${done.length ? `<h3 class="vx-sec">Decided</h3><div class="vx-invs">${done.map((i) => invCard(i, "")).join("")}</div>` : ""}`;
 }
 
 function accountingView() {
   const due = S.invoices.filter((i) => i.status === "approved");
   const paid = S.invoices.filter((i) => i.status === "paid");
-  return `<h3 class="vs-sec">Approved, waiting for payment</h3>
-    <div class="vs-invs" data-tour="due">${due.map((i) => invCard(i, `<button type="button" class="vs-btn sm" data-a="pay" data-v="${i.id}" data-tour="pay-${i.id}">Record payment</button>`)).join("") || `<p class="vs-muted">Nothing to pay.</p>`}</div>
-    <h3 class="vs-sec">Paid</h3><div class="vs-invs">${paid.map((i) => invCard(i, "")).join("")}</div>
-    <div class="vs-row"><button type="button" class="vs-btn ghost sm" data-a="export" data-v="Excel">Export to Excel</button><button type="button" class="vs-btn ghost sm" data-a="export" data-v="PDF">Export PDF</button></div>`;
+  return `<div class="vx-bar"><h3 class="vx-sec">Approved, waiting for payment</h3><span class="vx-grow"></span><button type="button" class="vx-sbtn" data-a="export" data-v="Excel">Export to Excel</button><button type="button" class="vx-sbtn" data-a="export" data-v="PDF">Export PDF</button></div>
+    <div class="vx-invs" data-tour="due">${due.map((i) => invCard(i, `<button type="button" class="vx-pbtn" data-a="pay" data-v="${i.id}" data-tour="pay-${i.id}">Record payment</button>`)).join("") || `<div class="vx-empty"><b>Nothing to pay.</b></div>`}</div>
+    <h3 class="vx-sec">Paid</h3><div class="vx-invs">${paid.map((i) => invCard(i, "")).join("")}</div>`;
 }
 
 function adminView() {
-  return `<section class="vs-card" data-tour="accounts">
-    <div class="vs-card-h"><h3>Accounts</h3><span class="vs-muted">Email-based sign-in. Admins add people, set roles and switch access off.</span></div>
-    <div class="vs-scroll"><table class="vs-t"><thead><tr><th>Name</th><th>Role</th><th>Entity</th><th>Email</th><th>Access</th></tr></thead>
-    <tbody>${S.people.map((p) => `<tr><td>${esc(p.name)}</td><td>${cap(p.role)}</td><td>${p.entity ? esc(entity(p.entity).name) : "All"}</td><td>${p.email}</td>
-      <td><button type="button" class="vs-chip" aria-pressed="${p.active}" data-a="access" data-v="${p.id}" ${p.id === "sol" ? "disabled" : ""}>${p.active ? "Active" : "Off"}</button></td></tr>`).join("")}</tbody></table></div>
+  return `<section class="vx-panel" data-tour="accounts">
+    <h4>Accounts</h4><p class="vx-hintx">Email-based sign-in. Admins add people, set roles and switch access off.</p>
+    <div class="vx-scroll"><table class="vx-table"><thead><tr><th>Name</th><th>Role</th><th>Entity</th><th>Email</th><th>Access</th></tr></thead>
+    <tbody>${S.people.map((p) => `<tr><td>${esc(p.name)}</td><td>${cap(p.role)}</td><td>${p.entity ? esc(entity(p.entity).name) : "All"}</td><td class="vx-num">${p.email}</td>
+      <td><button type="button" class="vx-star" aria-pressed="${p.active}" data-a="access" data-v="${p.id}" ${p.id === "sol" ? "disabled" : ""}>${p.active ? "Active" : "Off"}</button></td></tr>`).join("")}</tbody></table></div>
   </section>`;
 }
 
 function invoicesView() {
   const body = { contractor: contractorView, reviewer: reviewerView, accounting: accountingView, admin: adminView }[S.role]();
-  return `${roleBar()}${body}`;
+  return `<div class="vx-pages">${roleBar()}<div class="vx-pbody">${body}</div></div>`;
 }
 
 function render() {
   const view = { collection: collectionView, assistant: assistantView, invoices: invoicesView }[S.tab]();
-  root.innerHTML = `<div class="vs-app">${header()}${S.toast ? `<div class="vs-toast" role="status">${esc(S.toast)}</div>` : ""}<div class="vs-body">${view}</div></div>`;
+  root.innerHTML = `<div class="vx-app">${header()}${S.toast ? `<div class="vx-toast" role="status">${esc(S.toast)}</div>` : ""}${view}</div>`;
   S.toast = "";
 }
 

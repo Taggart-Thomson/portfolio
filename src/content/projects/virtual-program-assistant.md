@@ -6,8 +6,9 @@ order: 1
 where: "Think Tank Training Centre"
 stack: [Python, Flask, RAG, LLM extraction, TF-IDF, sentence-transformers]
 demo: guided
-demoNote: "A guided demo of how a webinar recording becomes part of the assistant's knowledge, on 8 invented snippets: the raw transcript, the cleaned version, the failed rules-based extraction and the LLM extraction side by side. The cleaner and the rules run live in your browser; the LLM extraction is precomputed."
+demoNote: "A guided demo on invented content: ask the assistant a question beside an invented course page, then go behind the scenes to see how a webinar recording becomes something it can answer from, on 8 invented snippets: the raw transcript, the cleaned version, the failed rules-based extraction and the LLM extraction side by side. The cleaner and the rules run live in your browser; the LLM extraction is precomputed."
 status: "Live for all students and graduates."
+preview: "/previews/virtual-program-assistant.webp"
 ---
 
 ## What it is

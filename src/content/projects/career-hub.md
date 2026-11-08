@@ -6,7 +6,7 @@ order: 6
 where: "Think Tank Training Centre"
 stack: [Python, GitHub Actions, Flask, SQLite, Greenhouse and Lever APIs]
 demo: guided
-demoNote: "A generic guided demo with invented job listings, the studio filter, the checklist and the placement form. The form shows a success message but stores nothing."
+demoNote: "A generic Career Hub demo with invented studios and job listings: see how the jobs feed is filtered, filter the studio list, use the checklist and try the placement form. The form shows a success message but stores nothing."
 status: "The school's first central place for job search support."
 ---
 

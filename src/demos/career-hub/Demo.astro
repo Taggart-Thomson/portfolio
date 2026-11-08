@@ -1,0 +1,68 @@
+---
+import DemoFrame from "../../components/tour/DemoFrame.astro";
+---
+<DemoFrame id="demo-career-hub" label="Career Hub demo · invented data · stores nothing">
+  <noscript><p style="padding:20px">This demo needs JavaScript.</p></noscript>
+</DemoFrame>
+
+<script>
+  import "./app";
+</script>
+
+<style is:global>
+  .ch-app { padding: clamp(12px, 2.5vw, 22px); font-size: 15px; line-height: 1.45; }
+  .ch-app h3 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -.01em; }
+  .ch-app h4 { margin: 14px 0 6px; font-size: 15px; font-weight: 800; }
+  .ch-app p { margin: 8px 0 0; }
+  .ch-k { font: 500 11px/1.3 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
+  .ch-muted { color: var(--muted); font-size: 13px; }
+  .ch-hero { background: var(--ink); color: var(--paper); border-radius: 14px; padding: 18px; margin-bottom: 12px; background-image: radial-gradient(circle at 90% 20%, rgba(255,213,0,.35) 0 60px, transparent 61px), radial-gradient(circle at 75% 80%, rgba(255,213,0,.18) 0 40px, transparent 41px); }
+  .ch-hero h2 { margin: 6px 0 0; font-size: clamp(22px, 3vw, 30px); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; max-width: 22ch; }
+  .ch-tabs { display: flex; gap: 4px; background: var(--ink); padding: 4px; border-radius: 999px; margin-bottom: 14px; overflow-x: auto; }
+  .ch-tabs button { flex: 1 0 auto; font: 600 14px/1 var(--f-display); border: 0; background: transparent; color: var(--paper); padding: 9px 12px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+  .ch-tabs button[aria-selected="true"] { background: var(--yel); color: var(--ink); }
+  @media (max-width: 640px) { .ch-tabs { display: grid; grid-template-columns: 1fr 1fr; border-radius: 16px; } .ch-tabs button { font-size: 13px; padding: 9px 6px; } }
+  .ch-body { display: grid; gap: 14px; }
+  .ch-card { background: #fff; border: 2px solid var(--ink); border-radius: 14px; padding: 14px; min-width: 0; }
+  .ch-card-h { display: flex; justify-content: space-between; align-items: center; gap: 8px 12px; flex-wrap: wrap; margin-bottom: 10px; }
+  .ch-btn { font: 600 15px/1 var(--f-display); background: var(--ink); color: var(--yel); border: 0; border-radius: 999px; padding: 11px 18px; cursor: pointer; justify-self: start; }
+  .ch-btn.sm { font-size: 13px; padding: 8px 12px; }
+  .ch-btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+  .ch-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .ch-chip { font: 500 13px/1.25 var(--f-display); border: 1.5px solid var(--ink); background: transparent; color: var(--ink); border-radius: 999px; padding: 6px 11px; cursor: pointer; }
+  .ch-chip[aria-pressed="true"] { background: var(--ink); color: var(--yel); }
+  .ch-tag { font: 500 11px/1 var(--f-mono); text-transform: uppercase; border: 1.5px solid var(--ink); border-radius: 999px; padding: 4px 7px; }
+
+  .ch-boards { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+  .ch-board { background: var(--paper); border-radius: 10px; padding: 10px; display: grid; gap: 2px; }
+  .ch-board span { font-size: 13px; color: var(--muted); }
+  .ch-jobs { list-style: none; margin: 0; padding: 0; }
+  .ch-jobs li { display: flex; justify-content: space-between; gap: 6px 14px; flex-wrap: wrap; padding: 10px 0; border-bottom: 1px solid rgba(18,18,18,.12); }
+  .ch-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .ch-pipe { background: var(--paper); border: 2px dashed var(--ink); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+  .ch-pipe p { margin: 0 0 8px; }
+  .ch-raw { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 14px; }
+  .ch-raw li { display: flex; justify-content: space-between; gap: 4px 12px; flex-wrap: wrap; padding: 5px 8px; border-radius: 6px; }
+  .ch-raw li.keep { background: #fff; }
+  .ch-raw li.drop { opacity: .6; text-decoration: line-through; text-decoration-thickness: 1px; }
+  .ch-why { font: 500 11px/1.6 var(--f-mono); text-transform: uppercase; letter-spacing: .03em; text-decoration: none; display: inline-block; }
+
+  .ch-filters { display: grid; gap: 8px; margin-bottom: 12px; }
+  .ch-check { display: flex; gap: 8px; align-items: flex-start; cursor: pointer; }
+  .ch-check input { width: 18px; height: 18px; margin: 1px 0 0; accent-color: #121212; flex: none; }
+  .ch-studios { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
+  .ch-studio { display: flex; gap: 10px; align-items: center; border: 1.5px solid var(--ink); border-radius: 10px; padding: 10px; }
+  .ch-mark { width: 34px; height: 34px; border-radius: 8px; flex: none; border: 1.5px solid var(--ink); }
+  .d-games { background: conic-gradient(var(--yel) 0 25%, var(--ink) 0 50%, var(--yel) 0 75%, var(--ink) 0); }
+  .d-film { background: repeating-linear-gradient(90deg, var(--ink) 0 4px, var(--yel) 4px 8px); }
+  .d-animation { background: radial-gradient(circle, var(--yel) 0 8px, var(--ink) 9px); }
+
+  .ch-progress { font: 500 12px/1 var(--f-mono); background: var(--yel); border: 1.5px solid var(--ink); border-radius: 999px; padding: 6px 10px; }
+  .ch-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .ch-form { display: grid; gap: 10px; max-width: 520px; }
+  .ch-form > label:not(.ch-check) { display: grid; gap: 4px; font: 500 11px/1.3 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; }
+  .ch-form input:not([type="checkbox"]) { font: 15px/1.2 var(--f-display); text-transform: none; letter-spacing: 0; border: 2px solid var(--ink); border-radius: 10px; padding: 9px 10px; background: var(--paper); color: var(--ink); min-width: 0; }
+  .ch-done { background: var(--yel); }
+  .ch-note { background: #fff; border-radius: 10px; padding: 10px 12px; font-size: 14px; }
+  .ch-done .ch-btn { margin-top: 10px; }
+</style>

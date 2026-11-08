@@ -30,4 +30,6 @@ The placement tracker gave leadership a KPI it never had: 8 in 10 graduates from
 
 ## Demo
 
-The case study page has a generic guided demo with invented job listings, the studio filter, the checklist and the placement form. The form shows a success message but stores nothing. It uses neutral placeholder visuals, not the school's branding.
+The case study page has a generic, hands-on "Career Hub demo" that runs in the visitor's browser on invented data, with no school name and no original artwork, banners, fonts or logos (neutral placeholder shapes only). A step-by-step tour walks through it, with skip, back and restart, and visitors can explore freely.
+
+It shows job board tips; a jobs feed of invented postings from 10 invented studios, with a "How this feed is built" view where 12 sample postings go through the same kind of filter as the real one (keep art roles, drop senior, lead and principal roles and non-art roles), leaving 7; a studio list filterable by discipline, region and whether the studio hires juniors; a resume and cover letter checklist with progress; and the "Landed a job? Tell us" placement form, prefilled with made-up details. Submitting shows a success message, but the demo sends and stores nothing.

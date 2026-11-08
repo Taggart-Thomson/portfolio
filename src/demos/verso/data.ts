@@ -26,7 +26,7 @@ export const CONTRACTS: Contract[] = [
   { id: "C-114", contractor: "jun", entity: "inc", title: "Installation crew, spring program", ends: "2027-03-31" },
   { id: "C-121", contractor: "jun", entity: "soc", title: "Gallery rehang, community wing", ends: "2026-12-15" },
   { id: "C-108", contractor: "bea", entity: "trust", title: "Conservation checks, outdoor works", ends: "2027-06-30" },
-  { id: "C-117", contractor: "theo", entity: "trust", title: "Catalogue photography", ends: "2027-01-31" },
+  { id: "C-117", contractor: "theo", entity: "trust", title: "Catalog photography", ends: "2027-01-31" },
   { id: "C-119", contractor: "theo", entity: "soc", title: "Event photography", ends: "2026-12-31" },
 ];
 
@@ -37,7 +37,7 @@ export interface Invoice { id: string; contract: string; desc: string; amount: n
 export const INVOICES: Invoice[] = [
   { id: "INV-2041", contract: "C-108", desc: "October condition reports, 6 outdoor works", amount: 1450, date: "2026-10-31", status: "paid",
     history: [{ at: "Oct 31", who: "Bea Moreno", what: "Submitted" }, { at: "Nov 2", who: "Wendy Arkwright", what: "Approved" }, { at: "Nov 5", who: "Pat Ellery", what: "Payment recorded, ref EFT-5531" }] },
-  { id: "INV-2046", contract: "C-117", desc: "Catalogue photography, 18 works", amount: 2160, date: "2026-11-03", status: "approved",
+  { id: "INV-2046", contract: "C-117", desc: "Catalog photography, 18 works", amount: 2160, date: "2026-11-03", status: "approved",
     history: [{ at: "Nov 3", who: "Theo Lund", what: "Submitted" }, { at: "Nov 4", who: "Wendy Arkwright", what: "Approved" }] },
   { id: "INV-2047", contract: "C-119", desc: "Fall opening night photography", amount: 600, date: "2026-11-04", status: "submitted",
     history: [{ at: "Nov 4", who: "Theo Lund", what: "Submitted" }] },

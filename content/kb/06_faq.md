@@ -76,7 +76,7 @@ Yes. His GitHub is github.com/Taggart-Thomson, and the code for this site, inclu
 
 ## Are the project demos the real tools?
 
-No. The guided demos on the project pages are for display and demo purposes only. They are rebuilt for the portfolio and run in the visitor's browser, and the real tools work differently in the environments where they are deployed. All data in the demos, including names and numbers, is fictional. Each demo shows a visible note saying so.
+No. The guided demos on the project pages are for display and demo purposes only. They are rebuilt for the portfolio and run in the visitor's browser, and the real tools work differently in the environments where they are deployed. All data in the demos, including names and numbers, is fictional. Two details: the Lastro demo uses real B3 ticker symbols only as examples, with invented holdings and prices, and the Driver's Exam Trainer demo uses original practice questions written from Brazil's public traffic code. Each demo shows a visible note saying so.
 
 ## How do I contact Taggart?
 

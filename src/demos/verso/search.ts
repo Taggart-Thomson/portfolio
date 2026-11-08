@@ -1,5 +1,5 @@
 // The assistant's tools, rebuilt from scratch for the demo. The model never sees the
-// catalogue: it asks for a search, the app runs it, and only safe fields go back.
+// catalog: it asks for a search, the app runs it, and only safe fields go back.
 
 import { WORKS } from "./data";
 import type { Medium, Work } from "./data";

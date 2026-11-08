@@ -31,7 +31,7 @@ The app holds the organization's 257-work collection, imported from a confidenti
 
 On top of it sits an AI assistant the team can ask in plain language ("what do we have in bronze?", "which works are over two meters tall?"). I designed it so it can't make things up:
 
-- **The model never sees the catalogue.** It gets a search tool. It decides what to look up, the app runs the query, and only the matching records go back to it. Every figure it quotes comes straight from the data.
+- **The model never sees the catalog.** It gets a search tool. It decides what to look up, the app runs the query, and only the matching records go back to it. Every figure it quotes comes straight from the data.
 - **Sensitive fields never leave the app.** Cost, insured value and owner are never sent to the model. Asked for a valuation, it says it doesn't have access.
 - **It shows its work.** Under each answer, a short line shows the search it ran and how many records matched, so anyone can check it.
 

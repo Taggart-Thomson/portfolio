@@ -1,8 +1,9 @@
 ---
 // Shared frame for every project demo: a tour bar on top and the demo app below.
 // The demo's own script renders into [data-demo-app] and calls mountTour() from ./tour.ts.
-interface Props { id: string; label: string }
-const { id, label } = Astro.props;
+interface Props { id: string; label: string; notice?: string }
+const DEFAULT_NOTICE = "This demo is for display purposes. The real tool works differently in the environment where it's deployed. All data here, including names and numbers, is fictional.";
+const { id, label, notice = DEFAULT_NOTICE } = Astro.props;
 ---
 <div class="demo-frame" id={id} data-demo-frame data-tour="intro">
   <div class="demo-chrome mono">
@@ -11,7 +12,7 @@ const { id, label } = Astro.props;
   </div>
   <div class="demo-notice" role="note">
     <span class="demo-notice-tag">Demo only</span>
-    <p>This demo is for display purposes. The real tool works differently in the environment where it's deployed. All data here, including names and numbers, is fictional.</p>
+    <p>{notice}</p>
   </div>
   <div class="tour-bar" data-tour-bar></div>
   <div class="demo-stage" data-demo-stage>

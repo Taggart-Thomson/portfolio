@@ -29,7 +29,7 @@ export const SECTIONS: Section[] = [
     en: "Road rules and overtaking",
     words: [["exceto", "except"], ["salvo", "unless, except"], ["não poderá", "may not"], ["pela direita", "from the right"], ["preferência", "right of way"]],
     rules: [
-      { en: "Overtake on the left, except when the vehicle ahead is signalling a left turn.", pt: "pela esquerda ... exceto" },
+      { en: "Overtake on the left, except when the vehicle ahead is signaling a left turn.", pt: "pela esquerda ... exceto" },
       { en: "On a two-way, single-carriageway road, no overtaking on bridges, viaducts, level crossings, pedestrian crossings, or blind bends and hills, unless signs allow it.", pt: "não poderá ... exceto quando houver sinalização" },
       { en: "At an unsigned crossing with no highway or roundabout involved, the vehicle coming from your right has right of way.", pt: "o que vier pela direita" },
       { en: "Pedestrians on a crosswalk have priority, except where there are traffic lights.", pt: "prioridade ... exceto nos locais com sinalização semafórica" },
@@ -45,9 +45,9 @@ export const SECTIONS: Section[] = [
       {
         pt: "A ultrapassagem de outro veículo em movimento deve ser feita pela esquerda, exceto quando:",
         en: "Overtaking a moving vehicle must be done on the left, except when:",
-        opts: [["o veículo à frente estiver sinalizando que vai entrar à esquerda", "the vehicle ahead is signalling a left turn"], ["a rodovia for de pista dupla", "the highway is dual carriageway"], ["for à noite", "it is night"], ["não houver tráfego em sentido contrário", "there is no oncoming traffic"]],
+        opts: [["o veículo à frente estiver sinalizando que vai entrar à esquerda", "the vehicle ahead is signaling a left turn"], ["a rodovia for de pista dupla", "the highway is dual carriageway"], ["for à noite", "it is night"], ["não houver tráfego em sentido contrário", "there is no oncoming traffic"]],
         answer: 0, signal: "exceto",
-        why: "The only exception in the rule is a vehicle signalling that it will turn left.", art: "Art. 29, IX",
+        why: "The only exception in the rule is a vehicle signaling that it will turn left.", art: "Art. 29, IX",
       },
       {
         pt: "Em via de duplo sentido e pista única, o condutor não poderá ultrapassar, salvo sinalização que permita:",

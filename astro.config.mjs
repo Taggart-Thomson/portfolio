@@ -5,6 +5,8 @@ export default defineConfig({
   site: "https://taggartthomson.ca",
   trailingSlash: "never",
   build: { format: "file" },
+  // Straight quotes everywhere, so Markdown pages match the front matter, .astro pages and demos.
+  markdown: { smartypants: false },
   // Renamed 2026-11-08. Keeps any shared links working.
   redirects: { "/projects/ai-career-assistant": "/projects/virtual-program-assistant" },
 });

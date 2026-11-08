@@ -403,7 +403,7 @@ const steps: TourStep[] = [
   {
     target: '[data-tour="ask-tall"]',
     title: "Ask a question",
-    body: "The model never sees the catalogue. It asks the app for a search, and only the matching records come back.",
+    body: "The model never sees the catalog. It asks the app for a search, and only the matching records come back.",
     before: view(() => A.tab("assistant")),
     act: view(() => A.ask("tall")),
     advanceOnClick: true,

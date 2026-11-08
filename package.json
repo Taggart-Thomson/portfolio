@@ -5,7 +5,7 @@
   "scripts": {
     "check:content": "node scripts/check-content.mjs",
     "dev": "astro dev",
-    "build": "npm run check:content && node scripts/build-kb-index.mjs && astro build",
+    "build": "npm run check:content && node scripts/build-kb-index.mjs && astro build && node scripts/check-dist.mjs",
     "preview": "astro preview",
     "deploy": "npm run build && wrangler deploy",
     "kb": "node scripts/build-kb-index.mjs"

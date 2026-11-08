@@ -17,7 +17,7 @@ The organization works through 3 legal entities. Verso handles contractor contra
 
 ## The collection and the AI assistant
 
-The collection holds 257 works, imported from a confidential spreadsheet. An AI assistant answers the team's questions about it in plain language. Taggart designed it so it can't make things up: the model never sees the catalogue, only a search tool. It decides what to look up, the app runs the query, and only the matching records go back to it, so every figure it quotes comes straight from the data. Cost, insured value and owner are never sent to the model; asked for a valuation, it says it doesn't have access. Under each answer, a short line shows the search it ran and how many records matched, so anyone can check its work.
+The collection holds 257 works, imported from a confidential spreadsheet. An AI assistant answers the team's questions about it in plain language. Taggart designed it so it can't make things up: the model never sees the catalog, only a search tool. It decides what to look up, the app runs the query, and only the matching records go back to it, so every figure it quotes comes straight from the data. Cost, insured value and owner are never sent to the model; asked for a valuation, it says it doesn't have access. Under each answer, a short line shows the search it ran and how many records matched, so anyone can check its work.
 
 ## How it is built
 

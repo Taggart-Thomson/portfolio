@@ -12,7 +12,7 @@ Taggart starts by looking at how the work really happens, then finds where time 
 
 ## Comfortable being wrong early
 
-He is comfortable being wrong early. The AI Career Assistant's first approach, a rules-based extractor, failed on real transcripts. Fixing it taught him more than the demo did. The LLM-based version is the one he then took to launch with the school's engineering team.
+He is comfortable being wrong early. The Virtual Program Assistant's first approach, a rules-based extractor, failed on real transcripts. Fixing it taught him more than the demo did. The LLM-based version is the one he then took to launch with the school's engineering team.
 
 ## Learning project first
 

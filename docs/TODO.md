@@ -5,7 +5,7 @@
 How it runs: Taggart steers from his phone. Copy edits go to the main session. Demos are built in a separate demo session on its own branch, merged and pushed only when Taggart says so. The live site stays `noindex`, so he reviews everything on taggartthomson.ca.
 
 **1. Copy pass (main session)**
-- [x] Reorder projects: AI Career Assistant, Term Scheduler, Mentor Assessment Automation, Verso, Lastro, Career Hub, Driver's Exam Trainer.
+- [x] Reorder projects: Virtual Program Assistant, Term Scheduler, Mentor Assessment Automation, Verso, Lastro, Career Hub, Driver's Exam Trainer.
 - [ ] Taggart reads the live site and sends edits in plain words, page by page. Each batch is applied, checked (`npm run check:content`, build) and pushed on "push it".
 
 **2. Working demos (demo session)**
@@ -14,7 +14,7 @@ How it runs: Taggart steers from his phone. Copy edits go to the main session. D
 - [ ] Shared tour component (steps, highlight, skip, back, restart).
 - [ ] Build in this order, one at a time, each reviewed live before the next:
   1. Term Scheduler
-  2. AI Career Assistant (raw transcript, cleaned, rules extraction failing, LLM extraction)
+  2. Virtual Program Assistant (raw transcript, cleaned, rules extraction failing, LLM extraction)
   3. Mentor Assessment Automation (now a demo, not a diagram)
   4. Verso (now a demo on an invented collection, not a diagram)
   5. Lastro (banner: "Demo with sample data. Not financial advice.")

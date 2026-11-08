@@ -8,15 +8,15 @@ page_url: /about
 
 ## What roles is Taggart looking for?
 
-Forward-deployed and AI deployment roles, AI enablement and AI operations roles, AI product roles, and AI transformation consulting. His next milestone is AI Systems Engineer, and his long-term goal is a Chief AI Officer track.
+Forward-deployed engineering and AI deployment, AI solutions and solutions engineering, AI enablement and AI operations, AI workflow and business process automation, AI agents and internal tools, GTM engineering and revenue systems, AI product and technical product roles, AI implementation and program leadership, AI transformation consulting, and business systems and operations leadership. His next milestone is AI Systems Engineer, and his long-term goal is a Chief AI Officer track.
 
 ## Is Taggart an engineer?
 
-Not by title. He has never held a software engineering title, and he is not a specialist software engineer. He builds working tools in Python, TypeScript and SQL with AI assistance, writes automated tests, and hands his prototypes to engineering teams. He is learning production engineering through his MS in AI Engineering.
+He builds working software himself: tools in Python, TypeScript and SQL, built with AI assistance and covered by automated tests. He rebuilt the Term Scheduler (FastAPI and React, 22 tests) and handed it to the school's engineering team, who own it now. His titles have been in operations leadership and as a co-founder rather than engineering, and he is deepening production engineering through his MS in AI Engineering.
 
 ## Has Taggart been a product manager?
 
-No, he has not held a product manager title. He has done much of the work around it: finding the problem worth solving, building the first version, testing it with real users, and working with engineers on the production version. As a co-founder he also owned pricing, delivery and client strategy.
+He has done the core work of the role, though his titles have been in operations and as a co-founder: finding the problem worth solving, building the first version, testing it with real users, and working with engineers on the production version. As a co-founder he also owned pricing, delivery and client strategy.
 
 ## Where is Taggart based, and will he relocate?
 

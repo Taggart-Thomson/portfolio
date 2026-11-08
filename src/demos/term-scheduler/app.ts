@@ -46,7 +46,7 @@ const root = document.querySelector<HTMLElement>("#demo-term-scheduler [data-dem
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 const stu = (id: string) => S.students.find((s) => s.id === id)!;
 const sup = (id: string) => E.supById(SUPERVISORS, id);
-const chip = (f: E.Fit) => `<span class="fit fit-${f}">${E.FIT_LABEL[f]}</span>`;
+const chip = (f: E.Fit) => `<span class="ps-fit ps-fit-${f}">${E.FIT_LABEL[f]}</span>`;
 const cr = (n: number) => `${n} credits`;
 const signed = (n: number) => (n > 0 ? `+${n}` : n < 0 ? `${n}` : "no change");
 const juno = () => stu(LATE_CHANGE.studentId);
@@ -114,55 +114,62 @@ const A = {
   },
 };
 
-// ---------- views ----------
+// ---------- views (styled after the real app's admin-portal look) ----------
+
+const PATH_TABS = (key: "rpath" | "kpath", current: string, withAll: boolean) => {
+  const ids: string[] = withAll ? ["all", ...PATH_IDS] : [...PATH_IDS];
+  return `<div class="ps-tabbar">${ids.map((p) => {
+    const n = p === "all" ? S.students.length : S.students.filter((s) => s.path === p).length;
+    return `<button type="button" class="ps-tab ${current === p ? "sel" : ""} ${p === "all" ? "all" : ""}" aria-pressed="${current === p}" data-a="${key}" data-v="${p}">${p === "all" ? "All" : PATHS[p as PathId].name}<span class="ps-tab-n">${n}</span></button>`;
+  }).join("")}</div>`;
+};
 
 function header() {
   const t = S.groups ? E.termTotals(S.groups, S.students, SUPERVISORS) : null;
-  const tabs: [Tab, string][] = [["roster", "Roster"], ["build", "Build"], ["groups", "Groups"], ["assistant", "Assistant"]];
+  const tabs: [Tab, string][] = [["build", "Build"], ["groups", "Groups"], ["roster", "Roster"], ["assistant", "Assistant"]];
   return `
-    <div class="ts-head">
-      <div>
-        <div class="ts-k">Demo term &middot; invented data</div>
-        <div class="ts-stats" data-tour="stats">
-          <span><b>${STUDENTS.length}</b> students</span>
-          <span><b>${SUPERVISORS.length}</b> supervisors</span>
-          ${t ? `<span><b>${t.groups}</b> groups</span><span><b>${t.cost}</b> credits</span><span>${t.counts.ideal} ideal, ${t.counts.ok} OK, ${t.counts.bad} not OK</span>` : `<span>No draft yet</span>`}
-        </div>
-      </div>
-      <nav class="ts-tabs" role="tablist" aria-label="Scheduler views">
-        ${tabs.map(([id, label]) => `<button type="button" role="tab" aria-selected="${S.tab === id}" data-a="tab" data-v="${id}" data-tour="tab-${id}">${label}${id === "assistant" && S.lateApplied && !S.asked.juno ? ` <i class="ts-dot" aria-label="new"></i>` : ""}</button>`).join("")}
+    <header class="ps-top">
+      <div class="ps-brand"><span>Term Scheduler</span><span class="ps-brand-sub">Online &middot; demo</span></div>
+      <nav class="ps-nav" role="tablist" aria-label="Scheduler views">
+        ${tabs.map(([id, label]) => `<button type="button" role="tab" class="ps-nav-link ${S.tab === id ? "active" : ""}" aria-selected="${S.tab === id}" data-a="tab" data-v="${id}" data-tour="tab-${id}">${label}${id === "assistant" && S.lateApplied && !S.asked.juno ? `<i class="ps-dot" aria-label="new"></i>` : ""}</button>`).join("")}
       </nav>
+      <div class="ps-spacer"></div>
+      <select class="ps-input ps-term" aria-label="Term"><option>Demo term (invented)</option></select>
+    </header>
+    <div class="ps-stats" data-tour="stats">
+      <div class="ps-stat"><div class="n">${STUDENTS.length}</div><div class="l">students</div></div>
+      <div class="ps-stat"><div class="n">${SUPERVISORS.length}</div><div class="l">supervisors</div></div>
+      <div class="ps-stat"><div class="n">${t ? t.groups : "&ndash;"}</div><div class="l">groups</div></div>
+      <div class="ps-stat"><div class="n">${t ? t.cost : "&ndash;"}</div><div class="l">credits this term</div></div>
+      <div class="ps-stat"><div class="n">${t ? `${t.counts.ideal}<small> / ${t.counts.ok} / ${t.counts.bad}</small>` : "&ndash;"}</div><div class="l">${t ? "ideal / OK / not OK" : "no draft yet"}</div></div>
     </div>`;
 }
 
 function rosterView() {
   const list = S.students.filter((s) => S.rosterPath === "all" || s.path === S.rosterPath);
-  const filters: (PathId | "all")[] = ["all", ...PATH_IDS];
   return `
-    <div class="ts-grid2">
-      <section class="ts-card" data-tour="students">
-        <div class="ts-card-h">
-          <h3>Students</h3>
-          <div class="ts-chips">${filters.map((f) => `<button type="button" class="ts-chip" aria-pressed="${S.rosterPath === f}" data-a="rpath" data-v="${f}">${f === "all" ? "All" : PATHS[f].name}</button>`).join("")}</div>
-        </div>
-        <div class="ts-scroll"><table class="ts-t">
-          <thead><tr><th>Student</th><th>Path</th><th>Region</th><th>Ahead of PT</th></tr></thead>
-          <tbody>${list.map((s) => `<tr><td>${esc(s.name)}</td><td>${PATHS[s.path].name}</td><td>${REGIONS[s.region].name}</td><td class="mono-n">+${REGIONS[s.region].offset}h</td></tr>`).join("")}</tbody>
+    <div class="ps-page-head"><h1>Roster</h1><span class="ps-muted ps-tiny">Session times are stored in Pacific time (PT) and converted to each student's local time.</span></div>
+    <div class="ps-grid2">
+      <section class="ps-card" data-tour="students">
+        <div class="ps-card-h"><h2>Students</h2></div>
+        ${PATH_TABS("rpath", S.rosterPath, true)}
+        <div class="ps-scroll"><table class="ps-table">
+          <thead><tr><th>Student</th><th>Path</th><th>Region</th><th class="num">Ahead of PT</th></tr></thead>
+          <tbody>${list.map((s) => `<tr><td class="ps-strong">${esc(s.name)}</td><td>${PATHS[s.path].name}</td><td>${REGIONS[s.region].name}</td><td class="num">+${REGIONS[s.region].offset}h</td></tr>`).join("")}</tbody>
         </table></div>
-        <p class="ts-foot">${list.length} shown. Session times are stored in Pacific time (PT) and converted to each student's local time.</p>
       </section>
-      <section class="ts-card" data-tour="supervisors">
-        <div class="ts-card-h"><h3>Supervisors</h3></div>
-        <div class="ts-scroll"><table class="ts-t">
-          <thead><tr><th>Supervisor</th><th>Teaches</th><th>Available (PT)</th><th>Price per group</th><th>Max groups</th></tr></thead>
+      <section class="ps-card" data-tour="supervisors">
+        <div class="ps-card-h"><h2>Supervisors</h2></div>
+        <div class="ps-scroll"><table class="ps-table">
+          <thead><tr><th>Supervisor</th><th>Teaches</th><th>Available (PT)</th><th class="num">Price</th><th class="num">Max</th></tr></thead>
           <tbody>${SUPERVISORS.map((v) => `<tr>
-            <td>${esc(v.name)}</td>
+            <td class="ps-strong">${esc(v.name)}</td>
             <td>${v.paths.map((p) => PATHS[p].name).join(", ")}</td>
-            <td>${v.slots.map((sl) => `<span class="${E.DAY_WEIGHT[sl.day] === null ? "ts-wk" : ""}">${E.fmtSlot(sl)}</span>`).join("<br>")}</td>
-            <td class="mono-n">${v.price}</td>
-            <td class="mono-n">${v.maxGroups}</td></tr>`).join("")}</tbody>
+            <td>${v.slots.map((sl) => `<span class="ps-pill ps-slot ${E.DAY_WEIGHT[sl.day] === null ? "ps-wk" : ""}">${E.fmtSlot(sl)}</span>`).join(" ")}</td>
+            <td class="num">${v.price}</td>
+            <td class="num">${v.maxGroups}</td></tr>`).join("")}</tbody>
         </table></div>
-        <p class="ts-foot">Prices are in credits, a pretend unit. A group of 7 or 8 adds ${LARGE_EXTRA} credits. Struck-through slots fall on a weekend and are never used.</p>
+        <p class="ps-muted ps-tiny ps-foot">Price is credits per group, a pretend unit. A group of 7 or 8 adds ${LARGE_EXTRA} credits. Struck-through slots fall on a weekend and are never used.</p>
       </section>
     </div>`;
 }
@@ -171,103 +178,105 @@ function buildView() {
   const ranked = E.rankSlots(S.rankPath, S.students, SUPERVISORS);
   const n = S.students.filter((s) => s.path === S.rankPath).length;
   return `
-    <section class="ts-card" data-tour="rules">
-      <div class="ts-card-h"><h3>Fit rule</h3></div>
-      <div class="ts-rules">
+    <div class="ps-page-head"><h1>Build</h1></div>
+    <section class="ps-card ps-step" data-tour="rules">
+      <div class="ps-step-head"><span class="ps-step-n">1</span><h2>Fit rule</h2></div>
+      <div class="ps-rules">
         <div>${chip("ideal")} starts 8:00 AM to 9:00 PM local</div>
         <div>${chip("ok")} starts 6:00 to 8:00 AM local</div>
         <div>${chip("bad")} any other time</div>
-        <div class="ts-muted">Midweek preferred. Weekends never.</div>
+        <div class="ps-muted">Midweek preferred. Weekends never.</div>
       </div>
     </section>
-    <section class="ts-card" data-tour="ranking">
-      <div class="ts-card-h">
-        <h3>Ranked slots</h3>
-        <div class="ts-chips">${PATH_IDS.map((p) => `<button type="button" class="ts-chip" aria-pressed="${S.rankPath === p}" data-a="kpath" data-v="${p}">${PATHS[p].name}</button>`).join("")}</div>
-      </div>
-      <p class="ts-foot top">How each supervisor slot fits the ${n} ${PATHS[S.rankPath].name} students on its own. No single slot suits every region, which is why the draft mixes morning and afternoon groups.</p>
-      <div class="ts-scroll"><table class="ts-t">
-        <thead><tr><th>#</th><th>Supervisor</th><th>Slot (PT)</th><th>Ideal</th><th>OK</th><th>Not OK</th><th>Price</th></tr></thead>
-        <tbody>${ranked.map((c, i) => `<tr class="${c.skipped ? "ts-skip" : ""}">
-          <td class="mono-n">${c.skipped ? "" : i + 1}</td><td>${esc(c.sup.name)}</td>
-          <td><span class="ts-sl">${E.fmtSlot(c.slot)}</span>${c.skipped ? `<div class="ts-note">${c.skipped}</div>` : ""}</td>
-          <td class="mono-n">${c.counts.ideal}</td><td class="mono-n">${c.counts.ok}</td><td class="mono-n">${c.counts.bad}</td><td class="mono-n">${c.sup.price}</td></tr>`).join("")}</tbody>
+    <section class="ps-card ps-step" data-tour="ranking">
+      <div class="ps-step-head"><span class="ps-step-n">2</span><h2>Ranked slots</h2></div>
+      ${PATH_TABS("kpath", S.rankPath, false)}
+      <p class="ps-sub ps-tiny ps-mb">How each supervisor slot fits the ${n} ${PATHS[S.rankPath].name} students on its own. No single slot suits every region, which is why the draft mixes morning and afternoon groups.</p>
+      <div class="ps-scroll"><table class="ps-table">
+        <thead><tr><th class="num">#</th><th>Supervisor</th><th>Slot (PT)</th><th>Fit</th><th class="num">Price</th></tr></thead>
+        <tbody>${ranked.map((c, i) => `<tr class="${c.skipped ? "ps-skip" : ""}">
+          <td class="num">${c.skipped ? "" : i + 1}</td><td class="ps-strong">${esc(c.sup.name)}</td>
+          <td><span class="ps-sl">${E.fmtSlot(c.slot)}</span>${c.skipped ? `<div class="ps-note">${c.skipped}</div>` : ""}</td>
+          <td><span class="ps-fitbar" aria-hidden="true"><span class="g" style="flex:${c.counts.ideal}"></span><span class="w" style="flex:${c.counts.ok}"></span><span class="b" style="flex:${c.counts.bad}"></span></span> <span class="ps-tiny ps-sub">${c.counts.ideal} ideal, ${c.counts.ok} OK, ${c.counts.bad} not OK</span></td>
+          <td class="num">${c.sup.price}</td></tr>`).join("")}</tbody>
       </table></div>
     </section>
-    <section class="ts-card" data-tour="draft">
-      <div class="ts-card-h">
-        <h3>Draft</h3>
-        <button type="button" class="ts-btn" data-a="build" data-tour="build-btn">${S.groups ? "Rebuild draft" : "Build draft"}</button>
-      </div>
-      ${S.reports ? `<div class="ts-reports">${S.reports.map((r) => `
-        <div class="ts-rep">
-          <div class="ts-rep-h"><b>${PATHS[r.path].name}</b><span>${r.n} students</span></div>
-          <div>${r.groups} groups (${r.sizes.join(" and ")} students): <b>${cr(r.cost)}</b></div>
-          <div class="ts-muted">${r.reason}${r.alt ? ` ${r.alt.groups} groups would cost ${cr(r.alt.cost)}.` : ""}</div>
-          <div class="ts-fits">${r.counts.ideal} ${chip("ideal")} ${r.counts.ok} ${chip("ok")} ${r.counts.bad} ${chip("bad")}</div>
-        </div>`).join("")}</div>` : `<p class="ts-foot top">The engine picks the cheapest group structure for each path, chooses slots, then places the pickiest students first.</p>`}
+    <section class="ps-card ps-step" data-tour="draft">
+      <div class="ps-step-head"><span class="ps-step-n">3</span><h2>Draft</h2><span class="ps-spacer"></span>
+        <button type="button" class="ps-btn ps-btn-primary" data-a="build" data-tour="build-btn">${S.groups ? "Rebuild draft" : "Build draft"}</button></div>
+      ${S.reports ? `<div class="ps-reports">${S.reports.map((r) => `
+        <div class="ps-bucket">
+          <div class="ps-bucket-head">${PATHS[r.path].name} <strong>${r.n} students</strong></div>
+          <div>${r.groups} groups (${r.sizes.join(" and ")} students): <strong>${cr(r.cost)}</strong></div>
+          <div class="ps-sub ps-tiny">${r.reason}${r.alt ? ` ${r.alt.groups} groups would cost ${cr(r.alt.cost)}.` : ""}</div>
+          <div class="ps-fits">${r.counts.ideal} ${chip("ideal")} ${r.counts.ok} ${chip("ok")} ${r.counts.bad} ${chip("bad")}</div>
+        </div>`).join("")}</div>` : `<p class="ps-sub ps-tiny">The engine picks the cheapest group structure for each path, chooses slots, then places the pickiest students first.</p>`}
     </section>`;
 }
 
 function moveRow(o: MoveOption, studentId: string) {
   const gs = sup(o.group.supId);
   const flag = o.changes.length
-    ? `<div class="ts-flag">Contract change: ${o.changes.map((c) => `${esc(c.name)}, ${c.before} to ${c.after} credits (${c.why})`).join("; ")}</div>`
-    : `<div class="ts-muted">No contract change</div>`;
-  return `<li class="ts-opt">
-    <div><b>${esc(gs.name)}</b>, ${E.fmtSlot(o.group.slot)} PT &rarr; ${E.fmtSlot(o.local)} local ${chip(o.fit)}</div>
-    <div class="ts-muted">Cost ${signed(o.costDelta)}${o.costDelta ? " credits" : ""}. Group goes to ${o.group.studentIds.length + 1} students.</div>
+    ? `<div class="ps-flag">Contract change: ${o.changes.map((c) => `${esc(c.name)}, ${c.before} to ${c.after} credits (${c.why})`).join("; ")}</div>`
+    : `<div class="ps-muted ps-tiny">No contract change</div>`;
+  return `<li class="ps-opt">
+    <div><strong>${esc(gs.name)}</strong>, ${E.fmtSlot(o.group.slot)} PT &rarr; ${E.fmtSlot(o.local)} local ${chip(o.fit)}</div>
+    <div class="ps-sub ps-tiny">Cost ${signed(o.costDelta)}${o.costDelta ? " credits" : ""}. Group goes to ${o.group.studentIds.length + 1} students.</div>
     ${flag}
-    <button type="button" class="ts-btn sm" data-a="move" data-v="${studentId}" data-g="${o.group.id}" ${o.full ? "disabled" : ""}>${o.full ? "Group full" : "Move here"}</button>
+    <button type="button" class="ps-btn ps-btn-sm ps-btn-primary" data-a="move" data-v="${studentId}" data-g="${o.group.id}" ${o.full ? "disabled" : ""}>${o.full ? "Group full" : "Move here"}</button>
   </li>`;
 }
 
 function groupsView() {
-  if (!S.groups) return `<section class="ts-card"><p>No draft yet. <button type="button" class="ts-btn sm" data-a="tab" data-v="build">Go to Build</button></p></section>`;
+  if (!S.groups) return `<div class="ps-page-head"><h1>Groups</h1></div><div class="ps-card ps-empty">No draft yet.<br><button type="button" class="ps-btn ps-btn-primary" data-a="tab" data-v="build">Go to Build</button></div>`;
   const j = juno();
   const jg = E.groupOf(S.groups, j.id);
   const banner = !S.lateApplied
-    ? `<div class="ts-banner" data-tour="late">
-        <div><b>1 roster change waiting.</b> ${esc(j.name)} (${PATHS[j.path].name}) updated their time zone: ${REGIONS[LATE_CHANGE.from].name} to ${REGIONS[LATE_CHANGE.to].name}.</div>
-        <button type="button" class="ts-btn sm" data-a="late" data-tour="late-btn">Apply change</button>
+    ? `<div class="ps-headline" data-tour="late">
+        <div><strong>1 roster change waiting.</strong> ${esc(j.name)} (${PATHS[j.path].name}) updated their time zone: ${REGIONS[LATE_CHANGE.from].name} to ${REGIONS[LATE_CHANGE.to].name}.</div>
+        <button type="button" class="ps-btn ps-btn-sm ps-btn-primary" data-a="late" data-tour="late-btn">Apply change</button>
       </div>`
     : S.proposal?.status === "approved"
-      ? `<div class="ts-banner done">Change approved and logged. Every student is placed.</div>`
+      ? `<div class="ps-headline ok">Change approved and logged. Every student is placed.</div>`
       : jg && E.studentFit(jg.slot, j.region) === "bad"
-        ? `<div class="ts-banner warn"><div>${esc(j.name)} now starts at ${E.fmtSlot(E.toLocal(jg.slot, j.region))} local. Ask the assistant, or click their name to see move options.</div><button type="button" class="ts-btn sm" data-a="tab" data-v="assistant">Ask the assistant</button></div>`
+        ? `<div class="ps-headline bad"><div>${esc(j.name)} now starts at ${E.fmtSlot(E.toLocal(jg.slot, j.region))} local. Ask the assistant, or click their name to see move options.</div><button type="button" class="ps-btn ps-btn-sm" data-a="tab" data-v="assistant">Ask the assistant</button></div>`
         : "";
-  const byPath = PATH_IDS.map((p) => ({ p, gs: S.groups!.filter((g) => g.path === p) }));
-  return `${banner}
-    ${byPath.map(({ p, gs }) => `
-      <h3 class="ts-sec">${PATHS[p].name}</h3>
-      <div class="ts-groups">
+  return `<div class="ps-page-head"><h1>Groups</h1><span class="ps-pill">Draft</span></div>${banner}
+    ${PATH_IDS.map((p) => {
+      const gs = S.groups!.filter((g) => g.path === p);
+      return `<h2 class="ps-sec">${PATHS[p].name} <span class="ps-muted ps-tiny">${gs.length} groups</span></h2>
+      <div class="ps-group-grid">
         ${gs.map((g) => {
           const v = sup(g.supId), n = g.studentIds.length;
-          return `<section class="ts-card ts-group" data-tour="group-${g.id}">
-            <div class="ts-card-h">
-              <div><h3>${esc(v.name)}</h3><div class="ts-muted">${E.DAY_FULL[g.slot.day]} ${E.fmtHour(g.slot.hour)} PT</div></div>
-              <div class="ts-gcost"><b>${cr(E.groupCost(v.price, n))}</b><div class="ts-muted">${n} of ${CAP} &middot; ${E.bandLabel(n)}</div></div>
+          return `<section class="ps-card ps-gc" data-tour="group-${g.id}">
+            <div class="ps-gc-head">
+              <div class="ps-gc-sup"><span class="ps-link">${esc(v.name)}</span></div>
+              <div class="ps-gc-time">${E.DAY_FULL[g.slot.day]} ${E.fmtHour(g.slot.hour)} PT</div>
+              <div class="ps-gc-meta"><span class="ps-pill">${n} of ${CAP}</span><span class="ps-pill">${E.bandLabel(n)}</span><span class="ps-pill">${cr(E.groupCost(v.price, n))}</span></div>
             </div>
-            <ul class="ts-members">
+            <ul class="ps-gc-body">
               ${g.studentIds.map((id) => {
                 const s = stu(id), loc = E.toLocal(g.slot, s.region), f = E.studentFit(g.slot, s.region);
                 const open = S.moving === id;
-                return `<li class="${open ? "open" : ""}">
-                  <button type="button" class="ts-name" data-a="pick" data-v="${id}" aria-expanded="${open}" data-tour="stu-${id}">${esc(s.name)}</button>
-                  <span class="ts-reg">${REGIONS[s.region].name}</span>
-                  <span class="ts-loc">${E.fmtSlot(loc)}</span>${chip(f)}
-                  ${open ? `<ul class="ts-opts">${E.moveOptions(S.groups!, s, SUPERVISORS).map((o) => moveRow(o, id)).join("") || `<li class="ts-muted">No other ${PATHS[s.path].name} group.</li>`}</ul>` : ""}
+                return `<li class="ps-stud ${open ? "open" : ""}">
+                  <div class="ps-stud-row">
+                    <button type="button" class="ps-stud-name" data-a="pick" data-v="${id}" aria-expanded="${open}" data-tour="stu-${id}">${esc(s.name)}</button>
+                    <span class="ps-stud-tz">${REGIONS[s.region].name}</span>
+                    <span class="ps-stud-local">${E.fmtSlot(loc)}</span>${chip(f)}
+                  </div>
+                  ${open ? `<ul class="ps-opts">${E.moveOptions(S.groups!, s, SUPERVISORS).map((o) => moveRow(o, id)).join("") || `<li class="ps-muted">No other ${PATHS[s.path].name} group.</li>`}</ul>` : ""}
                 </li>`;
               }).join("")}
             </ul>
           </section>`;
         }).join("")}
-      </div>`).join("")}
-    ${S.log.length ? `<section class="ts-card"><div class="ts-card-h"><h3>Change log</h3></div><ul class="ts-log">${S.log.map((l) => `<li>${esc(l)}</li>`).join("")}</ul></section>` : ""}`;
+      </div>`;
+    }).join("")}
+    ${S.log.length ? `<section class="ps-card ps-log"><h3>Change log</h3><ul>${S.log.map((l) => `<li>${esc(l)}</li>`).join("")}</ul></section>` : ""}`;
 }
 
 function assistantView() {
-  if (!S.groups) return `<section class="ts-card"><p>Build a draft first, so the assistant has results to read. <button type="button" class="ts-btn sm" data-a="tab" data-v="build">Go to Build</button></p></section>`;
+  if (!S.groups) return `<div class="ps-page-head"><h1>Assistant</h1></div><div class="ps-card ps-empty">Build a draft first, so the assistant has results to read.<br><button type="button" class="ps-btn ps-btn-primary" data-a="tab" data-v="build">Go to Build</button></div>`;
   const p = S.proposal;
   let card = "";
   if (p) {
@@ -275,37 +284,38 @@ function assistantView() {
     const before = p.status === "approved" ? E.moveStudent(S.groups, p.studentId, p.from) : S.groups;
     const after = p.status === "approved" ? S.groups : E.moveStudent(S.groups, p.studentId, p.to);
     const changes = E.contractChanges(before, after, SUPERVISORS);
-    card = `<section class="ts-apply ${p.status}" data-tour="apply">
-      <div class="ts-k">Proposed change &middot; needs approval</div>
-      <div class="ts-apply-t">Move ${esc(s.name)}</div>
-      <dl>
-        <div><dt>From</dt><dd>${esc(sup(from.supId).name)}, ${E.fmtSlot(from.slot)} PT &middot; ${E.fmtSlot(E.toLocal(from.slot, s.region))} local ${chip(E.studentFit(from.slot, s.region))}</dd></div>
-        <div><dt>To</dt><dd>${esc(sup(to.supId).name)}, ${E.fmtSlot(to.slot)} PT &middot; ${E.fmtSlot(E.toLocal(to.slot, s.region))} local ${chip(E.studentFit(to.slot, s.region))}</dd></div>
-        ${changes.map((c) => `<div class="ts-flag-row"><dt>Contract</dt><dd><span class="ts-flag">${esc(c.name)}: ${c.before} to ${c.after} credits</span> <span class="ts-muted">${c.why}</span></dd></div>`).join("")}
+    card = `<div class="ps-proposal ${p.status}" data-tour="apply">
+      <div class="ps-proposal-k">Proposed change &middot; needs approval</div>
+      <div class="ps-proposal-t">Move ${esc(s.name)}</div>
+      <dl class="ps-kv">
+        <dt>From</dt><dd>${esc(sup(from.supId).name)}, ${E.fmtSlot(from.slot)} PT &middot; ${E.fmtSlot(E.toLocal(from.slot, s.region))} local ${chip(E.studentFit(from.slot, s.region))}</dd>
+        <dt>To</dt><dd>${esc(sup(to.supId).name)}, ${E.fmtSlot(to.slot)} PT &middot; ${E.fmtSlot(E.toLocal(to.slot, s.region))} local ${chip(E.studentFit(to.slot, s.region))}</dd>
+        ${changes.map((c) => `<dt>Contract</dt><dd><span class="ps-flag">${esc(c.name)}: ${c.before} to ${c.after} credits</span> <span class="ps-sub ps-tiny">${c.why}</span></dd>`).join("")}
       </dl>
       ${p.status === "pending"
-        ? `<div class="ts-row"><button type="button" class="ts-btn" data-a="approve" data-tour="approve">Approve</button><button type="button" class="ts-btn ghost" data-a="dismiss">Dismiss</button></div>`
-        : `<div class="ts-status">${p.status === "approved" ? "Approved by you. Applied and logged." : "Dismissed. Nothing changed."}</div>`}
-    </section>`;
+        ? `<div class="ps-row"><button type="button" class="ps-btn ps-btn-sm ps-btn-apply" data-a="approve" data-tour="approve">Approve</button><button type="button" class="ps-btn ps-btn-sm ps-btn-ghost" data-a="dismiss">Dismiss</button></div>`
+        : `<div class="ps-status">${p.status === "approved" ? "Approved by you. Applied and logged." : "Dismissed. Nothing changed."}</div>`}
+    </div>`;
   }
   const prompts = [
-    !S.asked.summary ? `<button type="button" class="ts-chip" data-a="ask-summary">Summarize the term.</button>` : "",
-    S.lateApplied && !S.asked.juno ? `<button type="button" class="ts-chip hot" data-a="ask-juno" data-tour="ask-juno">${esc(juno().name)} moved time zones. Where should they go?</button>` : "",
+    !S.asked.summary ? `<button type="button" class="ps-example" data-a="ask-summary">Summarize the term.</button>` : "",
+    S.lateApplied && !S.asked.juno ? `<button type="button" class="ps-example hot" data-a="ask-juno" data-tour="ask-juno">${esc(juno().name)} moved time zones. Where should they go?</button>` : "",
   ].join("");
   return `
-    <section class="ts-card ts-chat" data-tour="chat">
-      <div class="ts-card-h"><h3>Assistant</h3><span class="ts-muted">Canned replies for the demo. The engines compute, the assistant explains, you approve.</span></div>
-      <div class="ts-msgs">
-        ${S.chat.length ? S.chat.map((m) => `<div class="ts-msg ${m.who}">${m.who === "tool" ? `<span class="ts-k">Tool</span> ` : ""}${m.html}</div>`).join("") : `<div class="ts-muted">Pick a question below.</div>`}
+    <div class="ps-page-head"><h1>Assistant</h1></div>
+    <p class="ps-sub ps-tiny ps-mb">Reads the draft for <strong>Demo term</strong>. It proposes changes; nothing happens until you approve. Replies here are canned for the demo.</p>
+    <section class="ps-card ps-chat" data-tour="chat">
+      <div class="ps-chat-log">
+        ${S.chat.length ? S.chat.map((m) => m.who === "tool" ? `<div class="ps-tool">${m.html}</div>` : `<div class="ps-msg ${m.who === "you" ? "user" : "assistant"}">${m.html}</div>`).join("") : `<div class="ps-empty ps-tiny">Pick an example below.</div>`}
+        ${card}
       </div>
-      ${card}
-      <div class="ts-prompts">${prompts || `<span class="ts-muted">${S.lateApplied ? "No more sample questions." : "Apply the roster change on the Groups tab to unlock another question."}</span>`}</div>
+      <div class="ps-examples">${prompts || `<span class="ps-muted ps-tiny">${S.lateApplied ? "No more example questions." : "Apply the roster change on the Groups tab to unlock another question."}</span>`}</div>
     </section>`;
 }
 
 function render() {
   const view = { roster: rosterView, build: buildView, groups: groupsView, assistant: assistantView }[S.tab]();
-  root.innerHTML = `<div class="ts-app">${header()}<div class="ts-body" role="tabpanel">${view}</div></div>`;
+  root.innerHTML = `<div class="ps-app">${header()}<main class="ps-main" role="tabpanel">${view}</main></div>`;
 }
 
 root.addEventListener("click", (e) => {

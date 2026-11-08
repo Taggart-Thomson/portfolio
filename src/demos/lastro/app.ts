@@ -79,7 +79,7 @@ const PANELS: Record<PanelId, { title: string; render: () => string }> = {
     render: () => {
       const prompts: [string, string][] = [
         ["budget", BUDGET_SAID],
-        ["why", "Why did you suggest IVVB11?"],
+        ["why", "Why did you suggest DEMU11?"],
         ["note", "Note for later: I like dividend payers."],
       ];
       const left = prompts.filter(([k]) => !S.asked.has(k));
@@ -143,8 +143,8 @@ const A = {
       S.override = { amount: 1000, said: BUDGET_SAID };
       S.memory.unshift({ kind: "budget", text: `R$ 1.000 for ${MONTH} only`, said: BUDGET_SAID, when: "Nov 8" });
     } else if (k === "why") {
-      S.chat.push({ who: "you", text: "Why did you suggest IVVB11?" });
-      S.chat.push({ who: "advisor", text: "Brazil is about 70% of the valued portfolio. IVVB11 adds S&P 500 exposure in reais and is listed on B3, so you can buy it in your broker app. The reasoning and sources sit on the suggestion card." });
+      S.chat.push({ who: "you", text: "Why did you suggest DEMU11?" });
+      S.chat.push({ who: "advisor", text: "Brazil is about 70% of the valued portfolio. DEMU11 adds US market exposure in reais and is listed on B3, so you can buy it in your broker app. The reasoning and sources sit on the suggestion card." });
     } else if (k === "note") {
       S.chat.push({ who: "you", text: "Note for later: I like dividend payers." });
       S.chat.push({ who: "advisor", text: "Saved as a note. It will reach the analysis as background only, not as a rule." });

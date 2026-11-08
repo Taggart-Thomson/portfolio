@@ -1,31 +1,31 @@
 // Sample data for the Lastro demo. Holdings, prices, headlines, suggestions,
-// conversations and costs are all invented. Not financial advice.
+// conversations, costs and ticker symbols are all invented. Not financial advice.
 
 export interface Position { ticker: string; name: string; cls: string; qty: number; avg: number; price: number | null; note?: string }
 export const POSITIONS: Position[] = [
-  { ticker: "BOVA11", name: "Ibovespa ETF", cls: "ETF", qty: 40, avg: 118.2, price: 124.85 },
-  { ticker: "IVVB11", name: "S&P 500 ETF (BRL)", cls: "ETF", qty: 15, avg: 310.0, price: 342.1 },
-  { ticker: "ITUB4", name: "Bank stock", cls: "Stock", qty: 100, avg: 30.4, price: 33.12 },
-  { ticker: "WEGE3", name: "Industrial stock", cls: "Stock", qty: 60, avg: 41.8, price: 39.55 },
-  { ticker: "HGLG11", name: "Logistics FII", cls: "FII", qty: 20, avg: 158.0, price: 161.4 },
+  { ticker: "DEMO11", name: "Brazil index ETF", cls: "ETF", qty: 40, avg: 118.2, price: 124.85 },
+  { ticker: "DEMU11", name: "US index ETF (BRL)", cls: "ETF", qty: 15, avg: 310.0, price: 342.1 },
+  { ticker: "DEMB4", name: "Bank stock", cls: "Stock", qty: 100, avg: 30.4, price: 33.12 },
+  { ticker: "DEMI3", name: "Industrial stock", cls: "Stock", qty: 60, avg: 41.8, price: 39.55 },
+  { ticker: "DEML11", name: "Logistics FII", cls: "FII", qty: 20, avg: 158.0, price: 161.4 },
   { ticker: "Tesouro Selic 2029", name: "Government bond", cls: "Bond", qty: 0.8, avg: 15420, price: null, note: "Bond prices aren't fetched yet, so this isn't valued." },
-  { ticker: "BTC", name: "Bitcoin", cls: "Crypto", qty: 0.0015, avg: 480000, price: 512300 },
+  { ticker: "DEMC", name: "Sample crypto", cls: "Crypto", qty: 0.0015, avg: 480000, price: 512300 },
 ];
 
 export const MARKET = [
-  { name: "Ibovespa", value: "128.410 pts", move: 0.62 },
-  { name: "S&P 500", value: "5.912 pts", move: -0.18 },
+  { name: "Brazil index", value: "128.410 pts", move: 0.62 },
+  { name: "US index", value: "5.912 pts", move: -0.18 },
   { name: "USD/BRL", value: "R$ 5,41", move: 0.25 },
-  { name: "Bitcoin", value: "R$ 512.300", move: 1.9 },
+  { name: "Crypto", value: "R$ 512.300", move: 1.9 },
 ];
 
 export interface Suggestion { action: "Buy" | "Hold" | "Trim"; ticker: string; why: string; sources: string[] }
 export const SUGGESTIONS: Suggestion[] = [
-  { action: "Buy", ticker: "IVVB11", why: "Brazil is about 70% of the portfolio. Adding S&P 500 exposure in reais spreads the risk without leaving B3.", sources: ["Allocation", "Sample headline 2"] },
+  { action: "Buy", ticker: "DEMU11", why: "Brazil is about 70% of the portfolio. Adding US market exposure in reais spreads the risk without leaving B3.", sources: ["Allocation", "Sample headline 2"] },
   { action: "Buy", ticker: "Tesouro IPCA+ 2035", why: "No inflation-linked bond yet. A long IPCA+ bond protects the budget against inflation.", sources: ["Positions", "Sample headline 1"] },
-  { action: "Hold", ticker: "WEGE3", why: "Down about 5% from average cost, but the sample news gives no reason to sell.", sources: ["Sample headline 4"] },
+  { action: "Hold", ticker: "DEMI3", why: "Down about 5% from average cost, but the sample news gives no reason to sell.", sources: ["Sample headline 4"] },
 ];
-export const REJECTED = [{ ticker: "VOO", reason: "US-listed ETF, not buyable on B3. Rejected before saving; the rest of the analysis was kept." }];
+export const REJECTED = [{ ticker: "DEMUS", reason: "US-listed ETF, not buyable on B3. Rejected before saving; the rest of the analysis was kept." }];
 
 export const NEWS = [
   "Sample headline 1: Inflation expectations edge higher in weekly survey",

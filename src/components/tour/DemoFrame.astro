@@ -9,10 +9,14 @@ const { id, label, notice = DEFAULT_NOTICE } = Astro.props;
   <div class="demo-chrome mono">
     <span class="dot"></span><span class="dot"></span><span class="dot"></span>
     <span class="demo-label">{label}</span>
+    <span class="demo-flag">Fictional data</span>
   </div>
   <div class="demo-notice" role="note">
-    <span class="demo-notice-tag">Demo only</span>
-    <p>{notice}</p>
+    <span class="demo-notice-icon" aria-hidden="true">!</span>
+    <div>
+      <strong class="demo-notice-title">Demo only. All names and numbers are fictional.</strong>
+      <p>{notice}</p>
+    </div>
   </div>
   <div class="tour-bar" data-tour-bar></div>
   <div class="demo-stage" data-demo-stage>
@@ -27,10 +31,13 @@ const { id, label, notice = DEFAULT_NOTICE } = Astro.props;
   .demo-chrome .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--yel); opacity: .9; }
   .demo-chrome .demo-label { margin-left: 8px; opacity: .85; }
 
-  .demo-notice { display: flex; gap: 10px 14px; align-items: center; flex-wrap: wrap; padding: 12px 16px; background: var(--paper); border-bottom: 3px solid var(--ink); }
-  .demo-notice p { margin: 0; flex: 1 1 320px; font-size: 16px; line-height: 1.4; font-weight: 600; }
-  .demo-notice-tag { font: 500 12px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; background: #E8590C; color: #fff; border-radius: 999px; padding: 6px 10px; white-space: nowrap; }
-  @media (max-width: 640px) { .demo-notice { padding: 10px 12px; } .demo-notice p { font-size: 15px; } }
+  /* Very visible demo disclaimer: high contrast, first thing inside every demo. */
+  .demo-notice { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; background: #E8590C; color: #fff; border-bottom: 3px solid var(--ink); }
+  .demo-notice-icon { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #fff; color: #E8590C; font: 800 20px/1 var(--f-display); }
+  .demo-notice-title { display: block; font-weight: 800; font-size: 20px; line-height: 1.2; letter-spacing: -.01em; }
+  .demo-notice p { margin: 4px 0 0; font-size: 16px; line-height: 1.45; font-weight: 500; max-width: 75ch; }
+  @media (max-width: 640px) { .demo-notice { padding: 14px; gap: 10px; } .demo-notice-title { font-size: 18px; } .demo-notice p { font-size: 15px; } }
+  .demo-flag { margin-left: auto; font: 500 11px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; background: #E8590C; color: #fff; border-radius: 999px; padding: 5px 9px; white-space: nowrap; }
 
   .tour-bar { position: sticky; top: 0; z-index: 30; background: var(--yel); border-bottom: 3px solid var(--ink); }
   .tb-row { display: flex; gap: 14px 20px; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 12px 16px; }

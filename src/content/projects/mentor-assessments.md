@@ -6,7 +6,7 @@ order: 3
 where: "Think Tank Training Centre"
 stack: [Google Apps Script, Google Forms, Google Sheets, AI analysis]
 demo: guided
-demoNote: "A guided demo with invented supervisors and survey answers: see feedback come in at mid-term and end of term, watch the AI turn written comments into a score and strengths for each supervisor, then use them to match a student."
+demoNote: "A guided demo with invented supervisors and survey answers: see feedback come in at mid-term and end of term, watch the AI turn written comments into a score and strengths for each supervisor, then use them to match a student. A short last part shows mentor scoring. The AI results are precomputed, so nothing is sent anywhere."
 status: "Runs every term."
 ---
 

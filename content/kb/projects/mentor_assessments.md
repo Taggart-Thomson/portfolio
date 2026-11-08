@@ -27,4 +27,8 @@ Taggart first wrote a read-only diagnostic to confirm exactly which tabs were af
 
 ## Demo
 
-The project page will have a guided demo on invented supervisors and survey answers.
+The project page has a guided, hands-on demo that runs entirely in the visitor's browser on invented data: 6 fictional supervisors across 3 example paths and the invented students in their groups. A step-by-step tour walks through it, with skip, back and restart, and visitors can explore freely.
+
+The visitor brings in the mid-term survey responses (example ratings from 1 to 5 plus a written comment from each student), then runs the AI analysis, which gives each supervisor a score out of 5, strengths, anything to watch, and the quotes it leaned on. In the demo, one supervisor's ratings average 3.8, but every one of their students mentions slow replies or moved sessions, so the analysis scores them lower and flags it mid-term. After the end-of-term survey, that supervisor's score is up. The visitor then matches an invented incoming student to a supervisor on their path, ranked on the strengths the student needs. A short last part shows mentor scoring: a form generated per mentor, responses landing in a master file with one tab per mentor, and a per-student running grade in each mentor's workbook.
+
+The AI analysis results in the demo are precomputed and written for the demo; no model is called from the page. The survey questions, rubric criteria and strength categories in the demo are examples, not the school's real ones.

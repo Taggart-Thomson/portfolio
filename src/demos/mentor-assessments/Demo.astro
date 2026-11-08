@@ -1,0 +1,84 @@
+---
+import DemoFrame from "../../components/tour/DemoFrame.astro";
+---
+<DemoFrame id="demo-mentor-assessments" label="Assessment demo · invented supervisors and students">
+  <noscript><p style="padding:20px">This demo needs JavaScript.</p></noscript>
+</DemoFrame>
+
+<script>
+  import "./app";
+</script>
+
+<style is:global>
+  .ma-app { padding: clamp(12px, 2.5vw, 22px); font-size: 15px; line-height: 1.45; }
+  .ma-app h3 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -.01em; }
+  .ma-app h4 { margin: 0; font-size: 17px; font-weight: 800; }
+  .ma-app p { margin: 0 0 10px; }
+  .ma-k { font: 500 11px/1.3 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
+  .ma-muted { color: var(--muted); font-size: 14px; }
+  .ma-top { margin-bottom: 12px !important; }
+  .ma-body { display: grid; gap: 14px; }
+
+  .ma-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px 20px; flex-wrap: wrap; margin-bottom: 16px; }
+  .ma-status { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .ma-status .ma-k { width: 100%; }
+  .ma-wave.ok { font: 500 12px/1.3 var(--f-mono); background: var(--ink); color: var(--yel); border-radius: 999px; padding: 6px 10px; }
+  .ma-tabs { display: flex; gap: 4px; background: var(--ink); padding: 4px; border-radius: 999px; max-width: 100%; overflow-x: auto; }
+  .ma-tabs button { flex: 1 0 auto; font: 600 14px/1 var(--f-display); border: 0; background: transparent; color: var(--paper); padding: 9px 13px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+  .ma-tabs button[aria-selected="true"] { background: var(--yel); color: var(--ink); }
+  @media (max-width: 640px) {
+    .ma-tabs { width: 100%; display: grid; grid-template-columns: 1fr 1fr; border-radius: 16px; }
+    .ma-tabs button { padding: 9px 6px; font-size: 13px; }
+  }
+
+  .ma-card { background: #fff; border: 2px solid var(--ink); border-radius: 14px; padding: 14px; min-width: 0; }
+  .ma-card-h { display: flex; justify-content: space-between; align-items: center; gap: 8px 12px; flex-wrap: wrap; margin-bottom: 10px; }
+  .ma-empty p { max-width: 62ch; margin-top: 6px; }
+  .ma-chips { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .ma-chip { font: 500 13px/1.25 var(--f-display); border: 1.5px solid var(--ink); background: transparent; color: var(--ink); border-radius: 999px; padding: 6px 11px; cursor: pointer; }
+  .ma-chip[aria-pressed="true"] { background: var(--ink); color: var(--yel); }
+  .ma-chip:disabled { opacity: .4; cursor: default; }
+  .ma-tag { font: 500 11px/1 var(--f-mono); letter-spacing: .04em; text-transform: uppercase; border: 1.5px solid var(--ink); border-radius: 999px; padding: 5px 8px; background: var(--yel); }
+  .ma-tag.solid { background: var(--ink); color: var(--yel); }
+  .ma-btn { font: 600 15px/1 var(--f-display); background: var(--ink); color: var(--yel); border: 0; border-radius: 999px; padding: 10px 16px; cursor: pointer; }
+  .ma-btn.sm { font-size: 13px; padding: 8px 12px; }
+  .ma-btn:disabled { opacity: .4; cursor: default; }
+  .ma-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .ma-scroll { overflow-x: auto; }
+  .ma-t { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .ma-t th { text-align: left; font: 500 11px/1.3 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 8px; border-bottom: 1.5px solid var(--ink); white-space: nowrap; }
+  .ma-t td { padding: 7px 8px; border-bottom: 1px solid rgba(18,18,18,.12); vertical-align: top; white-space: nowrap; }
+  .ma-t td.n { font-family: var(--f-mono); font-size: 13px; }
+  .ma-t td.c { white-space: normal; min-width: 260px; }
+
+  .ma-scores { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+  .ma-sc { border: 2px solid var(--ink); border-radius: 12px; padding: 12px; display: grid; gap: 8px; align-content: start; background: var(--paper); }
+  .ma-sc p { margin: 0; }
+  .ma-sc.flag { border-color: #E8590C; background: #FFF4EC; }
+  .ma-sc-h { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+  .ma-score { text-align: right; line-height: 1; }
+  .ma-score b { font-size: 30px; font-weight: 800; letter-spacing: -.02em; }
+  .ma-score span { display: block; font: 500 10px/1.3 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; margin-top: 3px; }
+  .ma-flag { background: #E8590C; color: #fff; border-radius: 8px; padding: 6px 10px; font-weight: 600; font-size: 14px; }
+  .ma-ev { display: grid; gap: 4px; font-size: 13px; }
+  .ma-ev q { border-left: 3px solid var(--ink); padding-left: 8px; font-style: italic; }
+
+  .ma-two { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); align-items: start; }
+  .ma-two .ma-k { margin: 6px 0; }
+  .ma-match { border: 2px solid var(--ink); border-radius: 12px; padding: 12px; margin-bottom: 10px; display: grid; gap: 6px; }
+  .ma-match.best { background: var(--yel); }
+  .ma-match h4 { margin-bottom: 4px; }
+
+  .ma-mentors { margin-top: 12px; }
+  .ma-three { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); align-items: start; }
+  .ma-lab { display: grid; gap: 4px; margin-bottom: 8px; font: 500 11px/1.3 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; }
+  .ma-lab select { font: 15px/1.2 var(--f-display); text-transform: none; border: 2px solid var(--ink); border-radius: 10px; padding: 7px 10px; background: var(--paper); color: var(--ink); }
+  .ma-grid td { text-align: center; }
+  .ma-grid td:first-child { text-align: left; }
+  .ma-radio { display: inline-block; width: 14px; height: 14px; border: 2px solid var(--ink); border-radius: 50%; }
+  .ma-sheettabs { display: flex; gap: 0; overflow-x: auto; border-bottom: 2px solid var(--ink); margin-bottom: 8px; }
+  .ma-stab { font: 500 12px/1.2 var(--f-mono); border: 1.5px solid var(--ink); border-bottom: 0; background: #F4F1E4; color: var(--ink); padding: 6px 10px; border-radius: 8px 8px 0 0; cursor: pointer; white-space: nowrap; margin-right: 2px; }
+  .ma-stab[aria-pressed="true"] { background: var(--yel); font-weight: 600; }
+  @media (max-width: 760px) { .ma-two { grid-template-columns: minmax(0, 1fr); } }
+</style>

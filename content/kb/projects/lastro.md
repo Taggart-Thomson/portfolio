@@ -69,4 +69,8 @@ A Tesouro Direto price fetcher (so bonds can be valued, not only recommended), c
 
 ## Demo
 
-The demo runs entirely on invented sample data: a made-up portfolio, sample market data, sample headlines and a sample advisor conversation. It shows a banner: "Demo with sample data. Not financial advice."
+The project page has a guided, hands-on demo that runs entirely in the visitor's browser on invented sample data: a made-up portfolio, sample prices and market values, sample headlines, sample suggestions, a sample advisor conversation and sample token costs. It shows a banner: "Demo with sample data. Not financial advice." It uses Lastro's own brand (the lockup and the dark palette). A step-by-step tour walks through it, with skip, back and restart, and visitors can explore freely.
+
+The demo shows the panel workspace (two workspaces, a Panels menu to add panels, and controls to move, widen, narrow or close each panel), positions with an unvalued bond (because the bond price fetcher isn't built yet), suggestions with a specific ticker, reasoning and sources, and a validator line rejecting a US-only ETF by name while keeping the rest of the analysis. In the advisor, the visitor says "Only invest R$ 1.000 this month, back to normal next month," and the memory panel shows it saved as a structured budget override for that month with the original sentence beside it; the monthly report then splits R$ 1.000. The cost panel shows sample token counts per hourly run, mostly read from the prompt cache, with a failed run logged too.
+
+The advisor replies are canned for the demo; no model is called from the page. The ticker symbols are real B3 instruments, but every price, quantity and suggestion in the demo is invented.

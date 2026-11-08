@@ -29,4 +29,12 @@ After reviewing the prototype with the client, Taggart redesigned the workflow.
 
 ## Status
 
-Verso is a working prototype and is not yet deployed. The client's data is confidential, so the project page will show a guided demo on an invented collection.
+Verso is a working prototype and is not yet deployed.
+
+## Demo
+
+The client's data is confidential, so the project page has a guided, hands-on demo that runs entirely in the visitor's browser on invented data: a made-up organization with 3 invented legal entities, 24 invented artworks by invented artists, 3 invented contractors with their contracts, and invented reviewers, accounting and admin staff (all emails use example.com). It is rebuilt from scratch for the portfolio and contains nothing from the client. A step-by-step tour walks through it, with skip, back and restart, and visitors can explore freely.
+
+In the demo, visitors browse and search the collection and open a record, where cost, insured value and owner are shown as fields kept in the app and never sent to the assistant. They ask the collection assistant sample questions. Each question runs a real search over the invented records in the page, and under each answer the demo shows the search it ran and how many records matched, plus an exact view of what the model received, with cost, insured value and owner stripped out. Asked for an insured value, it says it doesn't have access. The assistant's wording is canned for the demo; no model is called from the page.
+
+Visitors then submit an invoice as a contractor, switch to the reviewer for the right entity to approve it (or return it with a reason), switch to accounting to record the payment, and see the full history on the invoice. The admin view shows accounts and access.

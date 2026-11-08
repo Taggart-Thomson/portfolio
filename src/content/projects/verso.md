@@ -6,7 +6,7 @@ order: 4
 where: "Built for a public art organization"
 stack: [Django, SQL, Anthropic API, tool use, PDF and Excel exports]
 demo: guided
-demoNote: "The client's data is confidential, so this guided demo uses an invented collection and invented contractors: browse the collection, ask the assistant, submit an invoice, then review and approve it as each role."
+demoNote: "The client's data is confidential, so this guided demo uses an invented organization, collection and contractors. Browse the collection, ask the assistant and see the search it ran, then submit an invoice and take it through review and payment as each role. It all runs in your browser."
 status: "Working prototype, not yet deployed."
 ---
 

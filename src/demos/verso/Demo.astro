@@ -1,0 +1,113 @@
+---
+import DemoFrame from "../../components/tour/DemoFrame.astro";
+---
+<DemoFrame id="demo-verso" label="Verso demo · invented organization and data">
+  <noscript><p style="padding:20px">This demo needs JavaScript.</p></noscript>
+</DemoFrame>
+
+<script>
+  import "./app";
+</script>
+
+<style is:global>
+  .vs-app { padding: clamp(12px, 2.5vw, 22px); font-size: 15px; line-height: 1.45; }
+  .vs-app h3 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -.01em; }
+  .vs-k { font: 500 11px/1.3 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
+  .vs-muted { color: var(--muted); font-size: 14px; }
+  .vs-top { margin: 0 0 12px; }
+  .vs-body { display: grid; gap: 14px; }
+
+  .vs-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px 20px; flex-wrap: wrap; margin-bottom: 16px; }
+  .vs-brand { font-weight: 800; font-size: 26px; letter-spacing: -.03em; line-height: 1; font-style: italic; }
+  .vs-tabs { display: flex; gap: 4px; background: var(--ink); padding: 4px; border-radius: 999px; max-width: 100%; overflow-x: auto; }
+  .vs-tabs button { flex: 1 0 auto; font: 600 14px/1 var(--f-display); border: 0; background: transparent; color: var(--paper); padding: 9px 14px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+  .vs-tabs button[aria-selected="true"] { background: var(--yel); color: var(--ink); }
+  .vs-sm { display: none; }
+  @media (max-width: 640px) { .vs-tabs { width: 100%; } .vs-tabs button { padding: 9px 8px; font-size: 13px; } .vs-lg { display: none; } .vs-sm { display: inline; } }
+
+  .vs-toast { background: var(--ink); color: var(--yel); border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; font-weight: 600; }
+  .vs-card { background: #fff; border: 2px solid var(--ink); border-radius: 14px; padding: 14px; min-width: 0; }
+  .vs-card-h { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px 12px; flex-wrap: wrap; margin-bottom: 12px; }
+  .vs-input { flex: 1 1 260px; font: 15px/1.2 var(--f-display); border: 2px solid var(--ink); border-radius: 999px; padding: 9px 14px; background: var(--paper); color: var(--ink); min-width: 0; }
+  .vs-chips { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .vs-chip { font: 500 13px/1.25 var(--f-display); border: 1.5px solid var(--ink); background: transparent; color: var(--ink); border-radius: 999px; padding: 6px 11px; cursor: pointer; text-align: left; }
+  .vs-chip[aria-pressed="true"] { background: var(--ink); color: var(--yel); }
+  .vs-chip.ask { background: var(--yel); font-weight: 600; }
+  .vs-chip:disabled { opacity: .5; cursor: default; }
+  .vs-count { font: 500 12px/1 var(--f-mono); margin-bottom: 10px; color: var(--muted); }
+
+  .vs-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr)); }
+  .vs-work { display: grid; gap: 2px; text-align: left; font: inherit; color: var(--ink); background: var(--paper); border: 2px solid var(--ink); border-radius: 12px; padding: 10px; cursor: pointer; }
+  .vs-work.on { background: var(--yel); }
+  .vs-swatch { height: 54px; border-radius: 8px; margin-bottom: 6px; border: 1.5px solid var(--ink); }
+  .m-sculpture { background: repeating-linear-gradient(45deg, #121212 0 2px, #E9DFA8 2px 9px); }
+  .m-painting { background: linear-gradient(135deg, #FFD500 0 50%, #121212 50%); }
+  .m-print { background: radial-gradient(circle at 30% 50%, #121212 0 8px, transparent 9px) 0 0 / 22px 22px, #FFF7C2; }
+  .m-textile { background: repeating-linear-gradient(0deg, #121212 0 2px, #FFD500 2px 6px), #FFD500; background-blend-mode: multiply; }
+  .m-photograph { background: linear-gradient(#121212, #8F8A70); }
+  .m-installation { background: conic-gradient(from 45deg, #121212 0 25%, #FFD500 0 50%, #121212 0 75%, #FFD500 0); }
+  .vs-wt { font-weight: 700; line-height: 1.2; }
+  .vs-wa, .vs-wm, .vs-wl { font-size: 13px; color: var(--muted); line-height: 1.3; }
+
+  .vs-dl { margin: 0; display: grid; gap: 6px 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); }
+  .vs-dl dt { font: 500 11px/1.4 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .vs-dl dd { margin: 0; font-weight: 600; }
+  .vs-lock { margin-top: 14px; border: 2px dashed var(--ink); border-radius: 12px; padding: 12px; background: #F4F1E4; display: grid; gap: 8px; }
+  .vs-lock .vs-k::before { content: ""; display: inline-block; width: 9px; height: 9px; border: 2px solid var(--ink); border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+  .vs-btn { font: 600 15px/1 var(--f-display); background: var(--ink); color: var(--yel); border: 0; border-radius: 999px; padding: 10px 16px; cursor: pointer; }
+  .vs-btn.sm { font-size: 13px; padding: 8px 12px; }
+  .vs-btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+  .vs-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .vs-link { font: 600 13px/1.3 var(--f-display); background: none; border: 0; padding: 0; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; justify-self: start; }
+
+  .vs-msgs { display: grid; gap: 8px; margin-bottom: 12px; }
+  .vs-msg { max-width: 66ch; padding: 10px 12px; border-radius: 12px; }
+  .vs-msg.you { justify-self: end; background: var(--ink); color: var(--paper); }
+  .vs-msg.bot { background: var(--paper); border: 1.5px solid var(--ink); display: grid; gap: 8px; }
+  .vs-trace { font-size: 13px; border-top: 1px dashed rgba(18,18,18,.4); padding-top: 6px; overflow-wrap: anywhere; }
+  .vs-trace code { font: 12px/1.4 var(--f-mono); }
+  .vs-payload { display: grid; gap: 6px; }
+  .vs-payload pre { margin: 0; font: 12px/1.45 var(--f-mono); background: var(--ink); color: var(--paper); border-radius: 8px; padding: 10px; overflow: auto; max-height: 260px; }
+
+  .vs-roles { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; background: var(--ink); color: var(--paper); border-radius: 14px; padding: 8px; }
+  .vs-roles > .vs-k { padding: 0 6px; }
+  .vs-role { display: grid; text-align: left; font: inherit; border: 0; background: transparent; color: var(--paper); border-radius: 10px; padding: 6px 10px; cursor: pointer; }
+  .vs-role b { font-size: 14px; }
+  .vs-role span { font-size: 12px; opacity: .75; }
+  .vs-role[aria-pressed="true"] { background: var(--yel); color: var(--ink); }
+  @media (max-width: 640px) { .vs-roles { display: grid; grid-template-columns: 1fr 1fr; } .vs-roles > .vs-k { grid-column: 1 / -1; padding-top: 2px; } }
+
+  .vs-two { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); align-items: start; }
+  @media (max-width: 760px) { .vs-two { grid-template-columns: minmax(0, 1fr); } }
+  .vs-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .vs-form { display: grid; gap: 10px; }
+  .vs-form label { display: grid; gap: 4px; font: 500 11px/1.3 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; }
+  .vs-form input, .vs-form select { font: 15px/1.2 var(--f-display); text-transform: none; letter-spacing: 0; border: 2px solid var(--ink); border-radius: 10px; padding: 9px 10px; background: var(--paper); color: var(--ink); min-width: 0; }
+  .vs-form p { margin: 0; }
+  .vs-form .vs-btn { justify-self: start; }
+  .vs-form.row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .vs-form.row input { flex: 1 1 220px; }
+  .vs-sec { margin: 6px 0 -4px !important; }
+  .vs-ents { margin-top: 2px; }
+
+  .vs-invs { display: grid; gap: 10px; }
+  .vs-inv { background: #fff; border: 2px solid var(--ink); border-radius: 12px; padding: 12px; display: grid; gap: 8px; justify-items: start; }
+  .vs-inv > * { width: 100%; }
+  .vs-inv > .vs-btn, .vs-inv > .vs-row { width: auto; }
+  .vs-inv-h { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .vs-amt { text-align: right; font-weight: 800; font-size: 17px; }
+  .vs-st { display: block; font: 500 11px/1.4 var(--f-mono); letter-spacing: .05em; text-transform: uppercase; }
+  .st-submitted .vs-st { color: #B54708; }
+  .st-returned { border-color: #E8590C; }
+  .st-returned .vs-st { color: #E8590C; }
+  .st-paid .vs-st { color: var(--muted); }
+  .vs-return { background: #FFF4EC; border: 1.5px solid #E8590C; border-radius: 8px; padding: 6px 10px; font-size: 14px; }
+  .vs-hist { list-style: none; margin: 0; padding: 8px 0 0; border-top: 1px dashed rgba(18,18,18,.35); display: grid; gap: 3px; font-size: 13px; }
+  .vs-hist span { font-family: var(--f-mono); font-size: 12px; color: var(--muted); display: inline-block; min-width: 48px; }
+
+  .vs-scroll { overflow-x: auto; }
+  .vs-t { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .vs-t th { text-align: left; font: 500 11px/1.3 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 8px; border-bottom: 1.5px solid var(--ink); white-space: nowrap; }
+  .vs-t td { padding: 7px 8px; border-bottom: 1px solid rgba(18,18,18,.12); white-space: nowrap; }
+</style>

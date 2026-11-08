@@ -2,11 +2,11 @@
 title: "Verso"
 kicker: "Client web app"
 summary: "An internal app for a public art organization, combining a 257-work collection with an invoicing workflow across 3 legal entities."
-order: 6
+order: 4
 where: "Built for a public art organization"
 stack: [Django, SQL, PDF and Excel exports]
-demo: diagram
-demoNote: "The client's data is confidential, so Verso is shown only as a diagram of the workflow."
+demo: guided
+demoNote: "The client's data is confidential, so this guided demo uses an invented collection and invented contractors: browse the collection, submit an invoice, then review and approve it as each role."
 status: "Working prototype, not yet deployed."
 ---
 

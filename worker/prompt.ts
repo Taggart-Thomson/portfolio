@@ -5,10 +5,10 @@ import { CORE, formatPassage } from "./retrieve";
 const PROJECTS = `
 - AI Career Assistant (internal name Synapse): /projects/ai-career-assistant
 - Term Scheduler: /projects/term-scheduler
-- Career Hub: /projects/career-hub
-- Lastro: /projects/lastro
 - Mentor Assessment Automation: /projects/mentor-assessments
 - Verso: /projects/verso
+- Lastro: /projects/lastro
+- Career Hub: /projects/career-hub
 - Driver's Exam Trainer: /projects/drivers-exam-trainer
 - About page (experience, education, skills, other work): /about`.trim();
 

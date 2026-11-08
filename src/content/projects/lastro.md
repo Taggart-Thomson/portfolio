@@ -2,7 +2,7 @@
 title: "Lastro"
 kicker: "Personal project"
 summary: "An AI investing dashboard for Brazilian markets. It suggests, I decide. Every recommendation must resolve to something I can actually buy."
-order: 4
+order: 5
 where: "Personal project"
 stack: [Python, Flask, Anthropic API, prompt caching, GridStack, brapi.dev, CoinGecko]
 demo: guided

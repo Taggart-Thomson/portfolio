@@ -2,7 +2,7 @@
 title: "Career Hub"
 kicker: "Student tool"
 summary: "One place for job search support, with a live jobs feed and a placement tracker that gave leadership a KPI it never had."
-order: 3
+order: 6
 where: "Think Tank Training Centre"
 stack: [Python, GitHub Actions, Flask, SQLite, Greenhouse and Lever APIs]
 demo: guided

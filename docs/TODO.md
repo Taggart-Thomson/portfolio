@@ -1,5 +1,27 @@
 # TODO
 
+## Today (2026-11-08)
+
+How it runs: Taggart steers from his phone. Copy edits go to the main session. Demos are built in a separate demo session on its own branch, merged and pushed only when Taggart says so. The live site stays `noindex`, so he reviews everything on taggartthomson.ca.
+
+**1. Copy pass (main session)**
+- [x] Reorder projects: AI Career Assistant, Term Scheduler, Mentor Assessment Automation, Verso, Lastro, Career Hub, Driver's Exam Trainer.
+- [ ] Taggart reads the live site and sends edits in plain words, page by page. Each batch is applied, checked (`npm run check:content`, build) and pushed on "push it".
+
+**2. Working demos (demo session)**
+- Approach: guided, hands-on demos rebuilt in the site on invented data (see `docs/DECISIONS.md`, "Demo style"). Not Figma: they run real logic in the page, work on phones, match the site and cost nothing to host.
+- [ ] Taggart points to the real repos or screenshots for reference (UI and behavior only, nothing copied).
+- [ ] Shared tour component (steps, highlight, skip, back, restart).
+- [ ] Build in this order, one at a time, each reviewed live before the next:
+  1. Term Scheduler
+  2. AI Career Assistant (raw transcript, cleaned, rules extraction failing, LLM extraction)
+  3. Mentor Assessment Automation (now a demo, not a diagram)
+  4. Verso (now a demo on an invented collection, not a diagram)
+  5. Lastro (banner: "Demo with sample data. Not financial advice.")
+  6. Career Hub ("Career Hub demo", form stores nothing)
+  7. Driver's Exam Trainer (question source to be decided, see Blockers)
+- [ ] When each demo ships, update its KB file (Mentor and Verso KB files still say "diagram only").
+
 ## Blockers
 
 - [ ] **Learning trainer: do not link from the portfolio yet.** Its question bank must be rewritten with original questions based on Brazil's public traffic code (CTB), in its own repo (`Taggart-Thomson/cnh-mg-trainer`). Link the live app only after Taggart confirms. Until then, show the case study without the live link. Details in `private/BRIEF.md`, Section 5.

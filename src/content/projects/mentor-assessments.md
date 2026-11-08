@@ -2,11 +2,11 @@
 title: "Mentor Assessment Automation"
 kicker: "Automation"
 summary: "Generates a scoring form and workbook for each of about 72 mentors every term. Setup that took about 20 hours by hand now runs on its own."
-order: 5
+order: 3
 where: "Think Tank Training Centre"
 stack: [Google Apps Script, Google Forms, Google Sheets]
-demo: diagram
-demoNote: "A diagram of the data flow, from forms to the master file to each mentor's workbook, with an illustrative screenshot using fake names."
+demo: guided
+demoNote: "A guided demo with invented mentors and students: generate each mentor's scoring form, see responses land in the master file, and watch a running grade build in their workbook."
 status: "Runs every term."
 ---
 

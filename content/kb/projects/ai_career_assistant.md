@@ -42,4 +42,10 @@ Taggart built the prototype, then worked alongside the school's engineering team
 
 ## Demo
 
-The real data can't be shown. The case study page has a small interactive demo built on invented, clearly fictional webinar snippets, showing the raw transcript, the cleaned version, the failed rules-based extraction and the LLM extraction side by side. Ask Taggart, the assistant on this site, is a live example of the same retrieval pattern.
+The real data can't be shown, so the case study page has a guided, hands-on demo built on 8 short, invented webinar snippets about generic art-career topics (demo reels, portfolio size, art tests, applying without studio experience, portfolio sites, what recruiters look at, following up after applying, generalist or specialist). The speakers are fictional. A step-by-step tour walks through it, and visitors can click through every snippet on their own.
+
+For each snippet the visitor sees four stages: the raw Zoom caption file (VTT), the cleaned and anonymized transcript, the rules-based question extractor's output, and the LLM extraction, plus a side-by-side comparison. The cleaner and the rules-based extractor are rewritten from scratch for the demo and run live in the browser. The LLM extraction is precomputed for the demo; no model is called from the page.
+
+Each snippet shows a different way questions appear in a webinar: read out word for word, paraphrased, only implied, asked out loud by a participant, two questions read together, rhetorical questions in a presentation, a question taken from the chat, and a question finished by a co-host. Across all 8, the rules find 8 question and answer pairs, of which only 2 are usable; the precomputed model extraction finds 8 real pairs and skips the presentation that had no questions.
+
+Ask Taggart, the assistant on this site, is a live example of the same retrieval pattern.

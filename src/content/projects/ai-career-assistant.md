@@ -6,7 +6,7 @@ order: 1
 where: "Think Tank Training Centre"
 stack: [Python, Flask, RAG, LLM extraction, TF-IDF, sentence-transformers]
 demo: guided
-demoNote: "A guided walk-through on invented webinar snippets, showing a raw transcript, the cleaned version, the failed rules-based extraction and the LLM extraction side by side."
+demoNote: "A guided demo on 8 invented webinar snippets. The cleaner and the rules-based extractor run live in your browser; the LLM extraction is precomputed. See the raw transcript, the cleaned version, and where rules fail next to the model."
 status: "Fully operational for students."
 ---
 

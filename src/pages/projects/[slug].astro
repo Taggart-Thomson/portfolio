@@ -3,6 +3,9 @@ import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import { demoLabel } from "../../lib/labels";
 
+// Each project's demo lives in src/demos/<slug>/Demo.astro. Pages without one show the placeholder.
+const demos = import.meta.glob<{ default: any }>("../../demos/*/Demo.astro", { eager: true });
+
 export async function getStaticPaths() {
   const all = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
   return all.map((p, i) => ({ params: { slug: p.id }, props: { p, next: all[(i + 1) % all.length] } }));
@@ -10,6 +13,7 @@ export async function getStaticPaths() {
 const { p, next } = Astro.props;
 const { Content } = await render(p);
 const d = p.data;
+const Demo = demos[`../../demos/${p.id}/Demo.astro`]?.default;
 ---
 <Base title={d.title} description={d.summary}>
   <section class="head">
@@ -26,11 +30,21 @@ const d = p.data;
   </section>
 
   <section class="wrap demo-slot" aria-label={demoLabel[d.demo]}>
-    <div class="demo">
-      <span class="tag solid">{demoLabel[d.demo]}</span>
-      <p>{d.demoNote}</p>
-      <p class="mono soon">In progress</p>
-    </div>
+    {Demo ? (
+      <>
+      <div class="demo-intro">
+        <span class="tag solid">{demoLabel[d.demo]}</span>
+        <p>{d.demoNote}</p>
+      </div>
+      <Demo />
+      </>
+    ) : (
+      <div class="demo">
+        <span class="tag solid">{demoLabel[d.demo]}</span>
+        <p>{d.demoNote}</p>
+        <p class="mono soon">In progress</p>
+      </div>
+    )}
   </section>
 
   <article class="wrap prose">
@@ -59,6 +73,9 @@ const d = p.data;
   .demo .tag.solid { background: var(--yel); color: var(--ink); border-color: var(--yel); align-self: flex-start; }
   .demo p { margin: 0; max-width: 62ch; font-size: 18px; }
   .soon { color: var(--yel); }
+  .demo-intro { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .demo-intro .tag { align-self: flex-start; }
+  .demo-intro p { margin: 0; max-width: 70ch; font-size: 18px; }
 
   .prose { max-width: 760px; padding-block: clamp(36px, 6vw, 72px); }
   .prose :global(h2) { font-weight: 800; font-size: clamp(26px, 3vw, 34px); letter-spacing: -.02em; line-height: 1.1; margin: 1.8em 0 .5em; }

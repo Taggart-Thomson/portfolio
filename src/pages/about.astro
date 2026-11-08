@@ -37,33 +37,26 @@ const roles = [
   },
 ];
 
-const education = [
-  ["MS in AI Engineering", "Quantic School of Business and Technology", "2026 to 2027, in progress"],
-  ["MBA, Management", "University of East London", "2024"],
-  ["Bachelor of Commerce, Accounting and Finance", "Mount Allison University", "2010"],
-  ["Visual Art and Design", "Vancouver Film School", "2011"],
-];
-
-const courses = [
-  "AI Agents",
-  "LLM-Based Apps",
-  "Prompt Engineering",
-  "AI-Assisted Software Development",
-  "Software Testing and Agentic Software Development",
-  "CI/CD and Software Maintenance",
-  "Performance Monitoring",
-  "Cloud Foundations",
-  "Managing AI Application Development I and II",
-  "Adopting AI in Your Organization",
-  "Relational Databases",
-  "Back Ends",
+const looking = [
+  "Forward-deployed engineering and AI deployment",
+  "AI solutions and solutions engineering",
+  "AI enablement and AI operations",
+  "AI workflow and business process automation",
+  "AI agents and internal tools",
+  "GTM engineering and revenue systems",
+  "AI product and technical product roles",
+  "AI implementation and program leadership",
+  "AI transformation consulting",
+  "Business systems and operations leadership",
 ];
 
 const skills = [
-  ["AI", "Claude and Claude Code (daily), the Anthropic API, RAG, tool-using agents, MCP, Claude Skills, prompt and context design, LLM-based extraction, human-in-the-loop design."],
-  ["Building", "Python, FastAPI, Flask, Django, React, TypeScript, SQL, PostgreSQL, SQLite, REST APIs, Git, GitHub Actions, pytest."],
-  ["Automation", "Google Apps Script, Google Forms and Sheets, HubSpot workflows, HTML email, Zoom integration, Google Workspace, ClickUp, Miro, Figma."],
-  ["Operating", "Budget ownership, Excel cost and scenario modeling, KPI design, reporting to leadership, contractor contracts and onboarding, cross-functional delivery."],
+  ["AI", "Claude and Claude Code (daily), the Anthropic API, RAG, embeddings and semantic search, tool-using agents with human approval steps, MCP, Claude Skills, prompt and context design, prompt caching, LLM-based extraction, guardrails and rate limiting, AI cost tracking."],
+  ["Building", "Python, TypeScript, JavaScript, FastAPI, Flask, Django, React, Astro, SQL, PostgreSQL, SQLite, REST APIs, Git, GitHub Actions, pytest, Cloudflare Workers, offline-first web apps."],
+  ["Data", "Data cleaning and pipelines, messy real-world data and name matching, job board APIs (Greenhouse, Lever), Excel cost and scenario modeling, KPI design and reporting dashboards, PDF and Excel exports."],
+  ["Automation", "Google Apps Script, Google Forms and Sheets, HubSpot workflows, HTML email, Zoom integration, scheduled jobs, Google Workspace, ClickUp, Miro, Figma."],
+  ["Delivery", "Workflow discovery, scoping and requirements, rapid prototyping, user testing and redesign, rollout and adoption, working with engineering teams to ship to production, privacy by design."],
+  ["Operating", "Budget ownership (about CAD 490,000 a term), cost-saving business cases, revenue growth as a co-founder, pricing and proposals, business development, global brand clients, contractor contracts and onboarding, reporting to leadership, cross-functional delivery."],
 ];
 ---
 <Base title="About" description="Operations leader who builds AI and automation tools. Based remotely, relocating to Canada.">
@@ -81,24 +74,24 @@ const skills = [
     <div>
       <h2 class="mono">How I work</h2>
       <p>
-        I'm not a specialist software engineer, and I say so plainly. My strength is finding the workflow
-        worth fixing, building the first version with AI tools, working with engineers on the production
-        version, and measuring the result.
+        I start where the work actually happens. I find where time or money is being lost, build the first
+        working version myself with AI tools, put it in front of the people who will use it, measure the
+        result and fix what breaks.
       </p>
       <p>
-        I haven't held a formal software engineering or product manager title. What I have done: built working
-        first versions, worked with engineering teams to take them into production,
-        and run my own tools every term. I'm learning production engineering through my MS in AI Engineering
-        and the tools I build.
+        I'm most useful between the business and the engineering team. I've owned budgets, run a program of
+        about 500 students a term and built a company, so I know what a tool has to deliver. Then I build it.
+        When it needs to scale, I work with engineers to take it into production, as I did with the Virtual
+        Program Assistant and the Term Scheduler.
+      </p>
+      <p>
+        I learn project first. Every tool on this site started as a real problem I needed solved.
       </p>
     </div>
     <div>
       <h2 class="mono">What I'm looking for</h2>
       <ul>
-        <li>Forward-deployed and AI deployment roles</li>
-        <li>AI enablement and AI operations roles</li>
-        <li>AI product roles</li>
-        <li>AI transformation consulting</li>
+        {looking.map((r) => <li>{r}</li>)}
       </ul>
       <h2 class="mono">Where I'm based</h2>
       <p>
@@ -139,17 +132,28 @@ const skills = [
 
   <section class="wrap block" id="education">
     <h2 class="big">Education</h2>
-    <div class="table">
-      {education.map(([d, s, y]) => (
-        <div class="erow"><span class="t">{d}</span><span>{s}</span><span class="mono">{y}</span></div>
-      ))}
-    </div>
-    <div class="courses">
-      <h3>MS courses completed so far</h3>
-      <p class="sub">24 courses, May to November 2026, each with a proof of completion. Highlights:</p>
-      <ul class="chips">
-        {courses.map((c) => <li class="tag">{c}</li>)}
-      </ul>
+    <div class="edu">
+      <p class="lead">
+        I started in business, then went to film school, built a career on both, and have now turned it all
+        toward AI.
+      </p>
+      <p>
+        I earned a <strong>Bachelor of Commerce in Accounting and Finance</strong> from Mount Allison University
+        in 2010, then studied <strong>Visual Art and Design</strong> at Vancouver Film School in 2011. That
+        combination took me into digital media and, in 2017, to co-founding a production company in Shanghai.
+      </p>
+      <p>
+        In 2024 I completed an <strong>MBA in Management</strong> at the University of East London. It sharpened
+        how I think about cost, people and results, which is how I judge every tool I build.
+      </p>
+      <p>
+        Now I'm doing an <strong>MS in AI Engineering</strong> at Quantic School of Business and Technology
+        (2026 to 2027). Since May 2026 I've completed 24 courses, each with a proof of completion. They cover
+        building AI systems end to end: AI agents, LLM-based apps and prompt engineering; AI-assisted and
+        agentic software development, software testing, CI/CD and performance monitoring; cloud foundations,
+        relational databases and back ends; and the leadership side, from managing AI application development
+        to adopting AI across an organization.
+      </p>
     </div>
   </section>
 
@@ -192,14 +196,11 @@ const skills = [
   .role li, .role p { font-size: 18px; line-height: 1.55; margin: 6px 0; }
 
   .table > div { display: grid; gap: 16px; padding-block: 14px; border-bottom: 1.5px solid var(--ink); align-items: baseline; }
-  .erow { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) 200px; }
-  .erow .t { font-weight: 700; }
   .srow { grid-template-columns: 160px minmax(0, 1fr); }
-  @media (max-width: 760px) { .erow, .srow { grid-template-columns: minmax(0, 1fr) !important; gap: 4px !important; } }
+  @media (max-width: 760px) { .srow { grid-template-columns: minmax(0, 1fr) !important; gap: 4px !important; } }
   .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
-  .courses { margin-top: 32px; }
-  .courses .sub { margin: 6px 0 14px; color: var(--muted); }
-  .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-  .chips .tag { font-size: 12px; }
+  .edu { max-width: 68ch; }
+  .edu p { font-size: 19px; line-height: 1.6; margin: 0 0 16px; }
+  .edu .lead { font-size: clamp(22px, 2.6vw, 30px); line-height: 1.3; font-weight: 700; letter-spacing: -.01em; }
   .last { padding-bottom: clamp(48px, 7vw, 88px); }
 </style>

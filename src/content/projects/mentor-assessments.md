@@ -1,24 +1,32 @@
 ---
 title: "Mentor Assessment Automation"
 kicker: "Automation"
-summary: "Generates a scoring form and workbook for each of about 72 mentors every term. Setup that took about 20 hours by hand now runs on its own."
+summary: "Turns students' written survey feedback into a score for every supervisor, using AI to read the comments, so the school can see each supervisor's strengths and match students to the right one. It also runs mentor scoring every term, replacing about 20 hours of manual setup."
 order: 3
 where: "Think Tank Training Centre"
-stack: [Google Apps Script, Google Forms, Google Sheets]
+stack: [Google Apps Script, Google Forms, Google Sheets, AI analysis]
 demo: guided
-demoNote: "A guided demo with invented mentors and students: generate each mentor's scoring form, see responses land in the master file, and watch a running grade build in their workbook."
+demoNote: "A guided demo with invented supervisors and survey answers: see feedback come in at mid-term and end of term, watch the AI turn written comments into a score and strengths for each supervisor, then use them to match a student."
 status: "Runs every term."
 ---
 
 ## The problem
 
-Each term, about 72 mentors give weekly scores and feedback to their students. Setting up the forms and score sheets for every mentor took about 20 hours of manual work.
+Students are the best judges of how their supervision is going, but their feedback comes in as survey answers, much of it written comments. Read by hand, it's hard to compare supervisors fairly or use it when placing students in groups.
 
 ## What I built
 
-A Google Apps Script system that runs every term. It generates a Google Form for each mentor, pre-filled with that mentor's students and the term's weeks, with a rubric grid scoring five criteria from 0 to 5.
+**Supervisor scores from student feedback.** Students fill in a survey twice a term, at the middle and at the end. Their feedback on each supervisor goes into the tool, where an AI process reads the written comments alongside the ratings and gives each supervisor a score.
 
-All responses flow into one master data file, with one tab per mentor. It also creates a scoring workbook for each mentor, with a tab per student that pulls their weekly scores and calculates a running grade.
+That turns a pile of opinions into something the school can act on:
+
+- **Each supervisor's strengths are visible**, so it's clear who is strongest at what.
+- **Better matches for students.** When students are placed into groups, we can match them with the supervisor who fits them best.
+- **Problems surface mid-term**, while there's still time to fix them, instead of after the term ends.
+
+The goal is simple: the best possible experience for every student.
+
+**Mentor scoring that runs itself.** The project also covers the other side of assessment. Each term, about 72 mentors give weekly scores and feedback to their students. A Google Apps Script system generates a Google Form for each mentor, pre-filled with their students and the term's weeks, with a rubric grid scoring five criteria from 0 to 5. All responses flow into one master file, with one tab per mentor, and each mentor gets a scoring workbook with a tab per student that calculates a running grade. Setup that took about 20 hours by hand every term now runs on its own.
 
 ## What went wrong, and what I changed
 

@@ -74,6 +74,10 @@ He is studying for an MS in AI Engineering (2026 to 2027, expected), covering AI
 
 Yes. His GitHub is github.com/Taggart-Thomson, and the code for this site, including this assistant, is public there. Some work projects are private because they were built for an employer, so those are shown as case studies.
 
+## Are the project demos the real tools?
+
+No. The guided demos on the project pages are for display and demo purposes only. They are rebuilt for the portfolio and run in the visitor's browser, and the real tools work differently in the environments where they are deployed. All data in the demos, including names and numbers, is fictional. Each demo shows a visible note saying so.
+
 ## How do I contact Taggart?
 
 Email taggart.thomson@gmail.com, or connect on LinkedIn at linkedin.com/in/taggart-thomson-55043396.

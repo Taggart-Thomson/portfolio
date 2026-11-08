@@ -9,6 +9,10 @@ const { id, label } = Astro.props;
     <span class="dot"></span><span class="dot"></span><span class="dot"></span>
     <span class="demo-label">{label}</span>
   </div>
+  <div class="demo-notice" role="note">
+    <span class="demo-notice-tag">Demo only</span>
+    <p>This demo is for display purposes. The real tool works differently in the environment where it's deployed. All data here, including names and numbers, is fictional.</p>
+  </div>
   <div class="tour-bar" data-tour-bar></div>
   <div class="demo-stage" data-demo-stage>
     <div class="demo-app" data-demo-app><slot /></div>
@@ -21,6 +25,11 @@ const { id, label } = Astro.props;
   .demo-chrome { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: var(--ink); color: var(--paper); }
   .demo-chrome .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--yel); opacity: .9; }
   .demo-chrome .demo-label { margin-left: 8px; opacity: .85; }
+
+  .demo-notice { display: flex; gap: 10px 14px; align-items: center; flex-wrap: wrap; padding: 12px 16px; background: var(--paper); border-bottom: 3px solid var(--ink); }
+  .demo-notice p { margin: 0; flex: 1 1 320px; font-size: 16px; line-height: 1.4; font-weight: 600; }
+  .demo-notice-tag { font: 500 12px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; background: #E8590C; color: #fff; border-radius: 999px; padding: 6px 10px; white-space: nowrap; }
+  @media (max-width: 640px) { .demo-notice { padding: 10px 12px; } .demo-notice p { font-size: 15px; } }
 
   .tour-bar { position: sticky; top: 0; z-index: 30; background: var(--yel); border-bottom: 3px solid var(--ink); }
   .tb-row { display: flex; gap: 14px 20px; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 12px 16px; }

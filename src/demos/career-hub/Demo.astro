@@ -10,59 +10,134 @@ import DemoFrame from "../../components/tour/DemoFrame.astro";
 </script>
 
 <style is:global>
-  .ch-app { padding: clamp(12px, 2.5vw, 22px); font-size: 15px; line-height: 1.45; }
-  .ch-app h3 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -.01em; }
-  .ch-app h4 { margin: 14px 0 6px; font-size: 15px; font-weight: 800; }
-  .ch-app p { margin: 8px 0 0; }
-  .ch-k { font: 500 11px/1.3 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
-  .ch-muted { color: var(--muted); font-size: 13px; }
-  .ch-hero { background: var(--ink); color: var(--paper); border-radius: 14px; padding: 18px; margin-bottom: 12px; background-image: radial-gradient(circle at 90% 20%, rgba(255,213,0,.35) 0 60px, transparent 61px), radial-gradient(circle at 75% 80%, rgba(255,213,0,.18) 0 40px, transparent 41px); }
-  .ch-hero h2 { margin: 6px 0 0; font-size: clamp(22px, 3vw, 30px); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; max-width: 22ch; }
-  .ch-tabs { display: flex; gap: 4px; background: var(--ink); padding: 4px; border-radius: 999px; margin-bottom: 14px; overflow-x: auto; }
-  .ch-tabs button { flex: 1 0 auto; font: 600 14px/1 var(--f-display); border: 0; background: transparent; color: var(--paper); padding: 9px 12px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
-  .ch-tabs button[aria-selected="true"] { background: var(--yel); color: var(--ink); }
-  @media (max-width: 640px) { .ch-tabs { display: grid; grid-template-columns: 1fr 1fr; border-radius: 16px; } .ch-tabs button { font-size: 13px; padding: 9px 6px; } }
-  .ch-body { display: grid; gap: 14px; }
-  .ch-card { background: #fff; border: 2px solid var(--ink); border-radius: 14px; padding: 14px; min-width: 0; }
-  .ch-card-h { display: flex; justify-content: space-between; align-items: center; gap: 8px 12px; flex-wrap: wrap; margin-bottom: 10px; }
-  .ch-btn { font: 600 15px/1 var(--f-display); background: var(--ink); color: var(--yel); border: 0; border-radius: 999px; padding: 11px 18px; cursor: pointer; justify-self: start; }
-  .ch-btn.sm { font-size: 13px; padding: 8px 12px; }
-  .ch-btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
-  .ch-chips { display: flex; gap: 6px; flex-wrap: wrap; }
-  .ch-chip { font: 500 13px/1.25 var(--f-display); border: 1.5px solid var(--ink); background: transparent; color: var(--ink); border-radius: 999px; padding: 6px 11px; cursor: pointer; }
-  .ch-chip[aria-pressed="true"] { background: var(--ink); color: var(--yel); }
-  .ch-tag { font: 500 11px/1 var(--f-mono); text-transform: uppercase; border: 1.5px solid var(--ink); border-radius: 999px; padding: 4px 7px; }
+  /* The real Career Hub page's layout and colors, rebuilt for the demo: dark interface,
+     icon rail, sticky section tabs, numbered sections. No original artwork, banners,
+     fonts or logos (system font, plain header). Scoped to .ch-app. */
+  .ch-app {
+    --c-bg: #0b0c0e; --c-rail: #141518; --c-panel: #121316; --c-panel-2: #1a1c20; --c-row: #1d1f24;
+    --c-line: rgba(255,255,255,.08); --c-line-2: rgba(255,255,255,.14);
+    --c-text: #f4f5f6; --c-soft: #a8acb3; --c-faint: #6b6f77;
+    --c-cyan: #22d3ee; --c-teal: #2dd4bf; --c-purple: #7b2ff6; --c-purple-soft: #2a1850; --c-pink: #ec4899; --c-green: #9ee83b;
+    display: flex; background: var(--c-bg); color: var(--c-text); font: 400 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; min-height: 560px;
+  }
+  .ch-app *, .ch-app *::before { box-sizing: border-box; }
+  .ch-app button, .ch-app input { font-family: inherit; }
+  .ch-app svg { width: 100%; height: 100%; display: block; }
 
-  .ch-boards { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
-  .ch-board { background: var(--paper); border-radius: 10px; padding: 10px; display: grid; gap: 2px; }
-  .ch-board span { font-size: 13px; color: var(--muted); }
-  .ch-jobs { list-style: none; margin: 0; padding: 0; }
-  .ch-jobs li { display: flex; justify-content: space-between; gap: 6px 14px; flex-wrap: wrap; padding: 10px 0; border-bottom: 1px solid rgba(18,18,18,.12); }
-  .ch-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-  .ch-pipe { background: var(--paper); border: 2px dashed var(--ink); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
-  .ch-pipe p { margin: 0 0 8px; }
-  .ch-raw { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 14px; }
-  .ch-raw li { display: flex; justify-content: space-between; gap: 4px 12px; flex-wrap: wrap; padding: 5px 8px; border-radius: 6px; }
-  .ch-raw li.keep { background: #fff; }
-  .ch-raw li.drop { opacity: .6; text-decoration: line-through; text-decoration-thickness: 1px; }
-  .ch-why { font: 500 11px/1.6 var(--f-mono); text-transform: uppercase; letter-spacing: .03em; text-decoration: none; display: inline-block; }
+  .ch-rail { width: 60px; flex: none; background: var(--c-rail); border-right: 1px solid var(--c-line); display: flex; flex-direction: column; align-items: center; padding: 14px 0; gap: 4px; }
+  .ch-logo-tab { width: 30px; height: 30px; border: 1.5px solid var(--c-line-2); border-radius: 7px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+  .ch-logo-tab span { width: 13px; height: 13px; border: 1.5px solid var(--c-soft); border-radius: 3px; }
+  .ch-ricon { width: 40px; height: 40px; border-radius: 9px; display: flex; align-items: center; justify-content: center; color: var(--c-faint); padding: 10px; }
+  .ch-ricon.on { background: var(--c-panel-2); }
+  .ch-ricon.c1 { color: var(--c-cyan); } .ch-ricon.c2 { color: var(--c-teal); } .ch-ricon.c5 { color: var(--c-purple); } .ch-ricon.c6 { color: var(--c-purple); background: var(--c-purple-soft); } .ch-ricon.c7 { color: var(--c-pink); }
+  .ch-rsep { width: 26px; height: 1px; background: var(--c-line); margin: 7px 0; }
 
-  .ch-filters { display: grid; gap: 8px; margin-bottom: 12px; }
-  .ch-check { display: flex; gap: 8px; align-items: flex-start; cursor: pointer; }
-  .ch-check input { width: 18px; height: 18px; margin: 1px 0 0; accent-color: #121212; flex: none; }
-  .ch-studios { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
-  .ch-studio { display: flex; gap: 10px; align-items: center; border: 1.5px solid var(--ink); border-radius: 10px; padding: 10px; }
-  .ch-mark { width: 34px; height: 34px; border-radius: 8px; flex: none; border: 1.5px solid var(--ink); }
-  .d-games { background: conic-gradient(var(--yel) 0 25%, var(--ink) 0 50%, var(--yel) 0 75%, var(--ink) 0); }
-  .d-film { background: repeating-linear-gradient(90deg, var(--ink) 0 4px, var(--yel) 4px 8px); }
-  .d-animation { background: radial-gradient(circle, var(--yel) 0 8px, var(--ink) 9px); }
+  .ch-main { flex: 1; min-width: 0; }
+  .ch-hero { border-bottom: 1px solid var(--c-line); background: radial-gradient(120% 140% at 85% 0%, #1d1340 0%, rgba(11,12,14,0) 55%), radial-gradient(90% 120% at 0% 100%, #0d2a2a 0%, rgba(11,12,14,0) 60%), var(--c-bg); }
+  .ch-hero-in { max-width: 920px; margin: 0 auto; padding: 46px 28px 26px; }
+  .ch-hero h1 { margin: 0; font-size: 34px; font-weight: 600; letter-spacing: .02em; line-height: 1.05; color: #fff; }
+  .ch-hero p { margin: 8px 0 0; color: #e6e8ec; font-size: 15px; }
+  .ch-tabbar { background: rgba(11,12,14,.92); border-bottom: 1px solid var(--c-line); }
+  .ch-tabbar-in { max-width: 920px; margin: 0 auto; padding: 0 20px; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+  .ch-tab { font-size: 14px; font-weight: 500; color: var(--c-soft); background: none; border: 0; border-bottom: 2px solid transparent; padding: 14px 14px; cursor: pointer; white-space: nowrap; margin-bottom: -1px; }
+  .ch-tab:hover { color: var(--c-text); }
+  .ch-tab.active { color: var(--c-green); border-bottom-color: var(--c-green); }
+  .ch-wrap { max-width: 920px; margin: 0 auto; padding: 28px 28px 36px; }
 
-  .ch-progress { font: 500 12px/1 var(--f-mono); background: var(--yel); border: 1.5px solid var(--ink); border-radius: 999px; padding: 6px 10px; }
-  .ch-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-  .ch-form { display: grid; gap: 10px; max-width: 520px; }
-  .ch-form > label:not(.ch-check) { display: grid; gap: 4px; font: 500 11px/1.3 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; }
-  .ch-form input:not([type="checkbox"]) { font: 15px/1.2 var(--f-display); text-transform: none; letter-spacing: 0; border: 2px solid var(--ink); border-radius: 10px; padding: 9px 10px; background: var(--paper); color: var(--ink); min-width: 0; }
-  .ch-done { background: var(--yel); }
-  .ch-note { background: #fff; border-radius: 10px; padding: 10px 12px; font-size: 14px; }
-  .ch-done .ch-btn { margin-top: 10px; }
+  .ch-section { margin-bottom: 34px; }
+  .ch-section:last-child { margin-bottom: 0; }
+  .ch-shead { display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; }
+  .ch-num { font-size: 14px; color: var(--c-green); letter-spacing: .06em; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ch-shead h2 { margin: 0; font-size: 19px; font-weight: 600; letter-spacing: -.01em; }
+  .ch-sdesc { font-size: 14px; color: var(--c-soft); margin: 0 0 16px; max-width: 64ch; }
+  .ch-note { display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; color: var(--c-faint); margin: 14px 0 0; }
+  .ch-note svg { width: 15px; height: 15px; flex: none; margin-top: 2px; opacity: .7; }
+
+  .ch-boards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 12px; }
+  .ch-board { background: var(--c-panel); border: 1px solid var(--c-line); border-radius: 12px; padding: 16px 18px; }
+  .ch-board-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .ch-board-name { font-size: 15px; font-weight: 600; }
+  .ch-ico { width: 16px; height: 16px; color: var(--c-faint); }
+  .ch-blurb { font-size: 13px; color: var(--c-soft); line-height: 1.45; }
+
+  .ch-feedhead { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .ch-live { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--c-green); background: rgba(158,232,59,.08); border: 1px solid rgba(158,232,59,.3); padding: 5px 11px; border-radius: 999px; }
+  .ch-live i { width: 7px; height: 7px; border-radius: 50%; background: var(--c-green); }
+  .ch-pill { font-size: 13px; font-weight: 500; padding: 7px 16px; border-radius: 999px; border: 1px solid var(--c-line-2); background: var(--c-panel); color: var(--c-soft); cursor: pointer; }
+  .ch-pill:hover { border-color: var(--c-teal); color: var(--c-teal); }
+  .ch-pill.active { background: var(--c-purple); border-color: var(--c-purple); color: #fff; }
+  .ch-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .ch-pipe { background: var(--c-panel); border: 1px dashed var(--c-line-2); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; }
+  .ch-pipe p { margin: 0 0 10px; font-size: 13.5px; color: var(--c-soft); }
+  .ch-raw { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13.5px; }
+  .ch-raw li { display: flex; justify-content: space-between; gap: 4px 12px; flex-wrap: wrap; padding: 6px 10px; border-radius: 8px; background: var(--c-row); }
+  .ch-raw li.drop { opacity: .5; text-decoration: line-through; }
+  .ch-raw li.keep .ch-why { color: var(--c-green); }
+  .ch-why { font-size: 11px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; color: var(--c-faint); text-decoration: none; display: inline-block; }
+  .ch-joblist { display: flex; flex-direction: column; gap: 10px; }
+  .ch-job { background: var(--c-panel); border: 1px solid var(--c-line); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 16px; }
+  .ch-jmain { flex: 1; min-width: 0; }
+  .ch-role { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+  .ch-meta { font-size: 13px; color: var(--c-soft); display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+  .ch-studio { font-weight: 500; color: var(--c-text); }
+  .ch-dot { color: var(--c-faint); }
+  .ch-tags { display: flex; gap: 6px; flex-shrink: 0; }
+  .ch-tag { font-size: 11.5px; font-weight: 500; padding: 3px 9px; border-radius: 999px; white-space: nowrap; border: 1px solid transparent; }
+  .ch-tag.asset { background: rgba(34,211,238,.1); color: var(--c-cyan); border-color: rgba(34,211,238,.25); }
+  .ch-tag.vfx { background: rgba(236,72,153,.1); color: var(--c-pink); border-color: rgba(236,72,153,.25); }
+  .ch-go { width: 17px; height: 17px; flex-shrink: 0; color: var(--c-faint); }
+
+  .ch-toggle { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: var(--c-soft); cursor: pointer; margin: 2px 0 16px; }
+  .ch-toggle input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .ch-toggle span { width: 34px; height: 20px; border-radius: 999px; background: var(--c-panel-2); border: 1px solid var(--c-line-2); position: relative; flex: none; }
+  .ch-toggle span::after { content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: var(--c-soft); transition: transform .15s; }
+  .ch-toggle input:checked + span { background: var(--c-purple); border-color: var(--c-purple); }
+  .ch-toggle input:checked + span::after { transform: translateX(14px); background: #fff; }
+  .ch-toggle input:focus-visible + span { outline: 2px solid var(--c-teal); outline-offset: 2px; }
+  .ch-studios { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 9px; }
+  .ch-chip { background: var(--c-panel); border: 1px solid var(--c-line); border-radius: 9px; padding: 11px 13px; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+  .ch-sico { width: 16px; height: 16px; flex: none; color: var(--c-cyan); }
+  .ch-chip.vfx .ch-sico { color: var(--c-pink); }
+  .ch-label small { display: block; font-size: 12px; font-weight: 400; color: var(--c-faint); }
+
+  .ch-subhead { display: flex; align-items: center; gap: 9px; margin: 22px 0 6px; }
+  .ch-subhead:first-of-type { margin-top: 4px; }
+  .ch-sh-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-green); }
+  .ch-subhead h3 { margin: 0; font-size: 16px; font-weight: 600; }
+  .ch-checklist { display: flex; flex-direction: column; }
+  .ch-check { display: flex; gap: 13px; align-items: flex-start; padding: 12px 0; border: 0; border-bottom: 1px solid var(--c-line); background: none; color: var(--c-text); text-align: left; cursor: pointer; font-size: 15px; }
+  .ch-check:last-child { border-bottom: 0; }
+  .ch-box { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--c-line-2); flex: none; display: flex; align-items: center; justify-content: center; padding: 3px; color: transparent; }
+  .ch-check.done .ch-box { background: var(--c-green); border-color: var(--c-green); color: #0b0c0e; }
+  .ch-check.done .ch-ctitle { color: var(--c-faint); text-decoration: line-through; }
+  .ch-progress { margin-top: 18px; display: flex; align-items: center; gap: 12px; }
+  .ch-track { flex: 1; height: 7px; background: var(--c-panel-2); border-radius: 999px; overflow: hidden; }
+  .ch-fill { height: 100%; background: var(--c-green); border-radius: 999px; transition: width .35s ease; }
+  .ch-plabel { font-size: 13px; font-weight: 600; color: var(--c-green); min-width: 82px; text-align: right; }
+
+  .ch-place { background: linear-gradient(180deg, rgba(123,47,246,.12), rgba(123,47,246,.03)); border: 1px solid rgba(123,47,246,.35); border-radius: 14px; padding: 20px 22px; }
+  .ch-place.done { border-color: rgba(158,232,59,.4); background: linear-gradient(180deg, rgba(158,232,59,.1), rgba(158,232,59,.02)); }
+  .ch-place h3 { margin: 0 0 4px; font-size: 19px; font-weight: 600; }
+  .ch-place p { margin: 0 0 10px; }
+  .ch-place-h { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 8px; }
+  .ch-place-ico { width: 40px; height: 40px; border-radius: 10px; background: var(--c-purple); color: #fff; padding: 9px; flex: none; margin-bottom: 8px; }
+  .ch-place.done .ch-place-ico { background: var(--c-green); color: #0b0c0e; }
+  .ch-form { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+  .ch-form > label:not(.ch-toggle) { display: grid; gap: 5px; font-size: 12.5px; font-weight: 500; color: var(--c-soft); }
+  .ch-form input:not([type="checkbox"]) { font-size: 14.5px; padding: 11px 14px; border: 1px solid var(--c-line-2); border-radius: 10px; background: var(--c-panel-2); color: var(--c-text); color-scheme: dark; min-width: 0; }
+  .ch-form input:focus { outline: none; border-color: var(--c-purple); }
+  .ch-toggle.wide { grid-column: 1 / -1; margin: 0; }
+  .ch-send { grid-column: 1 / -1; justify-self: start; background: var(--c-purple); color: #fff; border: 0; border-radius: 999px; padding: 12px 24px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 8px 26px rgba(123,47,246,.35); }
+
+  @media (max-width: 640px) {
+    .ch-rail { display: none; }
+    .ch-hero-in { padding: 30px 16px 18px; }
+    .ch-hero h1 { font-size: 26px; }
+    .ch-tabbar-in { padding: 0 6px; }
+    .ch-tab { padding: 13px 10px; font-size: 13.5px; }
+    .ch-wrap { padding: 20px 16px 26px; }
+    .ch-job { padding: 12px 14px; gap: 10px; flex-wrap: wrap; }
+    .ch-go { display: none; }
+    .ch-form { grid-template-columns: 1fr; }
+  }
 </style>

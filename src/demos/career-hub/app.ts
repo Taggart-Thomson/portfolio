@@ -32,83 +32,104 @@ function verdict(p: Posting): { keep: boolean; why: string } {
 const kept = () => RAW.filter((p) => verdict(p).keep);
 const total = CHECKLIST.reduce((n, g) => n + g.items.length, 0);
 
+// Simple line icons drawn for the demo.
+const I = {
+  board: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>`,
+  studio: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg>`,
+  jobs: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>`,
+  doc: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h7"/></svg>`,
+  star: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6-.7z"/></svg>`,
+  arrow: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg>`,
+  check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>`,
+  info: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>`,
+};
+
+function shead(n: string, title: string, desc: string) {
+  return `<div class="ch-shead"><span class="ch-num">${n}</span><h2>${title}</h2></div><p class="ch-sdesc">${desc}</p>`;
+}
+
 function jobsView() {
   const k = kept();
-  return `<section class="ch-card">
-      <div class="ch-card-h"><h3>Job boards worth checking</h3></div>
-      <div class="ch-boards">${BOARDS.map((b) => `<div class="ch-board"><b>${b.name}</b><span>${b.note}</span></div>`).join("")}</div>
+  return `<section class="ch-section">
+      ${shead("01", "Best job boards to check", "Where to look first. Invented examples for the demo.")}
+      <div class="ch-boards">${BOARDS.map((b) => `<div class="ch-board"><div class="ch-board-top"><span class="ch-board-name">${b.name}</span><span class="ch-ico">${I.arrow}</span></div><div class="ch-blurb">${b.note}</div></div>`).join("")}</div>
     </section>
-    <section class="ch-card" data-tour="feed">
-      <div class="ch-card-h"><h3>Jobs you can apply to now</h3>
-        <button type="button" class="ch-btn ghost sm" data-a="pipeline" aria-expanded="${S.pipeline}" data-tour="pipeline-btn">${S.pipeline ? "Hide" : "How this feed is built"}</button></div>
+    <section class="ch-section" data-tour="feed">
+      ${shead("03", "Jobs you can apply to now", "Junior roles pulled from studios' own public job boards.")}
+      <div class="ch-feedhead"><span class="ch-live"><i></i>Live feed</span>
+        <button type="button" class="ch-pill" data-a="pipeline" aria-expanded="${S.pipeline}" data-tour="pipeline-btn">${S.pipeline ? "Hide how it's built" : "How this feed is built"}</button></div>
       ${S.pipeline ? `<div class="ch-pipe" data-tour="pipeline">
-        <p class="ch-muted">A scheduled job reads each studio's public job-board API, then keeps junior art roles. ${RAW.length} sample postings in, ${k.length} kept.</p>
+        <p>A scheduled job reads each studio's public job-board API, then keeps junior art roles. ${RAW.length} sample postings in, ${k.length} kept.</p>
         <ul class="ch-raw">${RAW.map((p) => { const v = verdict(p); return `<li class="${v.keep ? "keep" : "drop"}"><span><b>${esc(p.title)}</b> &middot; ${esc(p.studio)}</span><span class="ch-why">${esc(v.why)}</span></li>`; }).join("")}</ul>
       </div>` : ""}
-      <ul class="ch-jobs">${k.map((p) => { const s = STUDIOS.find((x) => x.name === p.studio)!; return `<li>
-        <div><b>${esc(p.title)}</b><div class="ch-muted">${esc(p.studio)} &middot; ${esc(p.location)}</div></div>
-        <div class="ch-meta"><span class="ch-tag">${s.disc}</span><span class="ch-muted">${p.posted}</span><span class="ch-muted">via ${s.board}</span></div>
-      </li>`; }).join("")}</ul>
-      <p class="ch-muted">Invented postings. In the real feed, each one links to the studio's own listing.</p>
+      <div class="ch-joblist">${k.map((p) => { const s = STUDIOS.find((x) => x.name === p.studio)!; return `<div class="ch-job">
+        <div class="ch-jmain"><div class="ch-role">${esc(p.title)}</div>
+          <div class="ch-meta"><span class="ch-studio">${esc(p.studio)}</span><span class="ch-dot">&middot;</span>${esc(p.location)}<span class="ch-dot">&middot;</span>${p.posted}<span class="ch-dot">&middot;</span>via ${s.board}</div></div>
+        <div class="ch-tags"><span class="ch-tag ${s.disc === "Film and VFX" ? "vfx" : "asset"}">${s.disc}</span></div>
+        <span class="ch-go">${I.arrow}</span>
+      </div>`; }).join("")}</div>
+      <p class="ch-note">${I.info}<span>Invented postings. In the real feed, each one links to the studio's own listing.</span></p>
     </section>`;
 }
 
 function studiosView() {
   const list = STUDIOS.filter((s) => (S.disc === "all" || s.disc === S.disc) && (S.region === "all" || s.region === S.region) && (!S.juniors || s.juniors));
-  const chips = <T extends string>(key: "disc" | "region", opts: T[]) => `<div class="ch-chips">${(["all", ...opts] as string[]).map((o) => `<button type="button" class="ch-chip" aria-pressed="${S[key] === o}" data-a="${key}" data-v="${o}" data-tour="${key}-${o.replace(/\s+/g, "-")}">${o === "all" ? "All" : o}</button>`).join("")}</div>`;
-  return `<section class="ch-card" data-tour="studios">
-    <div class="ch-card-h"><h3>Studios to target</h3><span class="ch-muted">${list.length} of ${STUDIOS.length}</span></div>
-    <div class="ch-filters">
-      ${chips<Disc>("disc", ["Games", "Film and VFX", "Animation"])}
-      ${chips<Region>("region", ["Americas", "Europe", "Asia Pacific"])}
-      <label class="ch-check"><input type="checkbox" data-a="juniors" ${S.juniors ? "checked" : ""}/> Hires juniors</label>
-    </div>
-    <div class="ch-studios">${list.map((s) => `<div class="ch-studio"><span class="ch-mark d-${s.disc.split(" ")[0].toLowerCase()}" aria-hidden="true"></span><div><b>${esc(s.name)}</b><div class="ch-muted">${s.city} &middot; ${s.disc}${s.juniors ? " &middot; hires juniors" : ""}</div></div></div>`).join("") || `<p class="ch-muted">No studios match. Loosen a filter.</p>`}</div>
-    <p class="ch-muted">Invented studios.</p>
+  const pills = <T extends string>(key: "disc" | "region", opts: T[]) => `<div class="ch-filters">${(["all", ...opts] as string[]).map((o) => `<button type="button" class="ch-pill ${S[key] === o ? "active" : ""}" aria-pressed="${S[key] === o}" data-a="${key}" data-v="${o}" data-tour="${key}-${o.replace(/\s+/g, "-")}">${o === "all" ? (key === "disc" ? "All studios" : "All regions") : o}</button>`).join("")}</div>`;
+  return `<section class="ch-section" data-tour="studios">
+    ${shead("02", "Studios to target", `${list.length} of ${STUDIOS.length} invented studios.`)}
+    ${pills<Disc>("disc", ["Games", "Film and VFX", "Animation"])}
+    ${pills<Region>("region", ["Americas", "Europe", "Asia Pacific"])}
+    <label class="ch-toggle"><input type="checkbox" data-a="juniors" ${S.juniors ? "checked" : ""}/><span></span>Hires juniors</label>
+    <div class="ch-studios">${list.map((s) => `<div class="ch-chip ${s.disc === "Film and VFX" ? "vfx" : ""}"><span class="ch-sico">${I.studio}</span><span class="ch-label">${esc(s.name)}<small>${s.city}${s.juniors ? " &middot; hires juniors" : ""}</small></span></div>`).join("") || `<p class="ch-sdesc">No studios match. Loosen a filter.</p>`}</div>
   </section>`;
 }
 
 function checklistView() {
   const n = S.checked.size;
-  return `<section class="ch-card" data-tour="checklist">
-    <div class="ch-card-h"><h3>Resume and cover letter checklist</h3><span class="ch-progress" data-tour="progress">${n} of ${total} done</span></div>
-    ${CHECKLIST.map((g) => `<h4>${g.group}</h4><ul class="ch-list">${g.items.map((it) => {
-      const id = `${g.group}:${it}`;
-      return `<li><label class="ch-check"><input type="checkbox" data-a="check" data-v="${esc(id)}" ${S.checked.has(id) ? "checked" : ""} data-tour="item-${g.group === "Resume" ? g.items.indexOf(it) : "x"}"/> ${esc(it)}</label></li>`;
-    }).join("")}</ul>`).join("")}
-    <p class="ch-muted">Ticks stay on this page only.</p>
+  return `<section class="ch-section" data-tour="checklist">
+    ${shead("04", "Resume and cover letters", "Run through this before you send anything.")}
+    ${CHECKLIST.map((g) => `<div class="ch-subhead"><span class="ch-sh-dot"></span><h3>${g.group}</h3></div>
+      <div class="ch-checklist">${g.items.map((it, i) => {
+        const id = `${g.group}:${it}`, done = S.checked.has(id);
+        return `<button type="button" class="ch-check ${done ? "done" : ""}" role="checkbox" aria-checked="${done}" data-a="check" data-v="${esc(id)}" data-tour="item-${g.group === "Resume" ? i : "x"}"><span class="ch-box">${I.check}</span><span class="ch-ctitle">${esc(it)}</span></button>`;
+      }).join("")}</div>`).join("")}
+    <div class="ch-progress" data-tour="progress"><div class="ch-track"><div class="ch-fill" style="width:${(n / total) * 100}%"></div></div><span class="ch-plabel">${n} of ${total} done</span></div>
+    <p class="ch-note">${I.info}<span>Ticks stay on this page only.</span></p>
   </section>`;
 }
 
 function landedView() {
-  if (S.sent) return `<section class="ch-card ch-done" data-tour="success">
+  if (S.sent) return `<section class="ch-section"><div class="ch-place done" data-tour="success">
+    <div class="ch-place-ico">${I.star}</div>
     <h3>Congratulations, and thank you.</h3>
     <p>Your placement has been recorded.</p>
-    <p class="ch-note">Demo only: nothing was sent or stored. In the real tracker the form posts to a small backend, records are protected by an admin token, and only a public count is shown.</p>
-    <button type="button" class="ch-btn ghost sm" data-a="again">Fill it in again</button>
-  </section>`;
-  return `<section class="ch-card" data-tour="form">
-    <div class="ch-card-h"><h3>Landed a job? Tell us</h3></div>
+    <p class="ch-note">${I.info}<span>Demo only: nothing was sent or stored. In the real tracker the form posts to a small backend, records are protected by an admin token, and only a public count is shown.</span></p>
+    <button type="button" class="ch-pill" data-a="again">Fill it in again</button>
+  </div></section>`;
+  return `<section class="ch-section"><div class="ch-place" data-tour="form">
+    <div class="ch-place-h"><div class="ch-place-ico">${I.star}</div><div><h3>Landed a job? Tell us</h3><p class="ch-sdesc">Filled in with made-up details. This demo stores nothing.</p></div></div>
     <form class="ch-form" data-form="landed">
       <label>Name<input name="name" value="Ada Example" /></label>
       <label>Email<input name="email" type="email" value="ada@example.com" /></label>
       <label>Studio<input name="studio" value="Pinecone Interactive" /></label>
       <label>Role<input name="role" value="Environment Artist" /></label>
       <label>Start date<input name="start" type="month" value="2026-12" /></label>
-      <label class="ch-check"><input type="checkbox" name="ok" checked /> It's fine to count my placement in school statistics</label>
-      <button type="submit" class="ch-btn" data-tour="submit">Send</button>
-      <p class="ch-muted">Filled in with made-up details. This demo stores nothing.</p>
+      <label class="ch-toggle wide"><input type="checkbox" name="ok" checked /><span></span>It's fine to count my placement in school statistics</label>
+      <button type="submit" class="ch-send" data-tour="submit">Send</button>
     </form>
-  </section>`;
+  </div></section>`;
 }
 
 function render() {
-  const tabs: [Tab, string][] = [["jobs", "Jobs"], ["studios", "Studios"], ["checklist", "Checklist"], ["landed", "Landed a job?"]];
+  const tabs: [Tab, string, string, string][] = [["jobs", "Jobs", I.jobs, "c1"], ["studios", "Studios", I.studio, "c2"], ["checklist", "Resume", I.doc, "c5"], ["landed", "Landed a job?", I.star, "c7"]];
   const view = { jobs: jobsView, studios: studiosView, checklist: checklistView, landed: landedView }[S.tab]();
   root.innerHTML = `<div class="ch-app">
-    <header class="ch-hero"><div class="ch-k">Career Hub demo</div><h2>Everything for your job search, in one place.</h2></header>
-    <nav class="ch-tabs" role="tablist" aria-label="Sections">${tabs.map(([id, l]) => `<button type="button" role="tab" aria-selected="${S.tab === id}" data-a="tab" data-v="${id}" data-tour="tab-${id}">${l}</button>`).join("")}</nav>
-    <div class="ch-body">${view}</div>
+    <nav class="ch-rail" aria-hidden="true"><span class="ch-logo-tab"><span></span></span>${tabs.map(([id, , ico, c]) => `<span class="ch-ricon ${c} ${S.tab === id ? "on" : ""}">${ico}</span>`).join("")}<span class="ch-rsep"></span><span class="ch-ricon c6">${I.board}</span></nav>
+    <div class="ch-main">
+      <header class="ch-hero"><div class="ch-hero-in"><h1>Career Hub demo</h1><p>Everything for your job search, in one place.</p></div></header>
+      <nav class="ch-tabbar" role="tablist" aria-label="Sections"><div class="ch-tabbar-in">${tabs.map(([id, l]) => `<button type="button" role="tab" class="ch-tab ${S.tab === id ? "active" : ""}" aria-selected="${S.tab === id}" data-a="tab" data-v="${id}" data-tour="tab-${id}">${l}</button>`).join("")}</div></nav>
+      <div class="ch-wrap">${view}</div>
+    </div>
   </div>`;
 }
 

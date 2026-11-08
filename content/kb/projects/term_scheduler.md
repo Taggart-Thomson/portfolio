@@ -43,4 +43,8 @@ Taggart rebuilt the scheduler himself as a FastAPI and React app with 22 tests, 
 
 ## Demo
 
-The case study page has a guided demo on an invented dataset: about 40 fictional students across 4 time zone regions and 3 program paths, and 8 fictional supervisors with made-up availability and costs in "credits," not real money.
+The case study page has a guided, hands-on demo that runs entirely in the visitor's browser on an invented term: 40 fictional students across 4 time zone regions (Americas West, Americas East, Europe, Asia Pacific) and 3 program paths (Characters, Environments, Effects), and 8 fictional supervisors with made-up availability and prices in "credits," not real money. A step-by-step tour highlights where to click, with skip, back and restart controls, and visitors can also explore on their own.
+
+The demo runs a real engine written from scratch for the portfolio, not the school's code or data. It applies the fit rule (8am to 9pm local is ideal, 6 to 8am is OK, anything else is not OK; midweek preferred, weekends never), ranks each supervisor's slots by fit, day and price, works out the cheapest group structure for each path, and places the pickiest students first. The tour then shows a late roster change (a student moves time zones and lands at a bad local time), a canned assistant reply whose numbers come from the engine, and an Apply card that flags a contract change because the student's new group crosses a size band. Nothing changes until the visitor approves it. Visitors can also move students by hand and see the cost and contract impact of each option.
+
+The assistant in the demo is canned (no model call); the real tool uses a live language model with tools.

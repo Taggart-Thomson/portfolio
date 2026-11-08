@@ -34,9 +34,14 @@ img, svg { max-width: 100%; }
 .mono { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
 
 /* Top bar */
-.bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding-block: 22px; }
+.bar { position: relative; z-index: 5; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding-block: 22px; }
 .bar a { text-decoration: none; }
-.bar nav { display: flex; gap: 18px; flex-wrap: wrap; }
+/* Large tap targets: at least 44px tall, with the padding offset so the layout doesn't move. */
+.bar nav { display: flex; gap: 6px; flex-wrap: wrap; margin-block: -12px; }
+.bar nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; touch-action: manipulation; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+#work { scroll-margin-top: 12px; }
 .bar nav a:hover, .bar nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
 
 /* Buttons and pills */

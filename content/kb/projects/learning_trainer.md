@@ -26,3 +26,9 @@ It is an installable PWA and works offline.
 ## Status
 
 The app is live on GitHub Pages. Its question bank is being rewritten with original questions based on Brazil's public traffic code (CTB) before it is linked from this site.
+
+## Demo
+
+The project page has a guided, hands-on demo of the trainer that runs in the visitor's browser. It does not link to the live app. Its 20 questions are original, written for the demo from Brazil's public traffic code (Código de Trânsito Brasileiro, Lei nº 9.503/1997, current text on planalto.gov.br), and each one cites the article it was checked against. None come from a study book or from the live app's current question bank.
+
+The demo has 4 sections (road rules and overtaking, speed and lights, safety, infractions and the license), each with Portuguese signal words and their meaning, the rules in English with the Portuguese words that decide them, and a 5-question practice quiz in Portuguese with an optional English translation. The deciding words are highlighted, and every answer explains the rule and cites the article. A section is complete at 70 percent or higher (4 of 5), and a progress ring tracks the course. A short mock exam has 8 timed questions in 8 minutes, 2 from each section, reshuffled each attempt, with 6 needed to pass and every miss reviewed afterward. The real app's mock exam is 30 questions in 30 minutes with 21 to pass.

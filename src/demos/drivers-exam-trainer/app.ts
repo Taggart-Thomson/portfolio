@@ -29,7 +29,7 @@ const examSize = SECTIONS.length * MOCK_PER_SECTION;
 const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 const bold = (text: string, sig: string) => {
   const i = text.toLowerCase().indexOf(sig.toLowerCase());
-  return i < 0 ? esc(text) : `${esc(text.slice(0, i))}<mark>${esc(text.slice(i, i + sig.length))}</mark>${esc(text.slice(i + sig.length))}`;
+  return i < 0 ? esc(text) : `${esc(text.slice(0, i))}<mark class="rt-mark">${esc(text.slice(i, i + sig.length))}</mark>${esc(text.slice(i + sig.length))}`;
 };
 
 // ---------- actions ----------
@@ -48,7 +48,7 @@ const A = {
     stopTimer();
     timer = window.setInterval(() => {
       S.left--;
-      const t = root.querySelector(".dt-timer");
+      const t = root.querySelector(".rt-timer");
       if (t) t.textContent = fmt(S.left);
       if (S.left <= 0) { A.finish(true); render(); }
     }, 1000);
@@ -84,87 +84,101 @@ const A = {
 };
 function stopTimer() { if (timer) { clearInterval(timer); timer = 0; } }
 
-// ---------- views ----------
+// ---------- views (styled after the real trainer: road-sign palette, phone-first) ----------
+
+const BADGE = ["red", "yellow", "blue", "green"];
 
 function ring() {
   const pct = Math.round((S.done.size / SECTIONS.length) * 100);
-  return `<div class="dt-ring" style="--p:${pct}" data-tour="ring"><span>${pct}%</span></div>`;
+  return `<div class="rt-ring" style="--p:${pct}" data-tour="ring"><i>${pct}%</i></div>`;
 }
 
 function homeView() {
-  return `<div class="dt-hero">
-      ${ring()}
-      <div><h3>Learn the rules, and the Portuguese words that decide each question.</h3>
-      <p class="dt-muted">${S.done.size} of ${SECTIONS.length} sections complete. A section is complete at 70 percent or higher.${S.best !== null ? ` Best mock exam: ${S.best} of ${examSize}.` : ""}</p></div>
+  return `<div class="rt-hero">
+      <div class="rt-plate"><span class="rt-br">BR</span><span class="rt-num">CNH &middot; DEMO</span></div>
+      <h1 class="rt-title">Pass the written exam, in Portuguese.</h1>
+      <p class="rt-sub">Learn the rules and the signal words that decide each question.</p>
     </div>
-    <div class="dt-secs" data-tour="sections">${SECTIONS.map((s, i) => `<button type="button" class="dt-sec ${S.done.has(s.id) ? "done" : ""}" data-a="lesson" data-v="${s.id}" data-tour="sec-${s.id}">
-        <span class="dt-num">${String(i + 1).padStart(2, "0")}</span>
-        <span><b>${s.en}</b><span class="dt-pt">${s.pt}</span></span>
-        <span class="dt-st">${S.done.has(s.id) ? "Complete" : `${s.qs.length} questions`}</span>
+    <div class="rt-band">${ring()}<div class="rt-txt"><b>${S.done.size} of ${SECTIONS.length} sections complete</b><span>A section is complete at 70 percent or higher.${S.best !== null ? ` Best mock exam: ${S.best} of ${examSize}.` : ""}</span></div></div>
+    <div class="rt-label"><span class="rt-eyebrow">Your route</span><span class="rt-ln"></span></div>
+    <div class="rt-path" data-tour="sections">${SECTIONS.map((s, i) => `<button type="button" class="rt-node" data-a="lesson" data-v="${s.id}" data-tour="sec-${s.id}">
+        <span class="rt-connector"></span>
+        <span class="rt-badge ${BADGE[i % 4]}">${i + 1}${S.done.has(s.id) ? `<span class="rt-done">&#10003;</span>` : ""}</span>
+        <span class="rt-meta"><b>${s.en}</b><span>${s.pt} &middot; ${s.qs.length} questions</span></span>
+        <span class="rt-chev">&#8250;</span>
       </button>`).join("")}</div>
-    <div class="dt-mock" data-tour="mock">
-      <div><b>Mock exam</b><p class="dt-muted">${examSize} questions in ${examSize} minutes, ${passMark(examSize)} to pass, drawn evenly from every section and reshuffled each time. The real exam is 30 questions in 30 minutes, 21 to pass.</p></div>
-      <button type="button" class="dt-btn" data-a="exam" data-tour="exam-btn">Start mock exam</button>
+    <div class="rt-exam" data-tour="mock">
+      <div class="rt-eyebrow light">Destination</div>
+      <h2>Mock exam</h2>
+      <p>${examSize} questions in ${examSize} minutes, ${passMark(examSize)} to pass, reshuffled each time. The real exam is 30 in 30 minutes, 21 to pass.</p>
+      <button type="button" class="rt-btn-white" data-a="exam" data-tour="exam-btn">Start mock exam &#8594;</button>
     </div>`;
 }
 
+function topbar(title: string, back = "Back") {
+  return `<div class="rt-topbar"><button type="button" class="rt-back" data-a="home" aria-label="${back}">&#8249;</button><span class="rt-tb-title">${title}</span></div>`;
+}
+
 function lessonView(s: Section) {
-  return `<button type="button" class="dt-back" data-a="home">&#8592; All sections</button>
-    <h3>${s.en} <span class="dt-pt">${s.pt}</span></h3>
-    <section class="dt-card" data-tour="words"><div class="dt-k">Signal words</div>
-      <div class="dt-words">${s.words.map(([pt, en]) => `<div><b>${esc(pt)}</b><span>${esc(en)}</span></div>`).join("")}</div></section>
-    <section class="dt-card" data-tour="rules"><div class="dt-k">The rules</div>
-      <ol class="dt-rules">${s.rules.map((r, i) => `<li data-tour="rule-${i}">${esc(r.en)}<div class="dt-dec">Decided by: <b>${esc(r.pt)}</b></div></li>`).join("")}</ol></section>
-    <button type="button" class="dt-btn" data-a="practice" data-v="${s.id}" data-tour="practice-btn">Practice ${s.qs.length} questions</button>`;
+  return `${topbar(s.en)}
+    <div class="rt-stage">
+      <div class="rt-kicker">${s.pt}</div>
+      <div class="rt-words" data-tour="words">${s.words.map(([pt, en]) => `<div class="rt-flash"><span class="rt-flash-tag">Signal word</span><span class="rt-pt">${esc(pt)}</span><span class="rt-en">${esc(en)}</span></div>`).join("")}</div>
+      <div class="rt-teach-list" data-tour="rules">${s.rules.map((r, i) => `<div class="rt-teach" data-tour="rule-${i}"><span class="rt-cnum">${String(i + 1).padStart(2, "0")}</span><p>${esc(r.en)}</p><div class="rt-hintword">Decided by: <b>${esc(r.pt)}</b></div></div>`).join("")}</div>
+    </div>
+    <div class="rt-btn-row"><button type="button" class="rt-btn" data-a="practice" data-v="${s.id}" data-tour="practice-btn">Practice ${s.qs.length} questions</button></div>`;
 }
 
 function quizView(s: Extract<Screen, { name: "quiz" }>) {
   const it = s.items[s.i], q = it.q, pick = s.picks[s.i];
   const correctPos = it.order.indexOf(q.answer);
-  return `<div class="dt-qhead">
-      <button type="button" class="dt-back" data-a="home">&#8592; Quit</button>
-      <span class="dt-k">${s.mode === "exam" ? "Mock exam" : sec(s.sec!).en} &middot; ${s.i + 1} of ${s.items.length}</span>
-      ${s.mode === "exam" ? `<span class="dt-timer" data-tour="timer">${fmt(S.left)}</span>` : ""}
-    </div>
-    <section class="dt-card dt-q" data-tour="question">
-      <p class="dt-qt">${bold(q.pt, q.signal)}</p>
-      ${S.english ? `<p class="dt-en">${esc(q.en)}</p>` : ""}
-      <button type="button" class="dt-link" data-a="english" data-tour="english">${S.english ? "Hide English" : "Show in English"}</button>
-      <div class="dt-opts">${it.order.map((oi, pos) => {
+  const head = s.mode === "exam"
+    ? `<div class="rt-exam-bar"><button type="button" class="rt-back" data-a="home" aria-label="Quit">&#8249;</button><span class="rt-timer" data-tour="timer">${fmt(S.left)}</span><span class="rt-mini"><i style="width:${(s.i / s.items.length) * 100}%"></i></span><span class="rt-qn">${s.i + 1}/${s.items.length}</span></div>`
+    : `${topbar(sec(s.sec!).en)}<div class="rt-progline"><i style="width:${((s.i + (s.shown ? 1 : 0)) / s.items.length) * 100}%"></i></div>`;
+  return `${head}
+    <div class="rt-stage">
+      <div class="rt-qcount">Question ${s.i + 1} of ${s.items.length}</div>
+      <div class="rt-qtext" data-tour="question">${bold(q.pt, q.signal)}${S.english ? `<span class="rt-qen">${esc(q.en)}</span>` : ""}
+        <button type="button" class="rt-link" data-a="english" data-tour="english">${S.english ? "Hide English" : "Show in English"}</button></div>
+      ${it.order.map((oi, pos) => {
         const [pt, en] = q.opts[oi];
         let cls = "";
-        if (s.shown) cls = pos === correctPos ? "right" : pos === pick ? "wrong" : "dim";
-        return `<button type="button" class="dt-opt ${cls}" data-a="pick" data-v="${pos}" ${s.shown ? "disabled" : ""} data-tour="${pos === correctPos ? "correct" : ""}">
-          <span class="dt-l">${"ABCD"[pos]}</span><span>${esc(pt)}${S.english ? `<span class="dt-en">${esc(en)}</span>` : ""}</span></button>`;
-      }).join("")}</div>
-      ${s.shown ? `<div class="dt-fb ${pick === correctPos ? "ok" : "no"}" data-tour="feedback">
-        <b>${pick === correctPos ? "Correct." : "Not quite."}</b> The deciding words: <mark>${esc(q.signal)}</mark>. ${esc(q.why)}
-        <div class="dt-art">CTB, ${esc(q.art)}</div></div>
-        <button type="button" class="dt-btn" data-a="next">${s.i < s.items.length - 1 ? "Next question" : "See results"}</button>` : ""}
-    </section>
-    ${s.mode === "practice" ? `<button type="button" class="dt-link sm" data-a="solve" data-tour="solve">Skip ahead: answer the rest for me</button>` : ""}`;
+        if (s.shown) cls = pos === correctPos ? "correct" : pos === pick ? "wrong" : "dim";
+        return `<button type="button" class="rt-opt ${cls}" data-a="pick" data-v="${pos}" ${s.shown ? "disabled" : ""} data-tour="${pos === correctPos ? "correct" : ""}">
+          <span class="rt-key">${"ABCD"[pos]}</span><span>${esc(pt)}${S.english ? `<span class="rt-opt-en">${esc(en)}</span>` : ""}</span></button>`;
+      }).join("")}
+      ${s.shown ? `<div class="rt-feedback ${pick === correctPos ? "ok" : "no"}" data-tour="feedback">
+        <div class="rt-fh">${pick === correctPos ? "&#10003; Correct" : "&#10007; Not quite"}</div>
+        <div class="rt-why">${esc(q.why)}</div>
+        <div class="rt-hintword">The deciding words: <b>${esc(q.signal)}</b> &middot; CTB, ${esc(q.art)}</div>
+      </div>` : ""}
+      ${s.mode === "practice" ? `<button type="button" class="rt-link sm" data-a="solve" data-tour="solve">Skip ahead: answer the rest for me</button>` : ""}
+    </div>
+    ${s.shown ? `<div class="rt-btn-row"><button type="button" class="rt-btn ${pick === correctPos ? "" : "red"}" data-a="next">${s.i < s.items.length - 1 ? "Continue" : "See results"}</button></div>` : ""}`;
 }
 
 function resultsView(s: Extract<Screen, { name: "results" }>) {
   const right = (it: Item, i: number) => s.picks[i] !== null && it.order[s.picks[i]!] === it.q.answer;
   const score = s.items.filter(right).length, need = passMark(s.items.length), passed = score >= need;
   const missed = s.items.map((it, i) => ({ it, i })).filter(({ it, i }) => !right(it, i));
-  return `<section class="dt-card dt-res ${passed ? "pass" : "fail"}" data-tour="results">
-      <div class="dt-k">${s.mode === "exam" ? "Mock exam" : sec(s.sec!).en}${s.timedOut ? " &middot; time ran out" : ""}</div>
-      <div class="dt-score">${score} of ${s.items.length}</div>
-      <p>${passed ? (s.mode === "exam" ? "Passed." : "Section complete.") : "Not yet."} The pass mark is ${need} of ${s.items.length}, 70 percent or higher.</p>
-    </section>
-    ${missed.length ? `<section class="dt-card"><div class="dt-k">Review what you missed</div>${missed.map(({ it, i }) => `<div class="dt-miss">
-        <p>${bold(it.q.pt, it.q.signal)}</p>
-        <p class="dt-muted">Your answer: ${s.picks[i] === null ? "none" : esc(it.q.opts[it.order[s.picks[i]!]][0])}. Right answer: <b>${esc(it.q.opts[it.q.answer][0])}</b>.</p>
-        <p class="dt-muted">${esc(it.q.why)} <span class="dt-art">CTB, ${esc(it.q.art)}</span></p></div>`).join("")}</section>` : ""}
-    <div class="dt-row"><button type="button" class="dt-btn" data-a="home" data-tour="home-btn">Back to sections</button>${s.mode === "practice" ? `<button type="button" class="dt-btn ghost" data-a="practice" data-v="${s.sec}">Practice again</button>` : ""}</div>`;
+  return `<div class="rt-result" data-tour="results">
+      <div class="rt-seal ${passed ? "pass" : "fail"}"><span class="rt-score">${score}</span><span class="rt-of">of ${s.items.length}</span></div>
+      <div class="rt-result-title">${passed ? (s.mode === "exam" ? "Passed" : "Section complete") : "Not yet"}</div>
+      <div class="rt-result-sub">${s.mode === "exam" ? "Mock exam" : sec(s.sec!).en}${s.timedOut ? ", time ran out" : ""}. The pass mark is ${need} of ${s.items.length}, 70 percent or higher.</div>
+      <div class="rt-stats"><div class="rt-stat"><b>${score}</b><span>correct</span></div><div class="rt-stat"><b>${missed.length}</b><span>missed</span></div><div class="rt-stat"><b>${Math.round((score / s.items.length) * 100)}%</b><span>score</span></div></div>
+    </div>
+    ${missed.length ? `<div class="rt-stage"><div class="rt-kicker">Review what you missed</div>${missed.map(({ it, i }) => `<div class="rt-rev">
+        <div class="rt-rq">${bold(it.q.pt, it.q.signal)}</div>
+        <div class="rt-ra you"><span class="rt-lbl">You</span>${s.picks[i] === null ? "No answer" : esc(it.q.opts[it.order[s.picks[i]!]][0])}</div>
+        <div class="rt-ra cor"><span class="rt-lbl">Right</span>${esc(it.q.opts[it.q.answer][0])}</div>
+        <div class="rt-why sm">${esc(it.q.why)} CTB, ${esc(it.q.art)}.</div></div>`).join("")}</div>` : ""}
+    <div class="rt-btn-row"><button type="button" class="rt-btn blue" data-a="home" data-tour="home-btn">Back to the route</button>${s.mode === "practice" ? `<button type="button" class="rt-btn ghost" data-a="practice" data-v="${s.sec}">Practice again</button>` : ""}</div>`;
 }
 
 function render() {
   const s = S.screen;
   const view = s.name === "home" ? homeView() : s.name === "lesson" ? lessonView(sec(s.sec)) : s.name === "quiz" ? quizView(s) : resultsView(s);
-  root.innerHTML = `<div class="dt-app">${view}<p class="dt-src">Original questions written for this demo from Brazil's public traffic code (CTB, Lei nº 9.503/1997). Each one cites its article.</p></div>`;
+  root.innerHTML = `<div class="rt-app"><div class="rt-phone">${view}<p class="rt-foot">Original questions written for this demo from Brazil's public traffic code (CTB, Lei nº 9.503/1997). Each one cites its article.</p></div></div>`;
 }
 
 root.addEventListener("click", (e) => {

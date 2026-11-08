@@ -8,6 +8,7 @@ stack: [PWA, offline-first, GitHub Pages]
 demo: guided
 demoNote: "A guided demo with 20 original questions I wrote from Brazil's public traffic code (CTB), each citing its article: lessons with the signal words, practice quizzes, the 70 percent completion rule, a progress ring and a short timed mock exam."
 status: "Live. Question bank being rewritten."
+preview: "/previews/drivers-exam-trainer.webp"
 ---
 
 ## The problem

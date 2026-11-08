@@ -8,6 +8,7 @@ stack: [FastAPI, React, TypeScript, SQLite, Anthropic API, tool use]
 demo: guided
 demoNote: "A guided demo on an invented term: 40 fictional students across 4 time zone regions and 3 program paths, and 8 fictional supervisors priced in credits, not real money. Build a draft, handle a late change, and approve the assistant's proposal. It all runs in your browser."
 status: "Rebuilt by me, now owned by the school's engineering team."
+preview: "/previews/term-scheduler.webp"
 ---
 
 ## The problem

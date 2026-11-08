@@ -43,6 +43,9 @@ const words = ["AI agents.", "automations.", "internal tools.", "AI assistants."
               <span class="body">
                 <span class="title">{p.data.title}</span>
                 <span class="sum">{p.data.summary}</span>
+                {p.data.preview && (
+                  <img class="preview" src={p.data.preview} alt={`${p.data.title} demo screen`} width="800" height="500" loading="lazy" decoding="async" />
+                )}
               </span>
               <span class="meta">
                 <span class="tag">{p.data.kicker}</span>
@@ -95,6 +98,7 @@ const words = ["AI agents.", "automations.", "internal tools.", "AI assistants."
   .title { display: block; font-weight: 800; font-size: clamp(24px, 3.4vw, 40px); line-height: 1.02; letter-spacing: -.025em; }
   .sum { display: block; margin-top: 6px; color: var(--muted); font-size: 17px; max-width: 60ch; }
   .meta { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  .preview { display: block; width: min(100%, 440px); height: auto; aspect-ratio: 8 / 5; margin-top: 14px; border: 3px solid var(--ink); border-radius: 12px; background: var(--ink); object-fit: cover; object-position: top left; }
   @media (max-width: 720px) {
     .work a { grid-template-columns: 40px minmax(0, 1fr); }
     .meta { grid-column: 2; justify-content: flex-start; }

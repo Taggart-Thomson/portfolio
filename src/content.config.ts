@@ -15,6 +15,7 @@ const projects = defineCollection({
     demo: z.enum(["guided", "diagram", "live", "none"]),
     demoNote: z.string(),
     status: z.string(),
+    preview: z.string().optional(), // small demo screenshot for the Work list, e.g. /previews/<slug>.webp
   }),
 });
 

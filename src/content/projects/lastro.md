@@ -8,6 +8,7 @@ stack: [Python, Flask, Anthropic API, prompt caching, GridStack, brapi.dev, Coin
 demo: guided
 demoNote: "A guided demo on invented sample data: a made-up portfolio, sample prices and headlines, a sample advisor conversation with memory, the panel workspace and the cost panel. It all runs in your browser. Not financial advice."
 status: "Version 1 works end to end. I haven't used it much day to day yet, so it has no track record."
+preview: "/previews/lastro.webp"
 ---
 
 ## The name

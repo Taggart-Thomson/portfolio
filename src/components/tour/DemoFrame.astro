@@ -51,7 +51,7 @@ const { id, label, notice = DEFAULT_NOTICE } = Astro.props;
   .tb-btn.solid { background: var(--ink); color: var(--yel); }
   .tb-btn.link { box-shadow: none; text-decoration: underline; text-underline-offset: 3px; padding-inline: 6px; }
   .tb-btn:disabled { opacity: .35; cursor: default; }
-  .tb-progress { height: 4px; background: rgba(18,18,18,.15); }
+  .tb-progress { height: 4px; background: rgba(22,31,50,.15); }
   .tb-progress span { display: block; height: 100%; background: var(--ink); transition: width .25s ease; }
   @media (max-width: 640px) {
     .tb-row { padding: 10px 12px; }
@@ -62,7 +62,7 @@ const { id, label, notice = DEFAULT_NOTICE } = Astro.props;
   }
 
   .demo-stage { position: relative; overflow: clip; }
-  .tour-ring { position: absolute; z-index: 20; border-radius: 12px; pointer-events: none; outline: 3px solid var(--yel); box-shadow: 0 0 0 3px var(--ink), 0 0 0 9999px rgba(18,18,18,.42); transition: left .2s ease, top .2s ease, width .2s ease, height .2s ease; }
+  .tour-ring { position: absolute; z-index: 20; border-radius: 12px; pointer-events: none; outline: 3px solid var(--yel); box-shadow: 0 0 0 3px var(--ink), 0 0 0 9999px rgba(22,31,50,.45); transition: left .2s ease, top .2s ease, width .2s ease, height .2s ease; }
   .tour-ring::after { content: ""; position: absolute; inset: -3px; border-radius: 14px; border: 3px solid var(--yel); animation: tour-pulse 1.6s ease-out infinite; }
   @keyframes tour-pulse { from { opacity: .9; transform: scale(1); } to { opacity: 0; transform: scale(1.06); } }
 </style>

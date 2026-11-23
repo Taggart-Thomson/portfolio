@@ -1,14 +1,17 @@
-/* Signal poster system: safety yellow, near-black ink, warm paper. */
+/* Palette from Taggart's banner: deep navy, warm gold, off-white. */
 @import "@fontsource-variable/bricolage-grotesque";
 @import "@fontsource/dm-mono/400.css";
 @import "@fontsource/dm-mono/500.css";
 
 :root {
-  --yel: #FFD500;
-  --ink: #121212;
-  --paper: #FFF7C2;
-  --muted: #5B5640;
-  --line: #121212;
+  --yel: #FECC42;        /* gold accent */
+  --ink: #161F32;        /* navy: text on light, and the dark surfaces */
+  --paper: #F4F3EF;      /* off-white page */
+  --muted: #5A6372;      /* slate secondary text */
+  --line: #161F32;
+  --navy-2: #1F2A40;     /* raised surface on navy */
+  --line-dark: #34405A;  /* rules and outlines on navy */
+  --soft-dark: #A3AAB8;  /* secondary text on navy */
   --f-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", system-ui, sans-serif;
   --f-mono: "DM Mono", ui-monospace, monospace;
   --gutter: clamp(16px, 4vw, 48px);
@@ -51,9 +54,16 @@ html { scroll-behavior: smooth; }
   padding: 10px 18px; font: 600 16px/1 var(--f-display); text-decoration: none; cursor: pointer;
 }
 .btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
-.btn:focus-visible, a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.btn:focus-visible, a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
 .tag { display: inline-block; border: 1.5px solid var(--ink); border-radius: 999px; padding: 3px 10px; font: 500 12px/1.4 var(--f-mono); letter-spacing: .04em; text-transform: uppercase; }
 .tag.solid { background: var(--ink); color: var(--yel); }
+
+/* Navy sections, like the banner: off-white text, gold accents. */
+.dark { background: var(--ink); color: var(--paper); }
+.dark .btn { background: var(--yel); color: var(--ink); }
+.dark .btn.ghost { background: transparent; color: var(--paper); box-shadow: inset 0 0 0 2px var(--line-dark); }
+.dark .tag { border-color: var(--line-dark); }
+.dark .tag.solid { background: var(--yel); color: var(--ink); border-color: var(--yel); }
 
 /* Section headings */
 .section { padding-block: clamp(48px, 8vw, 96px); }

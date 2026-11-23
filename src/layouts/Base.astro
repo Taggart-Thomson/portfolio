@@ -25,16 +25,18 @@ const NOINDEX = true;
     <meta name="description" content={description} />
     {NOINDEX && <meta name="robots" content="noindex, nofollow" />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#FFD500" />
+    <meta name="theme-color" content="#161F32" />
   </head>
   <body>
     {!bare && (
-      <header class="wrap bar mono">
-        <a href="/">Taggart Thomson</a>
-        <nav aria-label="Main">
-          {nav.map((n) => <a href={n.href} aria-current={path === n.href ? "page" : undefined}>{n.label}</a>)}
-        </nav>
-      </header>
+      <div class="dark">
+        <header class="wrap bar mono">
+          <a href="/">Taggart Thomson</a>
+          <nav aria-label="Main">
+            {nav.map((n) => <a href={n.href} aria-current={path === n.href ? "page" : undefined}>{n.label}</a>)}
+          </nav>
+        </header>
+      </div>
     )}
     <slot />
     <footer class="foot">

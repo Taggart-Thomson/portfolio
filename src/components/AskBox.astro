@@ -27,13 +27,13 @@ const examples = [
 
 <style>
   .slab [hidden] { display: none !important; }
-  .slab { background: var(--ink); color: var(--paper); border-radius: 22px; padding: 18px; }
+  .slab { background: var(--navy-2); color: var(--paper); border: 1px solid var(--line-dark); border-radius: 22px; padding: 18px; }
   .ask { display: flex; gap: 10px; align-items: center; border-bottom: 2px solid var(--yel); padding-bottom: 10px; }
   .ask input { flex: 1; min-width: 0; background: transparent; border: 0; outline: none; color: var(--paper); font: 400 18px var(--f-display); }
-  .ask input::placeholder { color: #B9B39A; }
+  .ask input::placeholder { color: var(--soft-dark); }
   .ask button { border: 0; background: var(--yel); color: var(--ink); width: 44px; height: 44px; flex: none; border-radius: 50%; font-size: 20px; font-weight: 800; cursor: pointer; }
   .ask button:disabled { opacity: .5; cursor: default; }
-  .examples { margin-top: 14px; color: #B9B39A; }
+  .examples { margin-top: 14px; color: var(--soft-dark); }
   .examples .lbl { font: 500 11px/1.4 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; }
   .examples ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 5px; }
   .examples li { font-size: 15px; line-height: 1.4; color: var(--paper); opacity: .78; }
@@ -52,9 +52,9 @@ const examples = [
   .log :global(.a.err) { color: #FFB4A8; }
   .log :global(.a .wait) { display: inline-block; width: 8px; height: 16px; background: var(--yel); vertical-align: -2px; animation: blink 1s steps(2) infinite; }
   .log :global(.src) { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .log :global(.src a) { font: 500 11px/1.4 var(--f-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--paper); border: 1px solid #6E6A57; border-radius: 999px; padding: 3px 9px; text-decoration: none; }
+  .log :global(.src a) { font: 500 11px/1.4 var(--f-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--paper); border: 1px solid var(--line-dark); border-radius: 999px; padding: 3px 9px; text-decoration: none; }
   .log :global(.src a:hover) { border-color: var(--yel); color: var(--yel); }
-  .foot { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-top: 12px; font-size: 12px; color: #B9B39A; }
+  .foot { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-top: 12px; font-size: 12px; color: var(--soft-dark); }
   .foot .reset { background: transparent; border: 0; color: var(--yel); font: 600 13px var(--f-display); cursor: pointer; padding: 4px 0; }
   @keyframes blink { to { visibility: hidden; } }
 </style>
